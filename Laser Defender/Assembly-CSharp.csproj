@@ -46,11 +46,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\EnemyBehavior.cs" />
      <Compile Include="Assets\EnemySpawn.cs" />
      <Compile Include="Assets\PlayerControler.cs" />
      <Compile Include="Assets\Position.cs" />
+     <Compile Include="Assets\Projectile.cs" />
      <Compile Include="Assets\Scripts\LevelManager.cs" />
      <Compile Include="Assets\Scripts\MusicPlayer.cs" />
+     <Compile Include="Assets\Shredder.cs" />
      <None Include="Assets\SpaceShooterRedux\license.txt" />
      <None Include="Assets\SpaceShooterRedux\Spritesheet\sheet.xml" />
  <Reference Include="UnityEngine.UI">
