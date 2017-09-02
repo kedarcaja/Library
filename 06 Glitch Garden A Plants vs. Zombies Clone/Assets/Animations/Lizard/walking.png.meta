@@ -18,12 +18,12 @@ TextureImporter:
     21300026: npc_deimaginator__x1_walk_png_1354836023_13
     21300028: npc_deimaginator__x1_walk_png_1354836023_14
     21300030: npc_deimaginator__x1_walk_png_1354836023_15
-  serializedVersion: 4
+  serializedVersion: 2
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
-    sRGBTexture: 1
     linearTexture: 0
+    correctGamma: 0
     fadeOut: 0
     borderMipMap: 0
     mipMapFadeDistanceStart: 1
@@ -31,12 +31,11 @@ TextureImporter:
   bumpmap:
     convertToNormalMap: 0
     externalNormalMap: 0
-    heightScale: 0.25
+    heightScale: .25
     normalMapFilter: 0
   isReadable: 0
   grayScaleToAlpha: 0
-  generateCubemap: 6
-  cubemapConvolution: 0
+  generateCubemap: 0
   seamlessCubemap: 0
   textureFormat: -1
   maxTextureSize: 4096
@@ -52,31 +51,15 @@ TextureImporter:
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
-  spritePivot: {x: 0.5, y: 0.5}
+  spritePivot: {x: .5, y: .5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spritePixelsToUnits: 133.3333
-  alphaUsage: 1
+  spritePixelsToUnits: 133.333298
   alphaIsTransparency: 1
-  spriteTessellationDetail: -1
   textureType: 8
-  textureShape: 1
-  maxTextureSizeSet: 0
-  compressionQualitySet: 0
-  textureFormatSet: 0
-  platformSettings:
-  - buildTarget: DefaultTexturePlatform
-    maxTextureSize: 4096
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
+  buildTargetSettings: []
   spriteSheet:
-    serializedVersion: 2
     sprites:
-    - serializedVersion: 2
-      name: npc_deimaginator__x1_walk_png_1354836023_0
+    - name: npc_deimaginator__x1_walk_png_1354836023_0
       rect:
         serializedVersion: 2
         x: 0
@@ -86,10 +69,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: -1
-    - serializedVersion: 2
-      name: npc_deimaginator__x1_walk_png_1354836023_1
+    - name: npc_deimaginator__x1_walk_png_1354836023_1
       rect:
         serializedVersion: 2
         x: 251
@@ -99,10 +79,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: -1
-    - serializedVersion: 2
-      name: npc_deimaginator__x1_walk_png_1354836023_2
+    - name: npc_deimaginator__x1_walk_png_1354836023_2
       rect:
         serializedVersion: 2
         x: 502
@@ -112,10 +89,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: -1
-    - serializedVersion: 2
-      name: npc_deimaginator__x1_walk_png_1354836023_3
+    - name: npc_deimaginator__x1_walk_png_1354836023_3
       rect:
         serializedVersion: 2
         x: 0
@@ -125,10 +99,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: -1
-    - serializedVersion: 2
-      name: npc_deimaginator__x1_walk_png_1354836023_4
+    - name: npc_deimaginator__x1_walk_png_1354836023_4
       rect:
         serializedVersion: 2
         x: 251
@@ -138,10 +109,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: -1
-    - serializedVersion: 2
-      name: npc_deimaginator__x1_walk_png_1354836023_5
+    - name: npc_deimaginator__x1_walk_png_1354836023_5
       rect:
         serializedVersion: 2
         x: 502
@@ -151,10 +119,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: -1
-    - serializedVersion: 2
-      name: npc_deimaginator__x1_walk_png_1354836023_6
+    - name: npc_deimaginator__x1_walk_png_1354836023_6
       rect:
         serializedVersion: 2
         x: 0
@@ -164,10 +129,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: -1
-    - serializedVersion: 2
-      name: npc_deimaginator__x1_walk_png_1354836023_7
+    - name: npc_deimaginator__x1_walk_png_1354836023_7
       rect:
         serializedVersion: 2
         x: 251
@@ -177,10 +139,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: -1
-    - serializedVersion: 2
-      name: npc_deimaginator__x1_walk_png_1354836023_8
+    - name: npc_deimaginator__x1_walk_png_1354836023_8
       rect:
         serializedVersion: 2
         x: 502
@@ -190,10 +149,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: -1
-    - serializedVersion: 2
-      name: npc_deimaginator__x1_walk_png_1354836023_9
+    - name: npc_deimaginator__x1_walk_png_1354836023_9
       rect:
         serializedVersion: 2
         x: 0
@@ -203,10 +159,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: -1
-    - serializedVersion: 2
-      name: npc_deimaginator__x1_walk_png_1354836023_10
+    - name: npc_deimaginator__x1_walk_png_1354836023_10
       rect:
         serializedVersion: 2
         x: 251
@@ -216,10 +169,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: -1
-    - serializedVersion: 2
-      name: npc_deimaginator__x1_walk_png_1354836023_11
+    - name: npc_deimaginator__x1_walk_png_1354836023_11
       rect:
         serializedVersion: 2
         x: 502
@@ -229,10 +179,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: -1
-    - serializedVersion: 2
-      name: npc_deimaginator__x1_walk_png_1354836023_12
+    - name: npc_deimaginator__x1_walk_png_1354836023_12
       rect:
         serializedVersion: 2
         x: 0
@@ -242,10 +189,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: -1
-    - serializedVersion: 2
-      name: npc_deimaginator__x1_walk_png_1354836023_13
+    - name: npc_deimaginator__x1_walk_png_1354836023_13
       rect:
         serializedVersion: 2
         x: 251
@@ -255,10 +199,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: -1
-    - serializedVersion: 2
-      name: npc_deimaginator__x1_walk_png_1354836023_14
+    - name: npc_deimaginator__x1_walk_png_1354836023_14
       rect:
         serializedVersion: 2
         x: 502
@@ -268,10 +209,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: -1
-    - serializedVersion: 2
-      name: npc_deimaginator__x1_walk_png_1354836023_15
+    - name: npc_deimaginator__x1_walk_png_1354836023_15
       rect:
         serializedVersion: 2
         x: 0
@@ -281,10 +219,5 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: -1
-    outline: []
   spritePackingTag: 
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 

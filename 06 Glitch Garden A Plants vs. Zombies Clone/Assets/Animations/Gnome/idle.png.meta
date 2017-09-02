@@ -9,12 +9,12 @@ TextureImporter:
     21300008: npc_garden_gnome__x1_idleBlink_png_1354832661_4
     21300010: npc_garden_gnome__x1_idleBlink_png_1354832661_5
     21300012: npc_garden_gnome__x1_idleBlink_png_1354832661_6
-  serializedVersion: 4
+  serializedVersion: 2
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
-    sRGBTexture: 1
     linearTexture: 0
+    correctGamma: 0
     fadeOut: 0
     borderMipMap: 0
     mipMapFadeDistanceStart: 1
@@ -22,12 +22,11 @@ TextureImporter:
   bumpmap:
     convertToNormalMap: 0
     externalNormalMap: 0
-    heightScale: 0.25
+    heightScale: .25
     normalMapFilter: 0
   isReadable: 0
   grayScaleToAlpha: 0
-  generateCubemap: 6
-  cubemapConvolution: 0
+  generateCubemap: 0
   seamlessCubemap: 0
   textureFormat: -1
   maxTextureSize: 1024
@@ -43,31 +42,15 @@ TextureImporter:
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
-  spritePivot: {x: 0.5, y: 0.5}
+  spritePivot: {x: .5, y: .5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spritePixelsToUnits: 133.3333
-  alphaUsage: 1
+  spritePixelsToUnits: 133.333298
   alphaIsTransparency: 1
-  spriteTessellationDetail: -1
   textureType: 8
-  textureShape: 1
-  maxTextureSizeSet: 0
-  compressionQualitySet: 0
-  textureFormatSet: 0
-  platformSettings:
-  - buildTarget: DefaultTexturePlatform
-    maxTextureSize: 1024
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
+  buildTargetSettings: []
   spriteSheet:
-    serializedVersion: 2
     sprites:
-    - serializedVersion: 2
-      name: npc_garden_gnome__x1_idleBlink_png_1354832661_0
+    - name: npc_garden_gnome__x1_idleBlink_png_1354832661_0
       rect:
         serializedVersion: 2
         x: 0
@@ -77,10 +60,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: -1
-    - serializedVersion: 2
-      name: npc_garden_gnome__x1_idleBlink_png_1354832661_1
+    - name: npc_garden_gnome__x1_idleBlink_png_1354832661_1
       rect:
         serializedVersion: 2
         x: 81
@@ -90,10 +70,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: -1
-    - serializedVersion: 2
-      name: npc_garden_gnome__x1_idleBlink_png_1354832661_2
+    - name: npc_garden_gnome__x1_idleBlink_png_1354832661_2
       rect:
         serializedVersion: 2
         x: 162
@@ -103,10 +80,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: -1
-    - serializedVersion: 2
-      name: npc_garden_gnome__x1_idleBlink_png_1354832661_3
+    - name: npc_garden_gnome__x1_idleBlink_png_1354832661_3
       rect:
         serializedVersion: 2
         x: 243
@@ -116,10 +90,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: -1
-    - serializedVersion: 2
-      name: npc_garden_gnome__x1_idleBlink_png_1354832661_4
+    - name: npc_garden_gnome__x1_idleBlink_png_1354832661_4
       rect:
         serializedVersion: 2
         x: 324
@@ -129,10 +100,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: -1
-    - serializedVersion: 2
-      name: npc_garden_gnome__x1_idleBlink_png_1354832661_5
+    - name: npc_garden_gnome__x1_idleBlink_png_1354832661_5
       rect:
         serializedVersion: 2
         x: 405
@@ -142,10 +110,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: -1
-    - serializedVersion: 2
-      name: npc_garden_gnome__x1_idleBlink_png_1354832661_6
+    - name: npc_garden_gnome__x1_idleBlink_png_1354832661_6
       rect:
         serializedVersion: 2
         x: 486
@@ -155,10 +120,5 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: -1
-    outline: []
   spritePackingTag: 
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 
