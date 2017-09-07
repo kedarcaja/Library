@@ -374,19 +374,19 @@ MonoBehaviour:
     m_ShowAllHits: 0
     m_SearchArea: 0
     m_Folders:
-    - Assets
+    - Assets/_Scenes
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets
+  - Assets/_Scenes
   m_LastFoldersGridSize: -1
   m_LastProjectPath: C:\Users\Kedar\Documents\GitHub\Library\06 Glitch Garden A Plants
     vs. Zombies Clone
   m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 3}
-    m_SelectedIDs: c8240000
-    m_LastClickedID: 9416
+    m_SelectedIDs: 5e260000
+    m_LastClickedID: 9822
     m_ExpandedIDs: 00000000c824000000ca9a3bffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -442,7 +442,7 @@ MonoBehaviour:
   m_ListAreaState:
     m_SelectedInstanceIDs: 
     m_LastClickedInstanceID: 0
-    m_HadKeyboardFocusLastEvent: 0
+    m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs: c623000074280000ce370000ee2500002828000002280000fe260000d8240000d2240000e02400005a2800000000000022250000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -533,7 +533,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: e2fbffff00000000
+    m_ExpandedIDs: 86bbffff58bdffff20befffff6befffffcbeffff10bfffff18bfffff32bfffff3cbfffff46bfffff5ebfffffeac2ffffb4c3ffff8ac4ffff90c4ffffa4c4ffffacc4ffffc6c4ffffd0c4ffffdac4ffffe0c4ffffe6d6ffffe6e7fffface8ffff82e9ffff88e9ffff9ce9ffffa4e9ffffbee9ffffc8e9ffffd2e9ffff00ebffff4ef0ffff14f1ffffe8f1ffffecf1fffffef1ffff04f2ffff1cf2ffff24f2ffff2cf2ffff30f2ffffe2fbffff0000000030490000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -552,7 +552,7 @@ MonoBehaviour:
       m_ClientGUIView: {fileID: 4}
     m_SearchString: 
   m_ExpandedScenes:
-  - 00 Splash
+  - 01a Start
   m_CurrenRootInstanceID: 0
   m_Locked: 0
   m_CurrentSortingName: TransformSorting
@@ -588,9 +588,9 @@ MonoBehaviour:
   m_isRotationLocked: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 0, y: 0, z: 0}
+    m_Target: {x: 235.93365, y: 131.07253, z: 0}
     speed: 2
-    m_Value: {x: 0, y: 0, z: 0}
+    m_Value: {x: 235.93365, y: 131.07253, z: 0}
   m_RenderMode: 0
   m_ValidateTrueMetals: 0
   m_SceneViewState:
@@ -617,9 +617,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 747.1305
+    m_Target: 284.09738
     speed: 2
-    m_Value: 747.1305
+    m_Value: 284.09738
   m_Ortho:
     m_Target: 1
     speed: 2
