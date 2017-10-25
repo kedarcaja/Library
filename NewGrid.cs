@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [ExecuteInEditMode]
-public class NewBehaviourScript : MonoBehaviour {
+public class NewGrid : MonoBehaviour {
     public float snapInterval = 0.7f;
     private void Update()
     {
