@@ -7,7 +7,7 @@ public class NewGrid : MonoBehaviour {
     public float snapInterval = 0.7f;
     private void Update()
     {
-        Transform[] children = transform.GetComponentInChildren<Transform>();
+        Transform[] children = transform.GetComponentsInChildren<Transform>();
 
         for (int i = 0; i < children.Length; i++)
         {
