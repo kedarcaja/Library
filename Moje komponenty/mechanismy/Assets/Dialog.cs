@@ -8,12 +8,9 @@ public class Dialog : MonoBehaviour
 {
    int Part = 1;
     public Text text;
-    public GameObject DialBtn1, DialBtn2, DialBtn3,DialBtn4;
+    public GameObject Volba;
    
     public Text DialogováVolba1, DialogováVolba2, DialogováVolba3, DialogováVolba4;
-
-   
-
 
 
     public GameObject dialog;
@@ -21,19 +18,17 @@ public class Dialog : MonoBehaviour
     private int Step;
     public float time;     //Pozor Time začíná od 0 takže value času bude vždy o 1 menší než Part
     public int counter = 0;
-   
+    bool choice;
     private Animator animator;
-    // Detects keys pressed and prints their keycode
+    
     
     private void Start()
     {
         animator = GetComponent<Animator>();
         Dialog01();
+        
 
-        DialBtn1.SetActive(false);
-        DialBtn2.SetActive(false);
-        DialBtn3.SetActive(false);
-        DialBtn4.SetActive(false);
+
 
 
     }
@@ -44,11 +39,53 @@ public class Dialog : MonoBehaviour
 
         if (time >= counter) { Part = Step; Dialog01(); }
 
+        if (choice == true)
+        {
+            Volba.SetActive(true);
+            time = 0;
+            DialogováVolba1.text = "1. Volba1";
+            if (Input.GetKeyDown(KeyCode.Alpha1))
+            {
+                Debug.Log("1");
+                animator.SetBool("1", true);
+                Part = 5; Dialog01();
+                choice = false;
+            }
+
+           /* DialogováVolba1.text = "2. Volba2";
+            if (Input.GetKeyDown(KeyCode.Alpha2))
+            {
+                animator.SetInteger("Press", 2);
+                Part = 7; Dialog01();
+                choice = false;
+            }
+
+
+            DialogováVolba1.text = "3. Volba3";
+
+            if (Input.GetKeyDown(KeyCode.Alpha3))
+            {
+                animator.SetInteger("Press", 3);
+                Part = 9; Dialog01();
+                choice = false;
+            }
+
+            DialogováVolba1.text = "4. Volba4";
+
+            if (Input.GetKeyDown(KeyCode.Alpha4))
+            {
+                animator.SetInteger("Press", 4);
+                Part = 10; Dialog01();
+                choice = false;
+            }*/
+
+        }
     }
     void Dialog01()
     {
         if (Part == 1)
         {
+            
             text.text = "<color=brown><b>Leonard: </b></color> Ahoj Samatho, jak se dneska máš ??";
             counter = 1;
             Step = 2;
@@ -63,67 +100,68 @@ public class Dialog : MonoBehaviour
         if (Part == 3)
         {
             text.text = "<color=brown><b>Leonard: </b></color> Promiň, nechtěl jsem se tě dotknout";
-            counter = 3;
-            Step = 4;
+            Debug.Log("je tam");
+            choice = true;
+            time = 0;
         }
 
         if (Part == 4)
         {
-            animator.SetBool("Play", false);
-            time = 3;
-            DialBtn1.SetActive(true);
-            DialBtn2.SetActive(true);
-            DialBtn3.SetActive(true);
-            DialBtn4.SetActive(true);
-
-            DialogováVolba1.text = "1. Volba1";
-            if (Input.GetKeyDown(KeyCode.Alpha1))
-            {
-                animator.SetInteger("Press", 1);
-            }   
-       
-
             
-
-            DialogováVolba1.text = "2. Volba2";
-
-            DialogováVolba1.text = "3. Volba3";
-
-            DialogováVolba1.text = "4. Volba4";
-        }
-        if (Part == 4)
-        {
-            text.text = "<color=yellow><b>Samantha: </b></color> super jak to jde ";
-            counter = 4;
-            Step = 5;
+            
+      
         }
         if (Part == 5)
         {
-            text.text = "<color=brown><b>Leonard: </b></color> Promiň, nechtěl jsem se tě dotknout";
-            counter = 5;
+            animator.SetInteger("Press", 0);
+            text.text = "<color=yellow><b>Samantha: </b></color> sjsem na 5 ";
+            counter = 1;
             Step = 6;
         }
         if (Part == 6)
         {
-            text.text = "<color=brown><b>Leonard: </b></color> Promiň, nechtěl jsem se tě dotknout";
-            counter = 6;
-            Step = 7;
+            text.text = "<color=brown><b>Leonard: </b></color> jsem na 6";
+            counter = 2;
+            Step = 10;
         }
         if (Part == 7)
         {
-            text.text = "<color=brown><b>Leonard: </b></color> čs jdu prič";
-            counter = 5;
-            Step = 4;
+            animator.SetInteger("Press", 0);
+            text.text = "<color=brown><b>Leonard: </b></color> jsem na 7";
+            counter = 1;
+            Step = 8;
         }
-
         if (Part == 8)
         {
-            text.text = "<color=brown><b>Leonard: </b></color> čs jdu prič";
-            counter = 3;
-            Step = 4;
+            text.text = "<color=brown><b>Leonard: </b></color> jsem na 8";
+            counter = 2;
+            Step = 10;
         }
-        // dialog.SetActive(false);
-        // Ikona.SetActive(false);
+
+        if (Part == 9)
+        {
+            animator.SetInteger("Press", 0);
+            text.text = "<color=brown><b>Leonard: </b></color> jsem na 9";
+            counter = 1;
+            Step = 10;
+        }
+
+        if (Part == 10)
+        {
+            text.text = "<color=brown><b>Leonard: </b></color> čs jdu prič";
+            counter = 1;
+            Step = 11;
+        }
+
+        if (Part == 11)
+        {
+            /*time = 0;
+            Volba.SetActive(false);
+           
+            dialog.SetActive(false);
+            Ikona.SetActive(false); */
+        }
+        
 
     }
     
