@@ -12,7 +12,7 @@ public class PicUp : MonoBehaviour
              "True = Pick Up               ")]
     public bool PickUp;
     public int CoinValue;
-    int ItemValue;
+    
    
     private bool Pick;
     public Global Global;
