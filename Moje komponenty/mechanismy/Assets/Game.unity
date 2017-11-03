@@ -388,7 +388,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: AHHHHHHHHHHHHHH
+  m_Text: 
 --- !u!222 &528299359
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -562,7 +562,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 563888297}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 368, y: 136.3, z: 0}
+  m_LocalPosition: {x: 368.40002, y: 136.9, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1427989121}
@@ -570,7 +570,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 368, y: 136.3}
+  m_AnchoredPosition: {x: 368.40002, y: 136.9}
   m_SizeDelta: {x: 65.2, y: 43.2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &563888299
@@ -837,8 +837,6 @@ MonoBehaviour:
   "Dialogov\xE1Volba4": {fileID: 528299358}
   dialog: {fileID: 469786355}
   Ikona: {fileID: 862786644}
-  time: 0
-  counter: 0
 --- !u!58 &862786647
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -1198,7 +1196,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: AHHHHHHHHHHHHHH
+  m_Text: 
 --- !u!222 &975782146
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1272,7 +1270,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: AHHHHHHHHHHHHHH
+  m_Text: 
 --- !u!222 &1006074246
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1503,8 +1501,6 @@ MonoBehaviour:
   "Dialogov\xE1Volba4": {fileID: 0}
   dialog: {fileID: 469786355}
   Ikona: {fileID: 862786644}
-  time: 0
-  counter: 0
 --- !u!1 &1244952036
 GameObject:
   m_ObjectHideFlags: 0
@@ -1595,7 +1591,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1279936062
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1603,7 +1599,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1279936061}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 401, y: 158.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 171737076}
@@ -2015,7 +2011,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1427989117}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 386.20447, y: 153.89073, z: -13.387069}
+  m_LocalPosition: {x: 381.20447, y: 149.39073, z: -13.387069}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 563888298}
@@ -2312,7 +2308,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: AHHHHHHHHHHHHHH
+  m_Text: 
 --- !u!222 &1612534994
 CanvasRenderer:
   m_ObjectHideFlags: 0
