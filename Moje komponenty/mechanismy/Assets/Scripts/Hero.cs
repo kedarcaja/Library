@@ -33,7 +33,7 @@ public class Hero : MonoBehaviour
         if (inStealthMode)
         {
 			// If the player is in stealth mode then tick up the time spent towards the Invisible Man achievement.
-            AchievementManager.AddProgressToAchievement("The Invisible Man", Time.deltaTime);
+            AchievementManager.AddProgressToAchievement("The Invisible Man", UnityEngine.Time.deltaTime);
         }
 	}
 

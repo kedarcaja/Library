@@ -1,0 +1,4 @@
+sceneSetups:
+- path: Assets/Pathfinding/Scenes/SceneFolder/2DxyScene.unity
+  isLoaded: 1
+  isActive: 1

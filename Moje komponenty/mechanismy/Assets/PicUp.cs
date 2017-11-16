@@ -5,18 +5,13 @@ using UnityEngine.UI;
 
 public class PicUp : MonoBehaviour
 {
-    
-
 [Header("Pick up Systém")]
     [Tooltip("False = samozběr \n" +
-             "True = Pick Up               ")]
+             "True = Pick Up")]
     public bool PickUp;
     public int CoinValue;
-    
-   
     private bool Pick;
     public Global Global;
- 
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.E) && Pick == true)
@@ -25,30 +20,22 @@ public class PicUp : MonoBehaviour
             DestroyGameObject();
         }
     }
-
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Player")
         {
             if (PickUp == false)
             {
-                Global.Gold += 1;
+                Global.Gold += CoinValue;
                 DestroyGameObject();
             }
             else { Pick = true; }
 
         }
     }
-
-
     void DestroyGameObject()
     {
         
         Destroy(gameObject);
     }
-
-
-
-
 }

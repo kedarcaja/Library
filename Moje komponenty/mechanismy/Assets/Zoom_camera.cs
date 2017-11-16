@@ -21,6 +21,6 @@ public class Zoom_camera : MonoBehaviour {
 			targetOrtho = Mathf.Clamp (targetOrtho, minOrtho, maxOrtho);
 		}
 
-		Camera.main.orthographicSize = Mathf.MoveTowards (Camera.main.orthographicSize, targetOrtho, smoothSpeed * Time.deltaTime);
+		Camera.main.orthographicSize = Mathf.MoveTowards (Camera.main.orthographicSize, targetOrtho, smoothSpeed * UnityEngine.Time.deltaTime);
 	}
 }
