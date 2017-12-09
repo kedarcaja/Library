@@ -290,7 +290,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Credits.txt" />
-    <None Include="Assets\SoundManager\Readme.txt" />
     <None Include="Assets\TheTopicbirdTools\ToDoList\readme.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -34,6 +34,7 @@ MonoBehaviour:
   playClipTimes: 0
   coolDown: 0
   consumableItemAttributes: []
+  useOnPickUp: 0
   CDAllThisWhenUse: 0
   CDAllConsumbleWhenUse: 0
   equipmentPart: 4

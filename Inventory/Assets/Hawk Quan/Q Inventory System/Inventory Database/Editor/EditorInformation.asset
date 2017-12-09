@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8da55861d6ce13045a3b464df66f2c61, type: 3}
   m_Name: EditorInformation
   m_EditorClassIdentifier: 
-  titleColor: {r: 0.9191176, g: 0.17571367, b: 0.17571367, a: 1}
+  titleColor: {r: 0.875, g: 0.0064338297, b: 0.0064338297, a: 1}
   labelColor: {r: 0.47794116, g: 0.78397554, b: 1, a: 1}
   createRigidbody2D: 1
   AutoChangeSprite: 1

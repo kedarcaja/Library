@@ -17,7 +17,7 @@ namespace DigitalRuby.SoundManagerNamespace
             MusicAudioSources[index].PlayLoopingMusicManaged(1.0f, 1.0f, PersistToggle=true);
         }
 
-       
+      
 
         private void Update()
         {
