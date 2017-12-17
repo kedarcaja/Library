@@ -1,4 +1,0 @@
-sceneSetups:
-- path: Assets/Hawk Quan/Q Inventory System/Example/3D/3D Example.unity
-  isLoaded: 1
-  isActive: 1
