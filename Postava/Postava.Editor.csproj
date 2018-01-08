@@ -7,7 +7,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{5B46B7AE-7F3A-3459-E516-4756133A9BC4}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <AssemblyName>Assembly-CSharp-Editor.dll</AssemblyName>
+    <AssemblyName>Assembly-CSharp-Editor</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{E097FAD1-6243-4DAD-9C02-E9B9EFC3FFC1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
@@ -277,140 +277,56 @@
     <Reference Include="UnityEditor.Purchasing">
       <HintPath>C:/Users/Kedar/AppData/LocalLow/Unity/cache/packages/packages.unity.com/com.unity.purchasing@1.0.1/Editor/UnityEditor.Purchasing.dll</HintPath>
     </Reference>
+    <Reference Include="M3D_DLL">
+      <HintPath>Assets/MORPH3D/Scripts/Plugins/M3D_DLL.dll</HintPath>
+    </Reference>
+    <Reference Include="M3DIMPORT_DLL">
+      <HintPath>Assets/MORPH3D/Scripts/Plugins/M3DIMPORT_DLL.dll</HintPath>
+    </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib">
+      <HintPath>Assets/MORPH3D/Scripts/Plugins/ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
+    <Reference Include="MCS_Utilities">
+      <HintPath>Assets/MORPH3D/Scripts/Plugins/MCS_Utilities.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="Postava.Plugins.csproj">
-      <Project>{0D37CAB2-BB2D-6BFE-82A4-9CB332BBBE8D}</Project>
-      <Name>Postava.Plugins</Name>
-    </ProjectReference>
     <ProjectReference Include="Postava.csproj">
       <Project>{C1DECD32-97D8-DF56-D011-B0EDA63321DF}</Project>
       <Name>Postava</Name>
     </ProjectReference>
-    <ProjectReference Include="Postava.Editor.Plugins.csproj">
-      <Project>{374ECAAB-BFED-EDD8-D8D9-6FDB39DC4643}</Project>
-      <Name>Postava.Editor.Plugins</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Editor\CrossPlatformInputInitialize.cs" />
-    <Compile Include="Assets\Editor\InputAxisScrollbarCI.cs" />
+    <Compile Include="Assets\MORPH3D\Scripts\Editor\CIClothingEditor.cs" />
+    <Compile Include="Assets\MORPH3D\Scripts\Editor\M3DCharacterManagerEditor.cs" />
+    <Compile Include="Assets\MORPH3D\Scripts\Editor\M3DMorphEditor.cs" />
+    <Compile Include="Assets\MORPH3D\Scripts\Editor\M3DResourceEditor.cs" />
+    <Compile Include="Assets\MORPH3D\Scripts\Editor\M3DToolsEditor.cs" />
+    <Compile Include="Assets\MORPH3D\Scripts\Editor\MaterialImporter.cs" />
+    <Compile Include="Assets\MORPH3D\Scripts\Editor\MorphDebugInfo.cs" />
+    <Compile Include="Assets\MORPH3D\Scripts\Editor\SearchableWindow.cs" />
+    <Compile Include="Assets\MORPH3D\Vendor\Unity\Shaders\Hair\Editor\HairShaderGUI.cs" />
+    <Compile Include="Assets\MORPH3D\Vendor\Unity\Shaders\Skin\Editor\VolundMultiStandardShaderGUI.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\Note about Editor Folder.txt" />
-    <None Include="Assets\Standard Assets\Cameras\CameraGuidelines.txt" />
-    <None Include="Assets\Standard Assets\Characters\FirstPersonCharacter\FirstPersonCharacterGuidelines.txt" />
-    <None Include="Assets\Standard Assets\Characters\ThirdPersonCharacter\ThirdPersonCharacterGuidelines.txt" />
-    <None Include="Assets\Standard Assets\CrossPlatformInput\CrossPlatformInputGuidelines.txt" />
-    <None Include="Assets\Standard Assets\Effects\GlassRefraction (Pro Only)\Shaders\GlassStainedBumpDistort.shader" />
-    <None Include="Assets\Standard Assets\Effects\ImageEffects (Pro Only)\Shaders\BlendModesOverlay.shader" />
-    <None Include="Assets\Standard Assets\Effects\ImageEffects (Pro Only)\Shaders\BlurEffectConeTaps.shader" />
-    <None Include="Assets\Standard Assets\Effects\ImageEffects (Pro Only)\Shaders\CameraMotionBlur.shader" />
-    <None Include="Assets\Standard Assets\Effects\ImageEffects (Pro Only)\Shaders\CameraMotionBlurDX11.shader" />
-    <None Include="Assets\Standard Assets\Effects\ImageEffects (Pro Only)\Shaders\ChromaticAberrationShader.shader" />
-    <None Include="Assets\Standard Assets\Effects\ImageEffects (Pro Only)\Shaders\ColorCorrection3DLut.shader" />
-    <None Include="Assets\Standard Assets\Effects\ImageEffects (Pro Only)\Shaders\ColorCorrectionCurves.shader" />
-    <None Include="Assets\Standard Assets\Effects\ImageEffects (Pro Only)\Shaders\ColorCorrectionCurvesSimple.shader" />
-    <None Include="Assets\Standard Assets\Effects\ImageEffects (Pro Only)\Shaders\ColorCorrectionEffect.shader" />
-    <None Include="Assets\Standard Assets\Effects\ImageEffects (Pro Only)\Shaders\ColorCorrectionSelective.shader" />
-    <None Include="Assets\Standard Assets\Effects\ImageEffects (Pro Only)\Shaders\ContrastComposite.shader" />
-    <None Include="Assets\Standard Assets\Effects\ImageEffects (Pro Only)\Shaders\ContrastStretch\Adaptation.shader" />
-    <None Include="Assets\Standard Assets\Effects\ImageEffects (Pro Only)\Shaders\ContrastStretch\Apply.shader" />
-    <None Include="Assets\Standard Assets\Effects\ImageEffects (Pro Only)\Shaders\ContrastStretch\Luminance.shader" />
-    <None Include="Assets\Standard Assets\Effects\ImageEffects (Pro Only)\Shaders\ContrastStretch\MinMaxReduction.shader" />
-    <None Include="Assets\Standard Assets\Effects\ImageEffects (Pro Only)\Shaders\ConvertDepth.shader" />
-    <None Include="Assets\Standard Assets\Effects\ImageEffects (Pro Only)\Shaders\CreaseApply.shader" />
-    <None Include="Assets\Standard Assets\Effects\ImageEffects (Pro Only)\Shaders\EdgeDetectNormals.shader" />
-    <None Include="Assets\Standard Assets\Effects\ImageEffects (Pro Only)\Shaders\EdgeDetectX.shader" />
-    <None Include="Assets\Standard Assets\Effects\ImageEffects (Pro Only)\Shaders\FisheyeShader.shader" />
-    <None Include="Assets\Standard Assets\Effects\ImageEffects (Pro Only)\Shaders\FragAO.cginc" />
-    <None Include="Assets\Standard Assets\Effects\ImageEffects (Pro Only)\Shaders\GlobalFog.shader" />
-    <None Include="Assets\Standard Assets\Effects\ImageEffects (Pro Only)\Shaders\GlowCompose.shader" />
-    <None Include="Assets\Standard Assets\Effects\ImageEffects (Pro Only)\Shaders\GlowConeTap.shader" />
-    <None Include="Assets\Standard Assets\Effects\ImageEffects (Pro Only)\Shaders\GlowEffectDownsample.shader" />
-    <None Include="Assets\Standard Assets\Effects\ImageEffects (Pro Only)\Shaders\GrayscaleEffect.shader" />
-    <None Include="Assets\Standard Assets\Effects\ImageEffects (Pro Only)\Shaders\MotionBlur.shader" />
-    <None Include="Assets\Standard Assets\Effects\ImageEffects (Pro Only)\Shaders\MotionBlurClear.shader" />
-    <None Include="Assets\Standard Assets\Effects\ImageEffects (Pro Only)\Shaders\NoiseAndGrain.shader" />
-    <None Include="Assets\Standard Assets\Effects\ImageEffects (Pro Only)\Shaders\NoiseAndGrainDX11.shader" />
-    <None Include="Assets\Standard Assets\Effects\ImageEffects (Pro Only)\Shaders\NoiseEffectShaderRGB.shader" />
-    <None Include="Assets\Standard Assets\Effects\ImageEffects (Pro Only)\Shaders\NoiseEffectShaderYUV.shader" />
-    <None Include="Assets\Standard Assets\Effects\ImageEffects (Pro Only)\Shaders\PrepareSunShaftsBlur.shader" />
-    <None Include="Assets\Standard Assets\Effects\ImageEffects (Pro Only)\Shaders\RadialBlur.shader" />
-    <None Include="Assets\Standard Assets\Effects\ImageEffects (Pro Only)\Shaders\SSAOShader.shader" />
-    <None Include="Assets\Standard Assets\Effects\ImageEffects (Pro Only)\Shaders\ScreenSpaceAmbientObscurance.shader" />
-    <None Include="Assets\Standard Assets\Effects\ImageEffects (Pro Only)\Shaders\SepiaToneEffect.shader" />
-    <None Include="Assets\Standard Assets\Effects\ImageEffects (Pro Only)\Shaders\ShowAlphaChannel.shader" />
-    <None Include="Assets\Standard Assets\Effects\ImageEffects (Pro Only)\Shaders\SimpleClear.shader" />
-    <None Include="Assets\Standard Assets\Effects\ImageEffects (Pro Only)\Shaders\SunShaftsComposite.shader" />
-    <None Include="Assets\Standard Assets\Effects\ImageEffects (Pro Only)\Shaders\Tonemapper.shader" />
-    <None Include="Assets\Standard Assets\Effects\ImageEffects (Pro Only)\Shaders\TwirlEffect.shader" />
-    <None Include="Assets\Standard Assets\Effects\ImageEffects (Pro Only)\Shaders\VignettingShader.shader" />
-    <None Include="Assets\Standard Assets\Effects\ImageEffects (Pro Only)\Shaders\VortexEffect.shader" />
-    <None Include="Assets\Standard Assets\Effects\ImageEffects (Pro Only)\Shaders\_Antialiasing\DLAA.shader" />
-    <None Include="Assets\Standard Assets\Effects\ImageEffects (Pro Only)\Shaders\_Antialiasing\FXAA2.shader" />
-    <None Include="Assets\Standard Assets\Effects\ImageEffects (Pro Only)\Shaders\_Antialiasing\FXAA3Console.shader" />
-    <None Include="Assets\Standard Assets\Effects\ImageEffects (Pro Only)\Shaders\_Antialiasing\FXAAPreset2.shader" />
-    <None Include="Assets\Standard Assets\Effects\ImageEffects (Pro Only)\Shaders\_Antialiasing\FXAAPreset3.shader" />
-    <None Include="Assets\Standard Assets\Effects\ImageEffects (Pro Only)\Shaders\_Antialiasing\NFAA.shader" />
-    <None Include="Assets\Standard Assets\Effects\ImageEffects (Pro Only)\Shaders\_Antialiasing\SSAA.shader" />
-    <None Include="Assets\Standard Assets\Effects\ImageEffects (Pro Only)\Shaders\_BloomAndFlares\Blend.shader" />
-    <None Include="Assets\Standard Assets\Effects\ImageEffects (Pro Only)\Shaders\_BloomAndFlares\BlendForBloom.shader" />
-    <None Include="Assets\Standard Assets\Effects\ImageEffects (Pro Only)\Shaders\_BloomAndFlares\BlendOneOne.shader" />
-    <None Include="Assets\Standard Assets\Effects\ImageEffects (Pro Only)\Shaders\_BloomAndFlares\BlurAndFlares.shader" />
-    <None Include="Assets\Standard Assets\Effects\ImageEffects (Pro Only)\Shaders\_BloomAndFlares\BrightPassFilter.shader" />
-    <None Include="Assets\Standard Assets\Effects\ImageEffects (Pro Only)\Shaders\_BloomAndFlares\BrightPassFilter2.shader" />
-    <None Include="Assets\Standard Assets\Effects\ImageEffects (Pro Only)\Shaders\_BloomAndFlares\LensFlareCreate.shader" />
-    <None Include="Assets\Standard Assets\Effects\ImageEffects (Pro Only)\Shaders\_BloomAndFlares\MobileBlur.shader" />
-    <None Include="Assets\Standard Assets\Effects\ImageEffects (Pro Only)\Shaders\_BloomAndFlares\MultiPassHollywoodFlares.shader" />
-    <None Include="Assets\Standard Assets\Effects\ImageEffects (Pro Only)\Shaders\_BloomAndFlares\SeparableBlurPlus.shader" />
-    <None Include="Assets\Standard Assets\Effects\ImageEffects (Pro Only)\Shaders\_BloomAndFlares\VignetteShader.shader" />
-    <None Include="Assets\Standard Assets\Effects\ImageEffects (Pro Only)\Shaders\_DepthOfField\Bokeh34.shader" />
-    <None Include="Assets\Standard Assets\Effects\ImageEffects (Pro Only)\Shaders\_DepthOfField\DepthOfField34.shader" />
-    <None Include="Assets\Standard Assets\Effects\ImageEffects (Pro Only)\Shaders\_DepthOfField\DepthOfFieldDX11.shader" />
-    <None Include="Assets\Standard Assets\Effects\ImageEffects (Pro Only)\Shaders\_DepthOfField\DepthOfFieldScatter.shader" />
-    <None Include="Assets\Standard Assets\Effects\ImageEffects (Pro Only)\Shaders\_DepthOfField\SeparableBlur.shader" />
-    <None Include="Assets\Standard Assets\Effects\ImageEffects (Pro Only)\Shaders\_DepthOfField\SeparableWeightedBlurDof34.shader" />
-    <None Include="Assets\Standard Assets\Effects\ImageEffects (Pro Only)\Shaders\_DepthOfField\TiltShift.shader" />
-    <None Include="Assets\Standard Assets\Effects\ImageEffects (Pro Only)\Shaders\_DepthOfField\TiltShiftHdrLensBlur.shader" />
-    <None Include="Assets\Standard Assets\Effects\LightShafts\LightShaftsGuidelines.txt" />
-    <None Include="Assets\Standard Assets\Effects\LightShafts\Shaders\ColorFilter.shader" />
-    <None Include="Assets\Standard Assets\Effects\LightShafts\Shaders\Coord.shader" />
-    <None Include="Assets\Standard Assets\Effects\LightShafts\Shaders\Depth.shader" />
-    <None Include="Assets\Standard Assets\Effects\LightShafts\Shaders\DepthBreaks.shader" />
-    <None Include="Assets\Standard Assets\Effects\LightShafts\Shaders\FinalInterpolation.shader" />
-    <None Include="Assets\Standard Assets\Effects\LightShafts\Shaders\InterpolateAlongRays.shader" />
-    <None Include="Assets\Standard Assets\Effects\LightShafts\Shaders\Raymarch.shader" />
-    <None Include="Assets\Standard Assets\Effects\LightShafts\Shaders\SamplePositions.shader" />
-    <None Include="Assets\Standard Assets\Effects\LightShafts\Shaders\Shared.cginc" />
-    <None Include="Assets\Standard Assets\Effects\ParticleSystems\ParticleSystemsGuidelines.txt" />
-    <None Include="Assets\Standard Assets\Effects\ParticleSystems\Shaders\PriorityParticleAdd.shader" />
-    <None Include="Assets\Standard Assets\Effects\ParticleSystems\Shaders\PriorityParticleAddSoft.shader" />
-    <None Include="Assets\Standard Assets\Effects\ParticleSystems\Shaders\PriorityParticleAlpha.shader" />
-    <None Include="Assets\Standard Assets\Effects\Projectors\ProjectorGuidelines.txt" />
-    <None Include="Assets\Standard Assets\Effects\Projectors\Shaders\ProjectorAdditive.shader" />
-    <None Include="Assets\Standard Assets\Effects\Projectors\Shaders\ProjectorLight.shader" />
-    <None Include="Assets\Standard Assets\Effects\Projectors\Shaders\ProjectorMultiply.shader" />
-    <None Include="Assets\Standard Assets\Effects\Shaders\MobileSpec.shader" />
-    <None Include="Assets\Standard Assets\Effects\TessellationShaders\Shaders\BumpedSpecularDisplacement.shader" />
-    <None Include="Assets\Standard Assets\Effects\TessellationShaders\Shaders\BumpedSpecularSmooth.shader" />
-    <None Include="Assets\Standard Assets\Effects\ToonShading\Shaders\ToonBasic.shader" />
-    <None Include="Assets\Standard Assets\Effects\ToonShading\Shaders\ToonBasicOutline.shader" />
-    <None Include="Assets\Standard Assets\Effects\ToonShading\Shaders\ToonLit.shader" />
-    <None Include="Assets\Standard Assets\Effects\ToonShading\Shaders\ToonLitOutline.shader" />
-    <None Include="Assets\Standard Assets\Environment\Skyboxes\SkyboxGuidelines.txt" />
-    <None Include="Assets\Standard Assets\Environment\Water (Basic)\Shaders\FXWaterBasic.shader" />
-    <None Include="Assets\Standard Assets\Environment\Water (Pro Only)\Shaders\FXWaterPro.shader" />
-    <None Include="Assets\Standard Assets\Environment\Water (Pro Only)\Shaders\FXWaterV4Pro.shader" />
-    <None Include="Assets\Standard Assets\Environment\Water (Pro Only)\Shaders\FXWaterV4Simple.shader" />
-    <None Include="Assets\Standard Assets\Environment\Water (Pro Only)\Shaders\WaterInclude.cginc" />
-    <None Include="Assets\Standard Assets\Prototyping\Shaders\WorldCoordDiffuse.shader" />
-    <None Include="Assets\Standard Assets\Vehicles\Aircraft\AircraftGuidelines.txt" />
-    <None Include="Assets\Standard Assets\Vehicles\Car\CarGuidelines.txt" />
-    <None Include="Assets\Standard Assets\Vehicles\Car\Shaders\DiffuseReflectiveShader.shader" />
-    <None Include="Assets\Standard Assets\Vehicles\Car\Shaders\ReflectiveDiffuseSpec.shader" />
-    <None Include="Assets\Standard Assets\Vehicles\Car\Shaders\ReflectiveDiffuseSpecTransp.shader" />
-    <None Include="Assets\Standard Assets\Vehicles\RollerBall\RollerBallGuidelines.txt" />
+    <None Include="Assets\MORPH3D\README.txt" />
+    <None Include="Assets\MORPH3D\Resources\Shaders\AlphaCombiner.shader" />
+    <None Include="Assets\MORPH3D\Resources\Shaders\EyeAndLash.shader" />
+    <None Include="Assets\MORPH3D\Resources\Shaders\Morph3DBasicSkin.shader" />
+    <None Include="Assets\MORPH3D\Vendor\Unity\Shaders\Hair\Hair_UnityStandardCore.cginc" />
+    <None Include="Assets\MORPH3D\Vendor\Unity\Shaders\Hair\Hair_UnityStandardInput.cginc" />
+    <None Include="Assets\MORPH3D\Vendor\Unity\Shaders\Hair\Hair_Universal.shader" />
+    <None Include="Assets\MORPH3D\Vendor\Unity\Shaders\Hair\Hair_setup.cginc" />
+    <None Include="Assets\MORPH3D\Vendor\Unity\Shaders\Skin\MorphSkinDeferred.shader" />
+    <None Include="Assets\MORPH3D\Vendor\Unity\Shaders\Skin\Volund_StandardSpecularCharacter.shader" />
+    <None Include="Assets\MORPH3D\Vendor\Unity\Shaders\Skin\Volund_UnityStandardCore.cginc" />
+    <None Include="Assets\MORPH3D\Vendor\Unity\Shaders\Skin\Volund_UnityStandardInput.cginc" />
+    <None Include="Assets\MORPH3D\Vendor\Unity\Shaders\Standard\Standard-2pass-doublesided-half depth.shader" />
+    <None Include="Assets\MORPH3D\Vendor\Unity\Shaders\Standard\Standard-2pass-doublesided.shader" />
+    <None Include="Assets\MORPH3D\Vendor\Unity\Shaders\Standard\Standard-doublesided.shader" />
+    <None Include="Assets\MORPH3D\Vendor\Unity\Shaders\Standard\StandardSpecular-doublesided.shader" />
+    <None Include="Assets\MORPH3D\Vendor\Unity\Shaders\UniqueShadow\UniqueShadow_DepthOnly.shader" />
+    <None Include="Assets\MORPH3D\Vendor\Unity\Shaders\UniqueShadow\UniqueShadow_ShadowSample.cginc" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />

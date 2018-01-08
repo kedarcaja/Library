@@ -92,7 +92,7 @@ public class DialogControlScript : MonoBehaviour
             timer = 0;
             DialogText.text = "<color=brown><b>Leonard: </b></color> Ahoj Samatho, jak se dneska máš ??";
             waitTime = 1f;
-            Step = 2;
+            Step = 1;
             }
         else if (Part == 2)
         {

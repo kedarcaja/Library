@@ -14,19 +14,13 @@ public class MusicManager : MonoBehaviour {
 	
 	void Start () {
 		audioSource = GetComponent<AudioSource>();
-		audioSource.volume = PlayerPrefsManager.GetMasterVolume();
-	}
+        audioSource.clip = thisLevelMusic;
+        audioSource.loop = true;
+        audioSource.volume = 0.5f;
+        audioSource.Play();
+    }
 	
-	void OnLevelWasLoaded (int level) {
-		AudioClip thisLevelMusic = levelMusicChangeArray[level];
-		Debug.Log ("Playing clip: " + thisLevelMusic);
-		
-		if (thisLevelMusic) { // If there's some music attached
-			audioSource.clip = thisLevelMusic;
-			audioSource.loop = true;
-			audioSource.Play ();
-		}
-	}
+	
 	
 	public void SetVolume (float volume) {
 		audioSource.volume = volume;
