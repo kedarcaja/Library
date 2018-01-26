@@ -1,0 +1,74 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: ObjectAtlas
+  m_EditorData:
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 0
+    platformSettings: []
+    packingParameters:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 1
+      enableTightPacking: 1
+    packedHash:
+      serializedVersion: 2
+      Hash: 43cdaeb99bd584681b7bad9abcf48fe5
+    variantMultiplier: 1
+    bindAsDefault: 1
+    finalFormat: 4
+    hashString: 43cdaeb99bd584681b7bad9abcf48fe5
+    totalSpriteSurfaceArea: 140181
+    packables:
+    - {fileID: 102900000, guid: 14ac2739680cdf44887113c0d04d8571, type: 3}
+    packedSpriteRenderDataKeys:
+    - bd1165e317bebfb46b7caee13a7e7f51: 21300000
+    - a86270fe06207c94bbab9fc3bc46eed6: 21300000
+    - 76851602e37b8924a91be1eba381f131: 21300000
+    - 81cf45d418864754db71befd9e6b2e60: 21300000
+    - ee845b1d31368eb4bae7c17eb4e316a9: 21300000
+    - 8cc45e92a99f31a48baf22bdebe3590d: 21300000
+    - c471ba6efaababc48ac4c0c0f124f3bd: 21300000
+    - 50d967c5f4890ba4fa321a3f5d4542f1: 21300000
+    - bcf86ba8c9a1ceb408f6603b6ad49fe5: 21300000
+    - a8740806d795b064c81981a1ce5e3cb0: 21300000
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: bd1165e317bebfb46b7caee13a7e7f51, type: 3}
+  - {fileID: 21300000, guid: a86270fe06207c94bbab9fc3bc46eed6, type: 3}
+  - {fileID: 21300000, guid: 76851602e37b8924a91be1eba381f131, type: 3}
+  - {fileID: 21300000, guid: 81cf45d418864754db71befd9e6b2e60, type: 3}
+  - {fileID: 21300000, guid: ee845b1d31368eb4bae7c17eb4e316a9, type: 3}
+  - {fileID: 21300000, guid: 8cc45e92a99f31a48baf22bdebe3590d, type: 3}
+  - {fileID: 21300000, guid: c471ba6efaababc48ac4c0c0f124f3bd, type: 3}
+  - {fileID: 21300000, guid: 50d967c5f4890ba4fa321a3f5d4542f1, type: 3}
+  - {fileID: 21300000, guid: bcf86ba8c9a1ceb408f6603b6ad49fe5, type: 3}
+  - {fileID: 21300000, guid: a8740806d795b064c81981a1ce5e3cb0, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - Tree
+  - BushLarge
+  - Crate
+  - BushDead
+  - SignSquare
+  - SignArrow
+  - BushSmall
+  - Skeleton
+  - Cross
+  - Round
+  m_Tag: ObjectAtlas
+  m_IsVariant: 0
