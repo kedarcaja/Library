@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 [ExecuteInEditMode]
 public class NewGrid : MonoBehaviour {
     public float snapInterval = 0.7f;

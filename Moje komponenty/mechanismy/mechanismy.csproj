@@ -359,8 +359,6 @@
     <Compile Include="Assets\Global.cs" />
     <Compile Include="Assets\LoadText.cs" />
     <Compile Include="Assets\Move_character.cs" />
-    <Compile Include="Assets\MyNotifications\MyNotifications.cs" />
-    <Compile Include="Assets\MyNotifications\Test.cs" />
     <Compile Include="Assets\NewGrid1.cs" />
     <Compile Include="Assets\PicUp.cs" />
     <Compile Include="Assets\Position.cs" />
