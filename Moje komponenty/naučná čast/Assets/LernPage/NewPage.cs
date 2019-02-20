@@ -56,7 +56,6 @@ public class NewPage : ScriptableObject
         
         if (game.childCount > 0)
         {
-            Debug.Log("Cleaning map...");
             while (game.childCount > 0)
             {
                 Transform child = game.GetChild(0);

@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: NewCategoryCotroler
   m_EditorClassIdentifier: 
   part:
-  - name: 
+  - name: "Hrani\u010D\xE1\u0159"
+    isView: 1
+    portrait: {fileID: 21300004, guid: 115c088a48ea9a440aee5be30368150d, type: 3}
+  - name: Troll
     isView: 1
     portrait: {fileID: 21300008, guid: 115c088a48ea9a440aee5be30368150d, type: 3}
-  - name: 
-    isView: 0
-    portrait: {fileID: 0}

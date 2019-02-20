@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c0af2db208ae67a46aafb055717d0180, type: 3}
-  m_Name: NewPage
+  m_Name: "Hrani\u010D\xE1\u0159"
   m_EditorClassIdentifier: 
   textPart:
   - isDiscovered: 1
@@ -32,21 +32,14 @@ MonoBehaviour:
   - isDiscovered: 1
     prefab: {fileID: 9153083989881320519, guid: 2e0e2f33b0084e74d9b02be4514e3ee0,
       type: 3}
-    page: page I
+    page: page II
     position: {x: 0, y: 0, z: 0}
-    size: {x: 200, y: 200}
+    size: {x: 200, y: 400}
     image: {fileID: 21300000, guid: f35101f0ac5fb584389e8e9e996a80d0, type: 3}
   - isDiscovered: 1
     prefab: {fileID: 9153083989881320519, guid: 2e0e2f33b0084e74d9b02be4514e3ee0,
       type: 3}
-    page: page I
-    position: {x: 0, y: 0, z: 0}
-    size: {x: 200, y: 200}
-    image: {fileID: 21300000, guid: f35101f0ac5fb584389e8e9e996a80d0, type: 3}
-  - isDiscovered: 1
-    prefab: {fileID: 9153083989881320519, guid: 2e0e2f33b0084e74d9b02be4514e3ee0,
-      type: 3}
-    page: page I
-    position: {x: 0, y: 0, z: 0}
-    size: {x: 200, y: 200}
+    page: page III
+    position: {x: 25, y: -50, z: 0}
+    size: {x: 400, y: 400}
     image: {fileID: 21300000, guid: f35101f0ac5fb584389e8e9e996a80d0, type: 3}
