@@ -1,67 +1,78 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using System;
-using System.Linq;
-[RequireComponent(typeof(Rigidbody))]
-public class Movement : MonoBehaviour
-{
-	private Rigidbody rb;
-	[SerializeField]
-	private float speed, jumpHeight;
-	private Vector3 direction = Vector3.zero;
-	void Start()
-	{
-		rb = GetComponent<Rigidbody>();
-	}
+﻿using UnityEngine;
+using System.Collections;
 
-	private void FixedUpdate()
-	{
-		Move();
-		if (Input.GetKeyDown(KeyCode.Space))
-		{
-			Jump();
-		}
-	}
-	void Update()
-	{
+public class Movement : MonoBehaviour {
+
+	public float walkSpeed = 2;
+	public float runSpeed = 6;
+	public float gravity = -12;
+	public float jumpHeight = 1;
+	
+	float airControlPercent = 0;
+
+	float turnSmoothTime = 0.2f;
+	float turnSmoothVelocity;
+
+	float speedSmoothTime = 0.1f;
+	float speedSmoothVelocity;
+	float currentSpeed;
+	float velocityY;
+
+
+	Transform cameraT;
+	CharacterController controller;
+
+	void Start () {
 		
-		GetInput();
-	}
-	public void Move()
-	{
-		rb.velocity = direction * 20*(speed * Time.deltaTime);
-	}
-	public void GetInput()
-	{
-		direction = Vector3.zero;
-		if (Input.GetKey(KeyCode.W))
-		{
-			direction = Vector3.forward;
-			transform.eulerAngles = new Vector3(0, 0, 0);
-		}
-		if (Input.GetKey(KeyCode.S))
-		{
-			direction = Vector3.back;
-			transform.eulerAngles = new Vector3(0, 180, 0);
-
-		}
-		if (Input.GetKey(KeyCode.A))
-		{
-			direction = Vector3.left;
-			transform.eulerAngles = new Vector3(0, -90, 0);
-		}
-		if (Input.GetKey(KeyCode.D))
-		{
-			direction = Vector3.right;
-			transform.eulerAngles = new Vector3(0, 90, 0);
-
-		}
-	}
-	public void Jump()
-	{
-       
-		rb.AddForce(transform.TransformDirection(Vector3.up) * (100*jumpHeight));
+		cameraT = Camera.main.transform;
+		controller = GetComponent<CharacterController> ();
 	}
 
+	void Update () {
+		// input
+		Vector2 input = new Vector2 (Input.GetAxisRaw ("Horizontal"), Input.GetAxisRaw ("Vertical"));
+		Vector2 inputDir = input.normalized;
+		bool running = Input.GetKey (KeyCode.LeftShift);
+
+		Move (inputDir, running);
+
+		if (Input.GetKeyDown (KeyCode.Space)) {
+			Jump ();
+		}		
+	}
+
+	void Move(Vector2 inputDir, bool running) {
+		if (inputDir != Vector2.zero) {
+			float targetRotation = Mathf.Atan2 (inputDir.x, inputDir.y) * Mathf.Rad2Deg + cameraT.eulerAngles.y;
+			transform.eulerAngles = Vector3.up * Mathf.SmoothDampAngle(transform.eulerAngles.y, targetRotation, ref turnSmoothVelocity, GetModifiedSmoothTime(turnSmoothTime));
+		}
+			
+		float targetSpeed = ((running) ? runSpeed : walkSpeed) * inputDir.magnitude;
+		currentSpeed = Mathf.SmoothDamp (currentSpeed, targetSpeed, ref speedSmoothVelocity, GetModifiedSmoothTime(speedSmoothTime));
+
+		velocityY += Time.deltaTime * gravity;
+		Vector3 velocity = transform.forward * currentSpeed + Vector3.up * velocityY;
+
+		controller.Move (velocity * Time.deltaTime);
+		currentSpeed = new Vector2 (controller.velocity.x, controller.velocity.z).magnitude;
+
+		if (controller.isGrounded) {
+			velocityY = 0;
+		}
+
+	}
+
+	void Jump() {
+		if (controller.isGrounded) {
+			float jumpVelocity = Mathf.Sqrt (-2 * gravity * jumpHeight);
+			velocityY = jumpVelocity;
+		}
+	}
+
+	float GetModifiedSmoothTime(float smoothTime) {
+		if (controller.isGrounded) {
+			return smoothTime;
+		}
+		return smoothTime / airControlPercent;
+	}
 }
