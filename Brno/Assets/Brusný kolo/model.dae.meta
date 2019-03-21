@@ -1,0 +1,179 @@
+fileFormatVersion: 2
+guid: 19207a28c2fa99949aebbaf90101076c
+ModelImporter:
+  serializedVersion: 23
+  fileIDToRecycleName:
+    100000: Crank
+    100002: Crank_Nut
+    100004: Crank_Stick
+    100006: Fixer
+    100008: Fixer_Nut1
+    100010: Fixer_Nut2
+    100012: Fixer_Stand1
+    100014: FixerStand2
+    100016: //RootNode
+    100018: Roll
+    100020: RoundStone
+    100022: RoundStone_MainNuts
+    100024: RoundStone_Nuts1
+    100026: Structure_Columns
+    100028: Structure_Lenght
+    100030: Structure_With
+    100032: StructureBase_Lenght
+    100034: StructureBase_With
+    400000: Crank
+    400002: Crank_Nut
+    400004: Crank_Stick
+    400006: Fixer
+    400008: Fixer_Nut1
+    400010: Fixer_Nut2
+    400012: Fixer_Stand1
+    400014: FixerStand2
+    400016: //RootNode
+    400018: Roll
+    400020: RoundStone
+    400022: RoundStone_MainNuts
+    400024: RoundStone_Nuts1
+    400026: Structure_Columns
+    400028: Structure_Lenght
+    400030: Structure_With
+    400032: StructureBase_Lenght
+    400034: StructureBase_With
+    2100000: M_grindstone
+    2300000: Crank
+    2300002: Crank_Nut
+    2300004: Crank_Stick
+    2300006: Fixer
+    2300008: Fixer_Nut1
+    2300010: Fixer_Nut2
+    2300012: Fixer_Stand1
+    2300014: FixerStand2
+    2300016: Roll
+    2300018: RoundStone
+    2300020: RoundStone_MainNuts
+    2300022: RoundStone_Nuts1
+    2300024: Structure_Columns
+    2300026: Structure_Lenght
+    2300028: Structure_With
+    2300030: StructureBase_Lenght
+    2300032: StructureBase_With
+    3300000: Crank
+    3300002: Crank_Nut
+    3300004: Crank_Stick
+    3300006: Fixer
+    3300008: Fixer_Nut1
+    3300010: Fixer_Nut2
+    3300012: Fixer_Stand1
+    3300014: FixerStand2
+    3300016: Roll
+    3300018: RoundStone
+    3300020: RoundStone_MainNuts
+    3300022: RoundStone_Nuts1
+    3300024: Structure_Columns
+    3300026: Structure_Lenght
+    3300028: Structure_With
+    3300030: StructureBase_Lenght
+    3300032: StructureBase_With
+    4300000: RoundStone
+    4300002: Roll
+    4300004: Fixer
+    4300006: RoundStone_MainNuts
+    4300008: RoundStone_Nuts1
+    4300010: Fixer_Nut1
+    4300012: FixerStand2
+    4300014: Fixer_Stand1
+    4300016: Structure_With
+    4300018: Structure_Columns
+    4300020: Structure_Lenght
+    4300022: StructureBase_Lenght
+    4300024: StructureBase_With
+    4300026: Fixer_Nut2
+    4300028: Crank_Nut
+    4300030: Crank_Stick
+    4300032: Crank
+  externalObjects: {}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    previousCalculatedGlobalScale: 1
+    hasPreviousCalculatedGlobalScale: 0
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

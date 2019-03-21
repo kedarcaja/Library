@@ -1,0 +1,268 @@
+fileFormatVersion: 2
+guid: 94a06ceb223b8754d829d05e07cf4de3
+ModelImporter:
+  serializedVersion: 23
+  fileIDToRecycleName:
+    100000: chimney_low
+    100002: door_a_low
+    100004: door_b_low
+    100006: g chimney_low
+    100008: g door_a_low
+    100010: g door_b_low
+    100012: g grand_low
+    100014: g house_low
+    100016: g house_small_wood_low
+    100018: g house_wood_low
+    100020: g roof_low
+    100022: g shutter_a_low
+    100024: g shutter_b_low
+    100026: g skylight_a_low
+    100028: g skylight_b_low
+    100030: g skylight_window_a_low
+    100032: g skylight_window_b_low
+    100034: g skylight_wood_a_low
+    100036: g skylight_wood_b_low
+    100038: g stone_a_low
+    100040: g stone_a_low 1
+    100042: g stone_b_low
+    100044: g window_house_a_low
+    100046: g window_house_c_low
+    100048: g window_house_d_low
+    100050: g window_house_e_low
+    100052: g wondow_house_b_low
+    100054: g wondow_house_b_low001
+    100056: grand_low
+    100058: house_low
+    100060: house_small_wood_low
+    100062: house_wood_low
+    100064: //RootNode
+    100066: roof_low
+    100068: shutter_a_low
+    100070: shutter_b_low
+    100072: skylight_a_low
+    100074: skylight_b_low
+    100076: skylight_window_a_low
+    100078: skylight_window_b_low
+    100080: skylight_wood_a_low
+    100082: skylight_wood_b_low
+    100084: stone_a_low
+    100086: stone_b_low
+    100088: window_house_a_low
+    100090: window_house_c_low
+    100092: window_house_d_low
+    100094: window_house_e_low
+    100096: wondow_house_b_low
+    100098: wondow_house_b_low001
+    400000: chimney_low
+    400002: door_a_low
+    400004: door_b_low
+    400006: g chimney_low
+    400008: g door_a_low
+    400010: g door_b_low
+    400012: g grand_low
+    400014: g house_low
+    400016: g house_small_wood_low
+    400018: g house_wood_low
+    400020: g roof_low
+    400022: g shutter_a_low
+    400024: g shutter_b_low
+    400026: g skylight_a_low
+    400028: g skylight_b_low
+    400030: g skylight_window_a_low
+    400032: g skylight_window_b_low
+    400034: g skylight_wood_a_low
+    400036: g skylight_wood_b_low
+    400038: g stone_a_low
+    400040: g stone_a_low 1
+    400042: g stone_b_low
+    400044: g window_house_a_low
+    400046: g window_house_c_low
+    400048: g window_house_d_low
+    400050: g window_house_e_low
+    400052: g wondow_house_b_low
+    400054: g wondow_house_b_low001
+    400056: grand_low
+    400058: house_low
+    400060: house_small_wood_low
+    400062: house_wood_low
+    400064: //RootNode
+    400066: roof_low
+    400068: shutter_a_low
+    400070: shutter_b_low
+    400072: skylight_a_low
+    400074: skylight_b_low
+    400076: skylight_window_a_low
+    400078: skylight_window_b_low
+    400080: skylight_wood_a_low
+    400082: skylight_wood_b_low
+    400084: stone_a_low
+    400086: stone_b_low
+    400088: window_house_a_low
+    400090: window_house_c_low
+    400092: window_house_d_low
+    400094: window_house_e_low
+    400096: wondow_house_b_low
+    400098: wondow_house_b_low001
+    2100000: all_house
+    2100002: ground
+    2300000: g chimney_low
+    2300002: g door_a_low
+    2300004: g door_b_low
+    2300006: g grand_low
+    2300008: g house_low
+    2300010: g house_small_wood_low
+    2300012: g house_wood_low
+    2300014: g roof_low
+    2300016: g shutter_a_low
+    2300018: g shutter_b_low
+    2300020: g skylight_a_low
+    2300022: g skylight_b_low
+    2300024: g skylight_window_a_low
+    2300026: g skylight_window_b_low
+    2300028: g skylight_wood_a_low
+    2300030: g skylight_wood_b_low
+    2300032: g stone_a_low
+    2300034: g stone_a_low 1
+    2300036: g stone_b_low
+    2300038: g window_house_a_low
+    2300040: g window_house_c_low
+    2300042: g window_house_d_low
+    2300044: g window_house_e_low
+    2300046: g wondow_house_b_low
+    2300048: g wondow_house_b_low001
+    3300000: g chimney_low
+    3300002: g door_a_low
+    3300004: g door_b_low
+    3300006: g grand_low
+    3300008: g house_low
+    3300010: g house_small_wood_low
+    3300012: g house_wood_low
+    3300014: g roof_low
+    3300016: g shutter_a_low
+    3300018: g shutter_b_low
+    3300020: g skylight_a_low
+    3300022: g skylight_b_low
+    3300024: g skylight_window_a_low
+    3300026: g skylight_window_b_low
+    3300028: g skylight_wood_a_low
+    3300030: g skylight_wood_b_low
+    3300032: g stone_a_low
+    3300034: g stone_a_low 1
+    3300036: g stone_b_low
+    3300038: g window_house_a_low
+    3300040: g window_house_c_low
+    3300042: g window_house_d_low
+    3300044: g window_house_e_low
+    3300046: g wondow_house_b_low
+    3300048: g wondow_house_b_low001
+    4300000: g skylight_window_a_low
+    4300002: g window_house_d_low
+    4300004: g window_house_e_low
+    4300006: g window_house_a_low
+    4300008: g wondow_house_b_low
+    4300010: g window_house_c_low
+    4300012: g roof_low
+    4300014: g door_a_low
+    4300016: g door_b_low
+    4300018: g stone_a_low
+    4300020: g stone_b_low
+    4300022: g house_wood_low
+    4300024: g skylight_wood_a_low
+    4300026: g skylight_a_low
+    4300028: g house_low
+    4300030: g shutter_a_low
+    4300032: g grand_low
+    4300034: g stone_a_low
+    4300036: g chimney_low
+    4300038: g house_small_wood_low
+    4300040: g skylight_b_low
+    4300042: g skylight_window_b_low
+    4300044: g skylight_wood_b_low
+    4300046: g shutter_b_low
+    4300048: g wondow_house_b_low001
+  externalObjects: {}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 10
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    previousCalculatedGlobalScale: 1
+    hasPreviousCalculatedGlobalScale: 0
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

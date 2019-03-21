@@ -1,0 +1,425 @@
+fileFormatVersion: 2
+guid: 968232ffef6bd7944bb8cf9afba529e8
+ModelImporter:
+  serializedVersion: 23
+  fileIDToRecycleName:
+    100000: B_Calf_L
+    100002: B_Calf_R
+    100004: B_FirstFinger_L
+    100006: B_FirstFinger_R
+    100008: B_FourFinger
+    100010: B_FourFinger 1
+    100012: B_Heel_L
+    100014: B_Heel_R
+    100016: B_Leg_L
+    100018: B_Leg_R
+    100020: B_Palm_L
+    100022: B_Palm_R
+    100024: B_SocondFinger_L
+    100026: B_SocondFinger_R
+    100028: B_ThighsA_L
+    100030: B_ThighsA_R
+    100032: B_ThighsB_L
+    100034: B_ThighsB_R
+    100036: B_ThirdFinger_L
+    100038: B_ThirdFinger_R
+    100040: Base
+    100042: body_group
+    100044: Calf_L
+    100046: Calf_R
+    100048: ChestA
+    100050: ChestB
+    100052: Ear_L
+    100054: Ear_R
+    100056: expression
+    100058: eye_constraint
+    100060: Eye_group
+    100062: eye_L
+    100064: eye_R
+    100066: EyePoint
+    100068: face_group
+    100070: FirstFinger_L
+    100072: FirstFinger_R
+    100074: FourthFinger_L
+    100076: FourthFinger_R
+    100078: Head
+    100080: Heel_L
+    100082: Heel_R
+    100084: Hip
+    100086: joint23
+    100088: joint23 1
+    100090: joint25
+    100092: joint25 1
+    100094: joint27
+    100096: joint27 1
+    100098: joint29
+    100100: joint29 1
+    100102: joint31
+    100104: joint31 1
+    100106: joint33
+    100108: joint33 1
+    100110: joint35
+    100112: joint35 1
+    100114: joint37
+    100116: joint37 1
+    100118: joint39
+    100120: joint40
+    100122: joint41
+    100124: joint42
+    100126: joint43
+    100128: joint45
+    100130: joint45 1
+    100132: joint46
+    100134: joint46 1
+    100136: joint47
+    100138: joint50
+    100140: joint51
+    100142: joint52
+    100144: joint57
+    100146: joint58
+    100148: joint59
+    100150: joint6
+    100152: joint60
+    100154: joint61
+    100156: joint62
+    100158: joint62 1
+    100160: joint63
+    100162: joint64
+    100164: joint65
+    100166: L_BackFootController
+    100168: L_BackLegController
+    100170: L_BFirstFinger_C
+    100172: L_BFourFinger_C
+    100174: L_BSecondFinger_C
+    100176: L_BThirdFinger_C
+    100178: L_EyePoint
+    100180: L_FirstFinger_C
+    100182: L_FootController
+    100184: L_FourFinger_C
+    100186: L_LegController
+    100188: L_SecondFinger_C
+    100190: L_ThirdFinger_C
+    100192: LegA_L
+    100194: LegA_R
+    100196: LegB_L
+    100198: LegB_R
+    100200: LowerBodyController
+    100202: LowerJaw
+    100204: Neck_A
+    100206: Neck_B
+    100208: Neck_C
+    100210: Palm_L
+    100212: Palm_R
+    100214: polyToCurve1
+    100216: polyToCurve3
+    100218: polyToCurve3 1
+    100220: polyToCurve3 2
+    100222: polyToCurve8
+    100224: polyToCurve9
+    100226: R_BackFootController
+    100228: R_BackLegController
+    100230: R_BFirstFinger_C
+    100232: R_BFourFinger_C
+    100234: R_BSecondFinger_C
+    100236: R_BThirdFinger_C
+    100238: R_EyePoint
+    100240: R_FirstFinger_C
+    100242: R_FootController
+    100244: R_FourFinger_C
+    100246: R_LegController
+    100248: R_SecondFinger_C
+    100250: R_ThirdFinger_C
+    100252: SocondFinger_L
+    100254: SocondFinger_R
+    100256: Tail
+    100258: ThighsA_L
+    100260: ThighsA_R
+    100262: ThighsB_L
+    100264: ThighsB_R
+    100266: ThirdFinger_L
+    100268: ThirdFinger_R
+    100270: Thumb_L
+    100272: Thumb_R
+    100274: tongue
+    100276: UpperBodyController_R
+    100278: UpperJaw
+    100280: WeistA
+    100282: WeistB
+    100284: wolf_body10
+    100286: wolf_body_joint
+    100288: wolf_claw_L
+    100290: wolf_claw_R2
+    100292: wolf_face_normal
+    100294: //RootNode
+    100296: wolf_group
+    100298: wolf_under_gum1
+    100300: wolf_under_teeth1
+    100302: wolf_upper_gum1
+    100304: wolf_upper_teeth4
+    400000: B_Calf_L
+    400002: B_Calf_R
+    400004: B_FirstFinger_L
+    400006: B_FirstFinger_R
+    400008: B_FourFinger
+    400010: B_FourFinger 1
+    400012: B_Heel_L
+    400014: B_Heel_R
+    400016: B_Leg_L
+    400018: B_Leg_R
+    400020: B_Palm_L
+    400022: B_Palm_R
+    400024: B_SocondFinger_L
+    400026: B_SocondFinger_R
+    400028: B_ThighsA_L
+    400030: B_ThighsA_R
+    400032: B_ThighsB_L
+    400034: B_ThighsB_R
+    400036: B_ThirdFinger_L
+    400038: B_ThirdFinger_R
+    400040: Base
+    400042: body_group
+    400044: Calf_L
+    400046: Calf_R
+    400048: ChestA
+    400050: ChestB
+    400052: Ear_L
+    400054: Ear_R
+    400056: expression
+    400058: eye_constraint
+    400060: Eye_group
+    400062: eye_L
+    400064: eye_R
+    400066: EyePoint
+    400068: face_group
+    400070: FirstFinger_L
+    400072: FirstFinger_R
+    400074: FourthFinger_L
+    400076: FourthFinger_R
+    400078: Head
+    400080: Heel_L
+    400082: Heel_R
+    400084: Hip
+    400086: joint23
+    400088: joint23 1
+    400090: joint25
+    400092: joint25 1
+    400094: joint27
+    400096: joint27 1
+    400098: joint29
+    400100: joint29 1
+    400102: joint31
+    400104: joint31 1
+    400106: joint33
+    400108: joint33 1
+    400110: joint35
+    400112: joint35 1
+    400114: joint37
+    400116: joint37 1
+    400118: joint39
+    400120: joint40
+    400122: joint41
+    400124: joint42
+    400126: joint43
+    400128: joint45
+    400130: joint45 1
+    400132: joint46
+    400134: joint46 1
+    400136: joint47
+    400138: joint50
+    400140: joint51
+    400142: joint52
+    400144: joint57
+    400146: joint58
+    400148: joint59
+    400150: joint6
+    400152: joint60
+    400154: joint61
+    400156: joint62
+    400158: joint62 1
+    400160: joint63
+    400162: joint64
+    400164: joint65
+    400166: L_BackFootController
+    400168: L_BackLegController
+    400170: L_BFirstFinger_C
+    400172: L_BFourFinger_C
+    400174: L_BSecondFinger_C
+    400176: L_BThirdFinger_C
+    400178: L_EyePoint
+    400180: L_FirstFinger_C
+    400182: L_FootController
+    400184: L_FourFinger_C
+    400186: L_LegController
+    400188: L_SecondFinger_C
+    400190: L_ThirdFinger_C
+    400192: LegA_L
+    400194: LegA_R
+    400196: LegB_L
+    400198: LegB_R
+    400200: LowerBodyController
+    400202: LowerJaw
+    400204: Neck_A
+    400206: Neck_B
+    400208: Neck_C
+    400210: Palm_L
+    400212: Palm_R
+    400214: polyToCurve1
+    400216: polyToCurve3
+    400218: polyToCurve3 1
+    400220: polyToCurve3 2
+    400222: polyToCurve8
+    400224: polyToCurve9
+    400226: R_BackFootController
+    400228: R_BackLegController
+    400230: R_BFirstFinger_C
+    400232: R_BFourFinger_C
+    400234: R_BSecondFinger_C
+    400236: R_BThirdFinger_C
+    400238: R_EyePoint
+    400240: R_FirstFinger_C
+    400242: R_FootController
+    400244: R_FourFinger_C
+    400246: R_LegController
+    400248: R_SecondFinger_C
+    400250: R_ThirdFinger_C
+    400252: SocondFinger_L
+    400254: SocondFinger_R
+    400256: Tail
+    400258: ThighsA_L
+    400260: ThighsA_R
+    400262: ThighsB_L
+    400264: ThighsB_R
+    400266: ThirdFinger_L
+    400268: ThirdFinger_R
+    400270: Thumb_L
+    400272: Thumb_R
+    400274: tongue
+    400276: UpperBodyController_R
+    400278: UpperJaw
+    400280: WeistA
+    400282: WeistB
+    400284: wolf_body10
+    400286: wolf_body_joint
+    400288: wolf_claw_L
+    400290: wolf_claw_R2
+    400292: wolf_face_normal
+    400294: //RootNode
+    400296: wolf_group
+    400298: wolf_under_gum1
+    400300: wolf_under_teeth1
+    400302: wolf_upper_gum1
+    400304: wolf_upper_teeth4
+    2100000: wolf_body_m
+    2100002: wolf_gumr_m
+    2100004: wolf_teeth_m1
+    2100006: wolf_eye
+    2300000: eye_L
+    2300002: eye_R
+    3300000: eye_L
+    3300002: eye_R
+    4300000: wolf_face_normal
+    4300002: wolf_upper_gum1
+    4300004: wolf_upper_teeth4
+    4300006: wolf_under_teeth1
+    4300008: wolf_under_gum1
+    4300010: wolf_body10
+    4300012: wolf_claw_R2
+    4300014: wolf_claw_L
+    4300016: eye_R
+    4300018: eye_L
+    7400000: Take 001
+    9500000: //RootNode
+    13700000: wolf_body10
+    13700002: wolf_claw_L
+    13700004: wolf_claw_R2
+    13700006: wolf_face_normal
+    13700008: wolf_under_gum1
+    13700010: wolf_under_teeth1
+    13700012: wolf_upper_gum1
+    13700014: wolf_upper_teeth4
+  externalObjects: {}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    previousCalculatedGlobalScale: 0.01
+    hasPreviousCalculatedGlobalScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
