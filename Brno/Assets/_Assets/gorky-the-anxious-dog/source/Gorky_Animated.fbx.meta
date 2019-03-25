@@ -1,0 +1,220 @@
+fileFormatVersion: 2
+guid: 9650c3882d7bb2a44b5a9b89cfcb38a5
+ModelImporter:
+  serializedVersion: 23
+  fileIDToRecycleName:
+    100000: Carrot1
+    100002: Carrot2
+    100004: Carrot3
+    100006: Carrot4
+    100008: Carrot5
+    100010: //RootNode
+    100012: GraffitiSculpt
+    100014: Head
+    100016: Jaw
+    100018: LAntler1
+    100020: LAntler2
+    100022: LAntler3
+    100024: LBackFoot
+    100026: LBackKnee
+    100028: LBackLowerLeg
+    100030: LBackUpperLeg
+    100032: Leaf1
+    100034: Leaf2
+    100036: Leaf3
+    100038: Leaf4
+    100040: Leaf5
+    100042: Leaf6
+    100044: LEar1
+    100046: LEar2
+    100048: LEar3
+    100050: LEar4
+    100052: LEar5
+    100054: LEar6
+    100056: LEye
+    100058: LFrontElbow
+    100060: LFrontFoot
+    100062: LFrontUpperLeg
+    100064: Mouth
+    100066: Nose
+    100068: Pelvis
+    100070: RAntler1
+    100072: RAntler2
+    100074: RAntler3
+    100076: RAntler4
+    100078: RBackFoot
+    100080: RBackKnee
+    100082: RBackLowerLeg
+    100084: RBackUpperLeg
+    100086: REye
+    100088: RFrontElbow
+    100090: RFrontFoot
+    100092: RFrontUpperLeg
+    100094: Rope1
+    100096: Rope2
+    100098: Shoulder
+    100100: Spine1
+    100102: Spine2
+    100104: Spine3
+    100106: Tail1
+    100108: Tail2
+    100110: Tail3
+    100112: Tail4
+    100114: Tail5
+    100116: Tail6
+    100118: Tongue1
+    100120: Tongue2
+    100122: Tongue3
+    400000: Carrot1
+    400002: Carrot2
+    400004: Carrot3
+    400006: Carrot4
+    400008: Carrot5
+    400010: //RootNode
+    400012: GraffitiSculpt
+    400014: Head
+    400016: Jaw
+    400018: LAntler1
+    400020: LAntler2
+    400022: LAntler3
+    400024: LBackFoot
+    400026: LBackKnee
+    400028: LBackLowerLeg
+    400030: LBackUpperLeg
+    400032: Leaf1
+    400034: Leaf2
+    400036: Leaf3
+    400038: Leaf4
+    400040: Leaf5
+    400042: Leaf6
+    400044: LEar1
+    400046: LEar2
+    400048: LEar3
+    400050: LEar4
+    400052: LEar5
+    400054: LEar6
+    400056: LEye
+    400058: LFrontElbow
+    400060: LFrontFoot
+    400062: LFrontUpperLeg
+    400064: Mouth
+    400066: Nose
+    400068: Pelvis
+    400070: RAntler1
+    400072: RAntler2
+    400074: RAntler3
+    400076: RAntler4
+    400078: RBackFoot
+    400080: RBackKnee
+    400082: RBackLowerLeg
+    400084: RBackUpperLeg
+    400086: REye
+    400088: RFrontElbow
+    400090: RFrontFoot
+    400092: RFrontUpperLeg
+    400094: Rope1
+    400096: Rope2
+    400098: Shoulder
+    400100: Spine1
+    400102: Spine2
+    400104: Spine3
+    400106: Tail1
+    400108: Tail2
+    400110: Tail3
+    400112: Tail4
+    400114: Tail5
+    400116: Tail6
+    400118: Tongue1
+    400120: Tongue2
+    400122: Tongue3
+    2100000: GraffitiSculpt_Mat
+    4300000: GraffitiSculpt
+    7400000: Take 001
+    9500000: //RootNode
+    13700000: GraffitiSculpt
+  externalObjects: {}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 10
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    previousCalculatedGlobalScale: 0.01
+    hasPreviousCalculatedGlobalScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
