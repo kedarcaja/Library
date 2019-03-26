@@ -1,0 +1,36 @@
+﻿
+using UnityEngine;
+
+public enum EEnemyState { Attack, Detected, Neutral,Search }
+public enum ETemperament{ Neutral,Agresive }
+[CreateAssetMenu(menuName = "Character/Stats/EnemyStats", fileName = "NewEnemyState")]
+[ExecuteAlways]
+public class EnemyStats : EntityStats
+{
+	[SerializeField]
+	private ETemperament temperament;
+	[ExecuteAlways]
+	[SerializeField]
+	private EEnemyState state;
+	[ExecuteAlways]
+	public EEnemyState State
+	{
+		get
+		{
+			return state;
+		}
+
+		set
+		{
+			state = value;
+		}
+	}
+
+	public ETemperament Temperament
+	{
+		get
+		{
+			return temperament;
+		}
+	}
+}
