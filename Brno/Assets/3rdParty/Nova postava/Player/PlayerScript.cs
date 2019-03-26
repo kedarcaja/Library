@@ -119,8 +119,8 @@ public class PlayerScript : Entity
 		
 
 
-		if (AgentAvailable)
-		{
+		//if (AgentAvailable)
+		//{
 
 			if (AgentIsOnPosition)
 			{
@@ -143,7 +143,7 @@ public class PlayerScript : Entity
 
 			base.Update();
 		}
-	}
+	//}
 
 
 	void DrawParentAndResetPose()

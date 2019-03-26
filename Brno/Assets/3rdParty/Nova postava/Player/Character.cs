@@ -23,9 +23,9 @@ public class Character : MonoBehaviour
 	{
 		get
 		{
-			Agent.isStopped = true;
-			anim.SetFloat("speed",0);
-			return Agent.remainingDistance <= Agent.stoppingDistance && Agent.pathStatus == NavMeshPathStatus.PathComplete;
+            Agent.isStopped = true;
+            anim.SetFloat("speed", 0);
+            return Agent.remainingDistance <= Agent.stoppingDistance && Agent.pathStatus == NavMeshPathStatus.PathComplete;
 		}
 	}
 	protected IncrementTimer idleTimer = new IncrementTimer(), walkTimer = new IncrementTimer(), runTimer = new IncrementTimer();
@@ -93,7 +93,7 @@ public class Character : MonoBehaviour
 	{
 
 	
-		Agent.isStopped = true;
+		//Agent.isStopped = true;
 
 		if (!idleTimer.isRunning)
 		{

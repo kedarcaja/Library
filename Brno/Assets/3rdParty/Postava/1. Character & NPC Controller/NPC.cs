@@ -19,24 +19,24 @@ public class NPC : Character
 		{
 			RandomMove(transform.position, 50); // specific radius
 		}
-		if (AgentIsOnPosition)
-		{
-			Idle();
-		}
-		else
-		{
-			if ((stats.TargetVector.Target != null && TargetInRange(stats.TargetVector.Target, InteractionRadius)) || (stats.TargetVector.Destination != Vector3.zero && DestinationInRange(stats.TargetVector.Destination, InteractionRadius)))
-			{
-				Run();
-			}
+        if (AgentIsOnPosition)
+        {
+            Idle();
+        }
+        else
+        {
+            if ((stats.TargetVector.Target != null && TargetInRange(stats.TargetVector.Target, InteractionRadius)) || (stats.TargetVector.Destination != Vector3.zero && DestinationInRange(stats.TargetVector.Destination, InteractionRadius)))
+            {
+                Run();
+            }
 
-			else
-			{
-				Walk();
-			}
-		}
+            else
+            {
+                Walk();
+            }
+        }
 
-		base.Update();
+        base.Update();
 	}
 
 	public void RandomMove(Vector3 startPos, float radius)
@@ -59,7 +59,7 @@ public class NPC : Character
 	private void OnMouseUp()
 	{
 
-		if (Vector3.Distance(transform.position, PlayerScript.Instance.transform.position) < PlayerScript.Instance.InteractionRadius)
-			PlayerScript.Instance.SetTarget(transform);
-	}
+        if (Vector3.Distance(transform.position, PlayerScript.Instance.transform.position) < MouseManager.Instance.MoveClickRange)
+            PlayerScript.Instance.SetTarget(transform);
+    }
 }

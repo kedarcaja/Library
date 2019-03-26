@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: f4d79ef96609c95428ea88ad2162473f
+guid: e5c4775654157c04eb2c1aa5ebffbd1d
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
@@ -221,22 +221,22 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Weapon_material
-    second: {fileID: 2100000, guid: 470d955bc31438e47a0e8e0977edf396, type: 2}
+    second: {fileID: 2100000, guid: e13bba77cce91bd45b564a8ce31585a0, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: hero_armor
-    second: {fileID: 2100000, guid: f20163c4ab1e99f44b009e72732fa0a8, type: 2}
+    second: {fileID: 2100000, guid: 2b6850b029869e44493693e40b96d5f5, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: hero_body
-    second: {fileID: 2100000, guid: 7ac7d93e0a511c646ba807f05488aad0, type: 2}
+    second: {fileID: 2100000, guid: 08048b318357f7647ae53618fb271e69, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: hero_hair
-    second: {fileID: 2100000, guid: 829ab2975d0758d46bb1de7180e9b95a, type: 2}
+    second: {fileID: 2100000, guid: 8c8b329ab681c054d8a6918c15071ddd, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
@@ -310,6 +310,7 @@ ModelImporter:
     globalScale: 1
     meshCompression: 0
     addColliders: 0
+    useSRGBMaterialColor: 1
     importVisibility: 0
     importBlendShapes: 1
     importCameras: 0
@@ -334,6 +335,9 @@ ModelImporter:
     normalImportMode: 0
     tangentImportMode: 3
     normalCalculationMode: 0
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
   importAnimation: 1
   copyAvatar: 0
   humanDescription:
@@ -1303,12 +1307,10 @@ ModelImporter:
     legStretch: 0.05
     feetSpacing: 0
     rootMotionBoneName: Root_Jnt
-    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
     hasTranslationDoF: 0
     hasExtraRoot: 0
     skeletonHasParents: 1
-  lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: 73c06c49c4293504589ad384aeacc0e0,
-    type: 3}
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
   animationType: 3
   humanoidOversampling: 1
   additionalBone: 0

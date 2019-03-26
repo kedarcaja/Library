@@ -147,23 +147,26 @@ public class ItemContainer : MonoBehaviour, ITarget, IPointerClickHandler
 				return;
 
 			}
-			if (eventData.button == PointerEventData.InputButton.Right && canUseItem)
-			{
-				slot.CurrentItem.CurrentSlot = slot;
-                //if (!slot.Bag.Bag.OtherItemUsage)
-                //{
-                    slot.CurrentItem.Use();
-                    if (OnUse != null)
-                    {
-                        OnUse();
-                    }
-                    return;
-                //}
-                //slot.CurrentItem.Use(OtherItemUsage);
+            if (eventData.button == PointerEventData.InputButton.Right && canUseItem)
+            {
+                slot.CurrentItem.CurrentSlot = slot;
 
-                //return;
-			}
-		}
+                if (Input.GetKey(KeyCode.LeftShift)/*&&slot.CurrentItem.MainCategory ==ItemType.CONSUMEABLE*/)
+                {
+                    FindObjectsOfType<CharBag>().ToList().Find(b => b.Bag.name == "ActionBag" && b.name == "BookActionSlots").AddItems(slot.CurrentItem, slot.Items.Count);
+                    slot.RemoveAll();
+                    return;
+
+                }
+                slot.CurrentItem.Use();
+                if (OnUse != null)
+                {
+                    OnUse();
+                }
+                return;
+
+            }
+        }
 		if (InventoryManager.Instance.IsDraging)
 		{
 

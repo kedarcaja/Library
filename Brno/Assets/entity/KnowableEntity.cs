@@ -94,8 +94,8 @@ public struct OtherImageData : IInstanceable
 {
 
 	public Image Image { get; private set; }
-	[SerializeField]
-	private Vector2 place, size;
+    [SerializeField]
+    private Vector2 place;
 	[SerializeField]
 	private KnowlableOtherImageData data;
 
@@ -112,7 +112,7 @@ public struct OtherImageData : IInstanceable
 		Image = UnityEngine.Object.Instantiate(KnowladngeManager.Instance.ImagePrefab).GetComponent<Image>();
 		Image.sprite = data.Sprite;
 		Image.transform.parent = parent;
-		Image.GetComponent<RectTransform>().sizeDelta = size;
+        Image.SetNativeSize();
 		Image.transform.localPosition = place;
 
 	}

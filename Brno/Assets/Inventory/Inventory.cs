@@ -76,7 +76,7 @@ public class Inventory : MonoBehaviour, IOpenable
            // //AddItemWithName("Kápě", 1);//není sprite
            // AddItemWithName("Rybářský prut", 1);
            // AddItemWithName("Lopara", 1);
-           // AddItemWithName("Jablko", 1); 
+            AddItemWithName("Jablko", 10); 
             AddItemWithName("Meč", 1);
             
            // AddItemWithName("bagitem", 11);

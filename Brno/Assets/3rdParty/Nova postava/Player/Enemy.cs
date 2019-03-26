@@ -194,4 +194,13 @@ public class Enemy : Entity, IID
 			}
 		}
 	}
+
+    private void OnMouseUp()
+    {
+        if (Vector3.Distance(transform.position, PlayerScript.Instance.transform.position) < MouseManager.Instance.MoveClickRange)
+        {
+            PlayerScript.Instance.SetTarget(transform);
+            PlayerScript.Instance.Attack();
+        }
+    }
 }

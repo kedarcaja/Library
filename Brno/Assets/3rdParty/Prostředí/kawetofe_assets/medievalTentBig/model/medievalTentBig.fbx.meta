@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 1c20290b98829a042b2bb65ca6f90c1b
+guid: 687ac4ef1ddb354498451f107faf9c75
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
@@ -18,7 +18,27 @@ ModelImporter:
     6400000: MedievalTentBig
     6400002: MedievalTentBig_Strings
     9500000: //RootNode
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Strings__MedievalTentBigTexture
+    second: {fileID: 2100000, guid: 9ad74a547fe979e4a8cf9f7e25a30200, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: TentSidesCol1__MedievalTentBigTexture
+    second: {fileID: 2100000, guid: 611442e785ca7234db16d4db8c994142, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: TentSidesCol2__MedievalTentBigTexture
+    second: {fileID: 2100000, guid: 47d52f597e65d4244bf9143f5dc64d1c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Tent_Top__MedievalTentBigTexture
+    second: {fileID: 2100000, guid: 188436192802e1e4d80f87d1faf9dcb7, type: 2}
   materials:
     importMaterials: 1
     materialName: 1
@@ -71,7 +91,7 @@ ModelImporter:
     secondaryUVPackMargin: 4
     useFileScale: 0
     previousCalculatedGlobalScale: 1
-    hasPreviousCalculatedGlobalScale: 0
+    hasPreviousCalculatedGlobalScale: 1
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0

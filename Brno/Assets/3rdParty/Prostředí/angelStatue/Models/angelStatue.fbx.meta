@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 12b340d4f3cecea4c9012c4820f458ef
+guid: d22aff8d09722ec43928573edeb7641e
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
@@ -30,7 +30,12 @@ ModelImporter:
     4300004: angelStatue_mesh
     6400000: //RootNode
     9500000: //RootNode
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: angelStatue
+    second: {fileID: 2100000, guid: 76c0b79722ff7494b8bb9182e9f55f58, type: 2}
   materials:
     importMaterials: 1
     materialName: 1
@@ -83,7 +88,7 @@ ModelImporter:
     secondaryUVPackMargin: 4
     useFileScale: 0
     previousCalculatedGlobalScale: 1
-    hasPreviousCalculatedGlobalScale: 0
+    hasPreviousCalculatedGlobalScale: 1
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
