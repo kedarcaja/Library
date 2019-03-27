@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: TrollDV00
   m_EditorClassIdentifier: 
   decision: {fileID: 11400000, guid: 559fe644cd05ae845a553a4307d5a521, type: 2}
-  nextDialog: {fileID: 0}
-  value: 
+  nextDialog: {fileID: 11400000, guid: e780d899486ac904eb32075ebb43f95f, type: 2}
+  value: Ani omylem!
