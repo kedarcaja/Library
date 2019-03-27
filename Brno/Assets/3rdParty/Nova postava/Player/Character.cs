@@ -23,8 +23,7 @@ public class Character : MonoBehaviour
 	{
 		get
 		{
-            Agent.isStopped = true;
-            anim.SetFloat("speed", 0);
+           
             return Agent.remainingDistance <= Agent.stoppingDistance && Agent.pathStatus == NavMeshPathStatus.PathComplete;
 		}
 	}
@@ -92,20 +91,19 @@ public class Character : MonoBehaviour
 	public void Idle()
 	{
 
-	
-		//Agent.isStopped = true;
-
 		if (!idleTimer.isRunning)
 		{
 			idleTimer.Start();
 		}
+		Agent.speed = 0;
 
 	}
 	public void Walk()
 	{
 
-		Agent.isStopped = false;
-		
+		Debug.Log("Walk");
+
+
 
 		if (!walkTimer.isRunning)
 		{
@@ -115,10 +113,11 @@ public class Character : MonoBehaviour
 	}
 	public void Run()
 	{
-		
 
-		Agent.isStopped = false;
-		
+
+		Debug.Log("run");
+
+
 		if (stats.Stamina > 0)
 		{
 
@@ -138,6 +137,8 @@ public class Character : MonoBehaviour
 	public void SetDestination(Vector3 trg)
 	{
 		stats.TargetVector.Destination = trg;
+		stats.TargetVector.Target = null;
+
 
 	}
 	public void SetTarget(Transform trg)
