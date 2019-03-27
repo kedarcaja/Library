@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca53d6b4fd4795d498695a513580495f, type: 3}
   m_Name: Quest3.3
   m_EditorClassIdentifier: 
-  clip: {fileID: 8300000, guid: b4eb8c2f972a018498b76d11e70eac8e, type: 3}
+  clip: {fileID: 8300000, guid: 5002343c004a6f34196ca2e117d37e57, type: 3}
   subtitles:
-  - {fileID: 0}
+  - {fileID: 11400000, guid: b2a62b6eb6e6157418c97d37695a98a7, type: 2}
   - {fileID: 11400000, guid: 09afba0c2bd60bc458baedbbb81f946a, type: 2}
   - {fileID: 11400000, guid: 1a73cc1b515a2d142bbea3a1e283a493, type: 2}
   - {fileID: 11400000, guid: 2ca276b1eb6ec7244b3535cb9d201c96, type: 2}
