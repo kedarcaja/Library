@@ -14,7 +14,7 @@ public class PlayerScript : Entity
 	//
 	float range = 1.8f;
 	float attackInterval = 0.7f;
-	float meleeDamage = 30;
+	float meleeDamage = 20;
 	private float nextAttack = 0;
 	[SerializeField]
 	private float attackAngle = 45;

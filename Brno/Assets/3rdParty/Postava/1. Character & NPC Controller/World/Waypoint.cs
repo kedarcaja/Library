@@ -20,6 +20,7 @@ public class Waypoint : MonoBehaviour
 	[SerializeField]
 	private int sitting_Lieing_Rotation, waitTime;
 	private int time = 0;
+
 	private void Awake()
 	{
 	
@@ -33,6 +34,7 @@ public class Waypoint : MonoBehaviour
 		}
 		else if (other.GetComponent<NPC>())
 		{
+			waitTime = Random.Range(0,5);
 			time = 0;
 			GetComponent<SphereCollider>().enabled = false;
 			NPC n = other.GetComponent<NPC>();
@@ -54,7 +56,7 @@ public class Waypoint : MonoBehaviour
 							n.SetTarget(NextPoint);
 						}
 					};
-					t.OnTimerUpdate += delegate { if (t.GetTimeInt() >= waitTime) t.Stop(); };
+					t.OnTimerUpdate += delegate { if (t.Time == waitTime) t.Stop(); };
 					t.Start();
 					
 					break;

@@ -73,6 +73,9 @@ public class DialogInterpret : MonoBehaviour
 
         }
     }
-
+	public void Play()
+	{
+		dialog.OnStart.Invoke();
+	}
 }
 
