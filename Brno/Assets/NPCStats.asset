@@ -35,8 +35,9 @@ MonoBehaviour:
   level: 0
   TargetVector:
     target: {fileID: 0}
-    destination: {x: 230.91966, y: 0.03414549, z: 120.758575}
-  Followers: []
+    destination: {x: 236.66017, y: 0.12531039, z: 142.61482}
+  Followers:
+  - {fileID: 0}
   mood: 1
   profession: 1
   randomMove: 1

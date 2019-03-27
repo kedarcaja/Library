@@ -12,6 +12,7 @@ public delegate void TimerEventHandler();
 [RequireComponent(typeof(Animator))]
 public class Character : MonoBehaviour
 {
+	
 	[SerializeField]
 	protected CharacterStats stats;
 	public CharacterStats Stats { get { return stats; } }
@@ -23,15 +24,14 @@ public class Character : MonoBehaviour
 	{
 		get
 		{
-           
-            return Agent.remainingDistance <= Agent.stoppingDistance && Agent.pathStatus == NavMeshPathStatus.PathComplete;
+
+			return Agent.remainingDistance <= Agent.stoppingDistance && Agent.pathStatus == NavMeshPathStatus.PathComplete;
 		}
 	}
 	protected IncrementTimer idleTimer = new IncrementTimer(), walkTimer = new IncrementTimer(), runTimer = new IncrementTimer();
 	[SerializeField]
-	protected float interactionRadius, collisionRadius;
+	protected float interactionRadius;
 	public float InteractionRadius { get { return interactionRadius; } }
-	public float CollisionRadius { get { return collisionRadius; } }
 	public bool AgentAvailable { get; set; }
 	protected virtual void Awake()
 	{
@@ -81,10 +81,10 @@ public class Character : MonoBehaviour
 
 	public void Move()
 	{
-		
+
 		anim.SetFloat("speed", Agent.velocity.magnitude);
 		Agent.SetDestination(stats.TargetVector.Destination);
-	
+
 	}
 
 
@@ -101,9 +101,6 @@ public class Character : MonoBehaviour
 	public void Walk()
 	{
 
-		Debug.Log("Walk");
-
-
 
 		if (!walkTimer.isRunning)
 		{
@@ -113,9 +110,6 @@ public class Character : MonoBehaviour
 	}
 	public void Run()
 	{
-
-
-		Debug.Log("run");
 
 
 		if (stats.Stamina > 0)
@@ -137,7 +131,7 @@ public class Character : MonoBehaviour
 	public void SetDestination(Vector3 trg)
 	{
 		stats.TargetVector.Destination = trg;
-		stats.TargetVector.Target = null;
+		
 
 
 	}
@@ -188,8 +182,7 @@ public class Character : MonoBehaviour
 		//interaction radius
 		Gizmos.DrawWireSphere(new Vector3(transform.position.x, transform.position.y, transform.position.z), InteractionRadius);
 
-		Gizmos.color = Color.green;
-		Gizmos.DrawWireSphere(transform.position, collisionRadius);
+
 	}
 
 	public bool TargetInRange(Transform target, float radius)

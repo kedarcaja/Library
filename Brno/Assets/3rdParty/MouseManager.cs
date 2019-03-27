@@ -85,6 +85,10 @@ public class MouseManager : MonoBehaviour
                     Destroy(PointInstance);
                 }
                 PointInstance = Instantiate(PointPref, hit.point, Quaternion.identity);
+				if (PlayerScript.Instance.Stats.TargetVector.Target != null)
+				{
+					PlayerScript.Instance.Stats.TargetVector.Target = null;
+				}
                 PlayerScript.Instance.SetDestination(hit.point);
             }
           
