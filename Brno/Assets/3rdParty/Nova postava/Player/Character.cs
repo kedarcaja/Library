@@ -7,6 +7,7 @@ using UnityEngine.AI;
 using UnityEngine.Events;
 
 public delegate void TimerEventHandler();
+[RequireComponent(typeof(CapsuleCollider))]
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(NavMeshAgent))]
 [RequireComponent(typeof(Animator))]
@@ -25,7 +26,7 @@ public class Character : MonoBehaviour
 	{
 		get
 		{
-			return Math.Round((double)Agent.remainingDistance, 1) != Mathf.Infinity && Agent.pathStatus == NavMeshPathStatus.PathComplete && Math.Round(Agent.remainingDistance) == 0;
+			return Math.Round((double)Agent.remainingDistance, 1) != Mathf.Infinity && Agent.pathStatus == NavMeshPathStatus.PathComplete && Math.Round(Agent.remainingDistance) == Agent.stoppingDistance;
 
 		}
 	}
