@@ -31,7 +31,7 @@ public class PlayerScript : Entity
 	}
 	public override void Attack()
 	{
-		if (isInCombat||!CharacterPanel.Instance.WeaponSlot.Filled) return;
+		if (isInCombat || !CharacterPanel.Instance.WeaponSlot.Filled) return;
 		DisableAgent();
 		isInCombat = true;
 		SetAnimatorBool("isInCombat", true);
@@ -43,7 +43,7 @@ public class PlayerScript : Entity
 	public void SetOutOfCombat()
 	{
 
-		if (!isInCombat||!CharacterPanel.Instance.WeaponSlot.Filled) return;
+		if (!isInCombat || !CharacterPanel.Instance.WeaponSlot.Filled) return;
 		DisableAgent();
 		isInCombat = false;
 		SetAnimatorBool("isInCombat", false);
@@ -95,55 +95,47 @@ public class PlayerScript : Entity
 		}
 
 
-			if (Input.GetKeyDown(KeyCode.Alpha0))
-			{
-				Attacking(0);
-			}
-			if (Input.GetKeyDown(KeyCode.Alpha1))
-			{
-				Attacking(1);
-			}
-			if (Input.GetKeyDown(KeyCode.Alpha2))
-			{
-				Attacking(2);
-			}
-			if (Input.GetKeyDown(KeyCode.Alpha3))
-			{
-				Attacking(3);
-			}
-			if (Input.GetKeyDown(KeyCode.Alpha4))
-			{
-				Attacking(4);
-			}
-
-		
-
-
-		//if (AgentAvailable)
-		//{
-
-			if (AgentIsOnPosition)
-			{
-
-				Idle();
-			}
-			else
-			{
-				if ((stats.TargetVector.Target != null || stats.TargetVector.Destination != Vector3.zero))
-				{
-
-					if (Input.GetKey(KeyCode.LeftShift))
-						Run();
-					else
-						Walk();
-
-				}
-
-			}
-
-			base.Update();
+		if (Input.GetKeyDown(KeyCode.Alpha0))
+		{
+			Attacking(0);
 		}
-	//}
+		if (Input.GetKeyDown(KeyCode.Alpha1))
+		{
+			Attacking(1);
+		}
+		if (Input.GetKeyDown(KeyCode.Alpha2))
+		{
+			Attacking(2);
+		}
+		if (Input.GetKeyDown(KeyCode.Alpha3))
+		{
+			Attacking(3);
+		}
+		if (Input.GetKeyDown(KeyCode.Alpha4))
+		{
+			Attacking(4);
+		}
+
+
+
+
+
+		if ((stats.TargetVector.Target != null || stats.TargetVector.Destination != Vector3.zero))
+		{
+
+			if (Input.GetKey(KeyCode.LeftShift))
+				Run();
+			else
+				Walk();
+		}
+		else
+		{
+			Idle();
+		}
+
+		base.Update();
+	}
+
 
 
 	void DrawParentAndResetPose()
@@ -188,9 +180,9 @@ public class PlayerScript : Entity
 	void MeleeAttack()
 	{
 		if (Time.time > nextAttack)
-		{ 
+		{
 			nextAttack = Time.time + attackInterval;
-			
+
 			Collider[] colls = Physics.OverlapSphere(transform.position, range);
 			foreach (Collider hit in colls)
 			{
@@ -198,10 +190,10 @@ public class PlayerScript : Entity
 				{
 					float angle = Vector3.Angle(transform.position, hit.transform.position);
 					//within angle?
-				
+
 					var dist = Vector3.Distance(hit.transform.position, transform.position);
-					if (dist <= range&& angle <= attackAngle)
-					{ 
+					if (dist <= range && angle <= attackAngle)
+					{
 						hit.SendMessage("ApplyDamage", meleeDamage);
 					}
 				}

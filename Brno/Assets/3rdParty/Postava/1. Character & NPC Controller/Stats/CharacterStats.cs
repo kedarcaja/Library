@@ -5,13 +5,15 @@ using System.Collections.Generic;
 public class CharacterStats : ScriptableObject
 {
 	[SerializeField]
-	protected float speed,health, stamina, minDamage, maxDamage, maxHealth, maxStamina, influence, talking, luck, fireResistance, waterResistance, coldResistance, lightResistance, poisonResistance, magicResistance;
+	protected float health, stamina, minDamage, maxDamage, maxHealth, maxStamina, influence, talking, luck, fireResistance, waterResistance, coldResistance, lightResistance, poisonResistance, magicResistance;
 	[SerializeField]
-	protected int strength, agility, intellect, charisma, level;
+	protected int strength, agility, intellect, charisma, level,runSpeed;
 	public TargetVector TargetVector = new TargetVector();
 	public List<Character> Followers = new List<Character>();
 	public const int KEDAR = 5;
-
+	[SerializeField]
+	protected int walkSpeed;
+	public int WalkSpeed { get { return walkSpeed; } }
 	public float Health
 	{
 		get { return health; }
@@ -120,7 +122,7 @@ public class CharacterStats : ScriptableObject
 		get { return level; }
 		set { level = value; }
 	}
-	public float Speed { get { return speed; } set { speed = value; } }
+	public int RunSpeed { get { return runSpeed; } set { runSpeed = value; } }
 
 	public bool IsAlive { get { return health > 0; } }
 

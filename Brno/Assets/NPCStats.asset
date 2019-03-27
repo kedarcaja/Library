@@ -12,7 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 887c71d7001519b40a27778c2ddb1f8b, type: 3}
   m_Name: NPCStats
   m_EditorClassIdentifier: 
-  speed: 5
   health: 0
   stamina: 0
   minDamage: 0
@@ -33,11 +32,13 @@ MonoBehaviour:
   intellect: 0
   charisma: 0
   level: 0
+  runSpeed: 4
   TargetVector:
     target: {fileID: 0}
-    destination: {x: 236.66017, y: 0.12531039, z: 142.61482}
+    destination: {x: 244.22505, y: 5.2429643, z: 145.03238}
   Followers:
   - {fileID: 0}
+  walkSpeed: 1
   mood: 1
   profession: 1
-  randomMove: 1
+  randomMove: 0

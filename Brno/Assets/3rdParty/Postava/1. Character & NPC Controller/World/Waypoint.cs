@@ -1,17 +1,11 @@
 using UnityEngine;
 using UnityEngine.Events;
-
+public enum EPointType {Sitting,Waiting,Lieing,SittingWaiting,LieingWaiting,InstantNext }
 public class Waypoint : MonoBehaviour
 {
+	public UnityEvent PlayerEvent,NPCEvent,EnemyEvent;
 	[SerializeField]
-	private EProffesion profession;
-	public EProffesion Profession
-	{
-		get
-		{
-			return profession;
-		}
-	}
+	private EPointType type;
 
 	public Transform NextPoint
 	{
@@ -23,6 +17,9 @@ public class Waypoint : MonoBehaviour
 	[SerializeField]
 	private Transform nextPoint;
 	public UnityEvent<Vector3> OnTriggerEnterEvent;
+	[SerializeField]
+	private int sitting_Lieing_Rotation, waitTime;
+	private int time = 0;
 	private void Awake()
 	{
 	
@@ -31,16 +28,72 @@ public class Waypoint : MonoBehaviour
 	{
 		if (other.CompareTag("Player"))
 		{
-			Inventory.Instance.AddItemWithName("Sword",1);
+		
+			PlayerEvent.Invoke();
 		}
-		if (other.GetComponent<NPC>() != null)
+		else if (other.GetComponent<NPC>())
 		{
-
+			time = 0;
+			GetComponent<SphereCollider>().enabled = false;
 			NPC n = other.GetComponent<NPC>();
-			if (n.Stats.TargetVector.Target == transform && NextPoint != null)
+		
+
+			switch (type)
 			{
-				n.SetTarget(NextPoint);
+				case EPointType.Sitting:
+					n.Agent.updateRotation = false;
+					transform.Rotate(sitting_Lieing_Rotation, 0,0);
+					n.Sit();
+					break;
+				case EPointType.Waiting:
+					IncrementTimer t = new IncrementTimer();
+					t.Init(1,1,this);
+					t.OnTimerEnd += delegate {
+						if (n.Stats.TargetVector.Target == transform && NextPoint != null)
+						{
+							n.SetTarget(NextPoint);
+						}
+					};
+					t.OnTimerUpdate += delegate { if (t.GetTimeInt() >= waitTime) t.Stop(); };
+					t.Start();
+					
+					break;
+				case EPointType.Lieing:
+					n.Agent.updateRotation = false;
+					transform.Rotate(sitting_Lieing_Rotation, 0, 0);
+					n.Lie();
+					break;
+				case EPointType.InstantNext:
+					if (n.Stats.TargetVector.Target == transform && NextPoint != null)
+					{
+						n.SetTarget(NextPoint);
+					}
+					break;
+				case EPointType.SittingWaiting:
+					n.Agent.updateRotation = false;
+					transform.Rotate(sitting_Lieing_Rotation, 0, 0);
+					n.Sit();
+					IncrementTimer tm = new IncrementTimer();
+					tm.Init(1, 1, this);
+					tm.OnTimerUpdate += delegate { if (tm.Time == waitTime) tm.Stop(); };
+
+					tm.OnTimerEnd += delegate {
+						if (tm.Time == waitTime)
+						{
+							n.StandUp();
+							if (n.Stats.TargetVector.Target == transform && NextPoint != null)
+							{
+								n.SetTarget(NextPoint);
+							}
+						}
+						
+					};
+
+					tm.Start();
+					break;
+
 			}
+			
 		}
 	}
 	private void OnDrawGizmos()

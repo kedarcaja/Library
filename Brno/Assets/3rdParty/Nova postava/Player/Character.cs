@@ -12,7 +12,8 @@ public delegate void TimerEventHandler();
 [RequireComponent(typeof(Animator))]
 public class Character : MonoBehaviour
 {
-	
+	[SerializeField]
+	private ECharacterState state;
 	[SerializeField]
 	protected CharacterStats stats;
 	public CharacterStats Stats { get { return stats; } }
@@ -24,8 +25,8 @@ public class Character : MonoBehaviour
 	{
 		get
 		{
+			return Math.Round((double)Agent.remainingDistance, 1) != Mathf.Infinity && Agent.pathStatus == NavMeshPathStatus.PathComplete && Math.Round(Agent.remainingDistance) == 0;
 
-			return Agent.remainingDistance <= Agent.stoppingDistance && Agent.pathStatus == NavMeshPathStatus.PathComplete;
 		}
 	}
 	protected IncrementTimer idleTimer = new IncrementTimer(), walkTimer = new IncrementTimer(), runTimer = new IncrementTimer();
@@ -33,6 +34,8 @@ public class Character : MonoBehaviour
 	protected float interactionRadius;
 	public float InteractionRadius { get { return interactionRadius; } }
 	public bool AgentAvailable { get; set; }
+	protected ECharacterState State { get => state; set => state = value; }
+
 	protected virtual void Awake()
 	{
 		AgentAvailable = true;
@@ -90,7 +93,6 @@ public class Character : MonoBehaviour
 
 	public void Idle()
 	{
-
 		if (!idleTimer.isRunning)
 		{
 			idleTimer.Start();
@@ -101,17 +103,16 @@ public class Character : MonoBehaviour
 	public void Walk()
 	{
 
-
 		if (!walkTimer.isRunning)
 		{
 			walkTimer.Start();
 		}
-		Agent.speed = 2; // do statů dát walk speed = walkSpeed
+		Agent.speed = stats.WalkSpeed; // do statů dát walk speed = walkSpeed
 	}
 	public void Run()
 	{
 
-
+		RestoreAgent();
 		if (stats.Stamina > 0)
 		{
 
@@ -120,7 +121,7 @@ public class Character : MonoBehaviour
 				runTimer.Start();
 			}
 
-			Agent.speed = 6;
+			Agent.speed = stats.RunSpeed;
 		}
 		else
 		{
@@ -131,8 +132,6 @@ public class Character : MonoBehaviour
 	public void SetDestination(Vector3 trg)
 	{
 		stats.TargetVector.Destination = trg;
-		
-
 
 	}
 	public void SetTarget(Transform trg)
@@ -203,6 +202,7 @@ public class IncrementTimer
 	private float delay;
 	private MonoBehaviour starter;
 	public bool isRunning { get; private set; }
+	public int Time;
 	public void Init(float updateValue, float delay, MonoBehaviour coroutineStarter)
 	{
 		starter = coroutineStarter;
@@ -249,6 +249,7 @@ public class IncrementTimer
 				{
 					OnTimerUpdate();
 				}
+				Time++;
 				Reset();
 			}
 		}
