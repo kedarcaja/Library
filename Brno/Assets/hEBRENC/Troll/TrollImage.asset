@@ -9,8 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9bf9798ab7bb99f4d9b02a1a4acc51e8, type: 3}
-  m_Name: Troll
+  m_Script: {fileID: 11500000, guid: cdff0383b916851408e2821467e8e349, type: 3}
+  m_Name: TrollImage
   m_EditorClassIdentifier: 
-  portait: {fileID: 21300000, guid: baafbfcf0589df6409c227f1962e2ec1, type: 3}
-  siluet: {fileID: 21300000, guid: baafbfcf0589df6409c227f1962e2ec1, type: 3}
+  sprite: {fileID: 21300000, guid: 7c2771f0ca03e4e4ca9e055ea6077c28, type: 3}
