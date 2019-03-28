@@ -146,7 +146,7 @@ public class Inventory : MonoBehaviour, IOpenable
 
 	public void DropItem(Item item, int count)
 	{
-		Debug.Log(InventoryManager.Instance.SackNearby);
+
 		SackScript sack;
 		if (InventoryManager.Instance.SackNearby == null)
 		{

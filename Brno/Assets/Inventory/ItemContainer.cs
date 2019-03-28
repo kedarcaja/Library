@@ -38,8 +38,9 @@ public class ItemContainer : MonoBehaviour, ITarget, IPointerClickHandler
 
 	public virtual void Add(Item item)
 	{
+		
 		image.sprite = item.Sprite;
-		image.raycastTarget = slot != InventoryManager.Instance.MovingSlot.GetComponent<Slot>() && slot != InventoryManager.Instance.SplitSlot ? true : false;
+		image.raycastTarget = slot != FindObjectOfType<InventoryManager>().MovingSlot.GetComponent<Slot>() && slot != FindObjectOfType<InventoryManager>().SplitSlot ? true : false;
 		itemCount.text = slot.Items.Count > 1 ? slot.Items.Count.ToString() : string.Empty;
 		slot.gameObject.transform.Find("quality").GetComponent<Image>().sprite = item.QualityColor;
 		slot.gameObject.transform.Find("quality").GetComponent<Image>().color = Color.white;

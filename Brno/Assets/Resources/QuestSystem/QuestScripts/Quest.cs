@@ -8,7 +8,10 @@ public enum EQuestCategory { Main, Secondary, Treasure, Profs, Complete }
 [CreateAssetMenu(menuName = "Quest/Quest", fileName = "NewQuest")]
 public class Quest : ScriptableObject
 {
-
+	public void Add()
+	{
+		QuestManager.Instance.AddQuest(this);
+	}
 	public GameObject GO { get; set; }
 	[SerializeField]
 	private int level;
@@ -179,4 +182,8 @@ public struct ItemReward
 	private Item item;
 	public Item Item { get { return item; } }
 	public int Count { get { return count; } }
+
+
+
+
 }

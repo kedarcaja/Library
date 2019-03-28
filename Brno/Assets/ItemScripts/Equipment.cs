@@ -23,19 +23,21 @@ public class Equipment : Item
 	public event Action OnGetTooltip;
 
 	[Header("Fyzical")]
-	
+
 	[SerializeField]
 	protected Material mat;
 	[SerializeField]
 	protected Mesh mesh;
 
+	[SerializeField]
+	private GameObject helm;
 	public override void Use()
 	{
 		if (!PlayerScript.Instance.CanSwapEquipment) return;
-		if (!equipable||PlayerScript.Instance.Stats.Level < level) return;
+		if (!equipable || PlayerScript.Instance.Stats.Level < level) return;
 		if (!Equiped)
 		{
-		
+
 			CharBag bag = CharacterPanel.Instance.Bags.ToList().Find(b => b.Bag.Slots.Exists(s => s.CanContain(this)));
 
 			if (bag != null)
@@ -71,7 +73,7 @@ public class Equipment : Item
 					if (s.Filled)
 					{
 						(s.CurrentItem as Equipment).Equiped = false;
-					//(s.CurrentItem as Equipment).FyzicalDeEquip();
+						(s.CurrentItem as Equipment).FyzDeEquip(CurrentSlot.FyzicPlacementInNotUse);
 						FyzicalEquip(s.FyzicPlacementInNotUse);
 						s.Bag.SwapItems(CurrentSlot, s);
 						InventoryManager.Instance.UpdateAllStats();
@@ -95,19 +97,19 @@ public class Equipment : Item
 						if (sec.Filled)
 						{
 							(sec.CurrentItem as Equipment).Equiped = false;
-							//(sec.CurrentItem as Equipment).FyzicalDeEquip();
+							(sec.CurrentItem as Equipment).FyzDeEquip(CurrentSlot.FyzicPlacementInNotUse);
 							sec.Bag.AddFromTo(sec, Inventory.Instance.Bags.Find(c => c.Bag.Type == sec.CurrentItem.MainCategory).EmptySlot);
 						}
 					}
 					else if (this.ItemType == ItemType.SecondHand)
 					{
-					
+
 						Slot slt = FindObjectsOfType<Slot>().ToList().Find(o => o._CanContain == ItemType.WEAPON && o.Bag is CharBag);
-						if (slt.Filled&&slt.CurrentItem.ItemType==ItemType.TwoHand)
+						if (slt.Filled && slt.CurrentItem.ItemType == ItemType.TwoHand)
 						{
 
 							(slt.CurrentItem as Equipment).Equiped = false;
-						//	(slt.CurrentItem as Equipment).FyzicalDeEquip();
+							(slt.CurrentItem as Equipment).FyzDeEquip(CurrentSlot.FyzicPlacementInNotUse);
 							slt.Bag.AddFromTo(slt, Inventory.Instance.Bags.Find(b => b.Bag.Type == slt.CurrentItem.MainCategory).EmptySlot);
 						}
 					}
@@ -165,25 +167,45 @@ public class Equipment : Item
 		return OnCharPanel != null && OnCharPanel != this;
 	}
 
-	protected void FyzicalEquip(Transform t1) 
+	protected void FyzicalEquip(Transform t1)
 	{
-		if(this is Weapon)
+		if (t1 == null) return;
+		if (this is Weapon)
 		{
 			EquipWeapon(t1.gameObject);
 			return;
 		}
-		t1.GetComponent<MeshRenderer>().sharedMaterial = mat;
-		t1.GetComponent<MeshFilter>().mesh = mesh;
-		
+		if (ItemType == ItemType.Helm)
+		{
+			t1.gameObject.SetActive(true);
+		}
+		//t1.GetComponent<MeshRenderer>().sharedMaterial = mat;
+		//t1.GetComponent<MeshFilter>().mesh = mesh;
+
 	}
 	public void EquipWeapon(GameObject w)
 	{
 		w.SetActive(true);
 	}
-	public void DrawWeapon(GameObject w_old,GameObject w_new)
+	public void DrawWeapon(GameObject w_old, GameObject w_new)
 	{
 		w_old.SetActive(false);
 		w_new.SetActive(true);
 	}
-	
+	public void FyzDeEquip(Transform t1)
+	{
+		if (t1 == null) return;
+
+		if (this is Weapon)
+		{
+			t1.gameObject.SetActive(false);
+			PlayerScript.Instance.HideSword();
+			return;
+		}
+		if (ItemType == ItemType.Helm)
+		{
+			helm.SetActive(false);
+		}
+
+	}
 }

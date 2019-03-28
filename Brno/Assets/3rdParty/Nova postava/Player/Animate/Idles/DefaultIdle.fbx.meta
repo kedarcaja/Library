@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 2bd6b89c2ebd68142846a5a7d1f967ff
+guid: 2f937c06fca2b6d42bb7ab84f21b0484
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
@@ -139,8 +139,7 @@ ModelImporter:
     400130: Spine1
     400132: Spine2
     400134: Sword_joint
-    7400000: mixamo.com
-    7400002: DefaultIdle
+    7400000: DefaultIdle
     9500000: //RootNode
   externalObjects: {}
   materials:
@@ -174,7 +173,7 @@ ModelImporter:
       name: DefaultIdle
       takeName: mixamo.com
       firstFrame: 0
-      lastFrame: 20
+      lastFrame: 150
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -182,7 +181,7 @@ ModelImporter:
       loop: 0
       hasAdditiveReferencePose: 0
       loopTime: 1
-      loopBlend: 1
+      loopBlend: 0
       loopBlendOrientation: 1
       loopBlendPositionY: 1
       loopBlendPositionXZ: 1

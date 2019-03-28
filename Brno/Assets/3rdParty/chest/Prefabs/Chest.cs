@@ -27,6 +27,8 @@ public class Chest : BagScript, IOpenable
 	private bool clicked = false;
 	private List<GameObject> slots;
 
+	[SerializeField]
+	private List<ItemReward> items;
 
 	void Awake()
 	{
@@ -35,6 +37,10 @@ public class Chest : BagScript, IOpenable
 		slotParent = transform.Find("Slots").gameObject;
 		slots = new List<GameObject>();
 		bag.Slots = new List<Slot>();
+		for (int i = 0; i < SlotParent.transform.childCount; i++)
+		{
+			bag.Slots.Add(SlotParent.transform.GetChild(i).GetComponent<Slot>());
+		}
 		bag.BagScript = this;
 		canvasGroup = GetComponent<CanvasGroup>();
 		Draw();
@@ -42,9 +48,17 @@ public class Chest : BagScript, IOpenable
 		FindObjectOfType<InventoryManager>().Book.GetComponent<Book>().OnClose += new OpenHandler(Close);
 		OnOpen += new OpenHandler(FindObjectOfType<InventoryManager>().Book.GetComponent<Book>().Open);
 		OnClose += new OpenHandler(FindObjectOfType<InventoryManager>().Book.GetComponent<Book>().Close);
-
+		SlotParent.GetComponent<GridLayoutGroup>().constraint = GridLayoutGroup.Constraint.FixedColumnCount;
+		SlotParent.GetComponent<GridLayoutGroup>().constraintCount = bag.Columns;
+	
 	}
-
+	private void Start()
+	{
+		for (int i = 0; i < items.Count; i++)
+		{
+			AddItems(items[i].Item, items[i].Count);
+		}
+	}
 
 
 
@@ -68,6 +82,7 @@ public class Chest : BagScript, IOpenable
 			slots.ForEach(a => { a.transform.parent = InventoryManager.Instance.Chest.transform;a.transform.localScale = new Vector3(1, 1, 1); });
 			InventoryManager.Instance.Chest.GetComponent<CanvasGroup>().alpha = 1;
 			InventoryManager.Instance.Chest.GetComponent<CanvasGroup>().blocksRaycasts = true;
+			FindObjectOfType<Book>().Open();
 			InventoryManager.Instance.Chest.GetComponent<GridLayoutGroup>().constraintCount = bag.Columns;
 			if (OnOpen != null)
 			{
@@ -123,6 +138,7 @@ public class Chest : BagScript, IOpenable
 	{
 		if (clicked && !Opened)
 		{
+
 			Open();
 		}
 	}

@@ -11,25 +11,20 @@ public class DialogManager : MonoBehaviour
 
 
 	public static DialogManager Instance { get; private set; }
-	public AudioSource AudioPlayer { get { return GetComponent<AudioSource>(); } }
+	public AudioSource AudioPlayer { get; private set; }
 	[SerializeField]
 	private TextMeshProUGUI subtitleArea;
 	public TextMeshProUGUI SubtitleArea { get { return subtitleArea; } }
 	[SerializeField]
 	private List<Button> decisionButtons = new List<Button>();
-	[SerializeField]
-	private DialogInterpret defaultInterpret;
+
 	[SerializeField]
 	private TextMeshProUGUI skipAtention;
 	public TextMeshProUGUI SkipAtention { get { return skipAtention; } }
-
+	public GameObject defaultInterPref = null;
 	public DialogInterpret DefaultInterpret
 	{
-		get
-		{
-			return defaultInterpret;
-		}
-
+		get;set;
 	
 	}
 
@@ -39,7 +34,7 @@ public class DialogManager : MonoBehaviour
 	private void Awake()
 	{
 		Instance = FindObjectOfType<DialogManager>();
-	
+		AudioPlayer = GetComponent<AudioSource>();
 	}
 
 	public void ShowDecision(Decision dec)
@@ -115,7 +110,11 @@ public class DialogManager : MonoBehaviour
 	private void SetDecisions(Decision dec)
 	{
 		decisionButtons.ToList().ForEach(b => b.gameObject.SetActive(false));
-		defaultInterpret.dialog = null;
+		if (DefaultInterpret)
+		{
+			Destroy(DefaultInterpret.gameObject);
+		}
+		DefaultInterpret = Instantiate(defaultInterPref).GetComponent<DialogInterpret>();
 		for (int i = 0; i < dec.Values.Count; ++i)
 		{
 			
@@ -128,11 +127,19 @@ public class DialogManager : MonoBehaviour
 			{
 				dec.Selected = dec.Values[n];
 				if (dec.Values[n].NextDialog) {
-					defaultInterpret.dialog = dec.Selected.NextDialog;
-					defaultInterpret.Init();
-					defaultInterpret.dialog.OnStart.Invoke();
+					DefaultInterpret.dialog = dec.Selected.NextDialog;
+					DefaultInterpret.Init();
+					DefaultInterpret.dialog.OnStart.Invoke();
 				}
-				defaultInterpret.dialog.OnEnd.AddListener(delegate { if (dec.NextDecision != null) ShowDecision(dec.NextDecision);  });
+				if(dec.Values[n].NextDialog)
+				DefaultInterpret.dialog.OnEnd.AddListener(delegate { if (dec.NextDecision != null) ShowDecision(dec.NextDecision);  });
+
+
+
+
+				
+
+
 				HideDecisions();
 			});
 

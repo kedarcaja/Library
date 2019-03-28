@@ -26,7 +26,7 @@ public class Waypoint : MonoBehaviour
 	bool startTime = false;
 	private void Awake()
 	{
-
+		GetComponent<MeshRenderer>().enabled = false;
 	}
 	private void Update()
 	{

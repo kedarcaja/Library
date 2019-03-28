@@ -97,10 +97,11 @@ public class Character : MonoBehaviour
 
 	public void Move()
 	{
-
-		anim.SetFloat("speed", Agent.velocity.magnitude);
-		Agent.SetDestination(stats.TargetVector.Destination);
-
+		if (!Agent.isStopped&&MouseManager.Instance.CanClick)
+		{
+			anim.SetFloat("speed", Agent.velocity.magnitude);
+			Agent.SetDestination(stats.TargetVector.Destination);
+		}
 	}
 
 
@@ -172,15 +173,12 @@ public class Character : MonoBehaviour
 		Agent.speed = 0;
 		Agent.velocity = Vector3.zero;
 		anim.SetFloat("speed", 0);
-		AgentAvailable = false;
 		Agent.isStopped = true;
 		ResetDestination();
 
 	}
 	public void RestoreAgent()
 	{
-
-		AgentAvailable = true;
 		Agent.isStopped = false;
 	}
 	public void ResetDestination()
@@ -205,7 +203,7 @@ public class Character : MonoBehaviour
 	{
 		return Vector3.Distance(transform.position, dest) < radius;
 	}
-
+	
 }
 public class IncrementTimer
 {

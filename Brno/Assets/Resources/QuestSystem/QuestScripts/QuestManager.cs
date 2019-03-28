@@ -162,6 +162,7 @@ public class QuestManager : MonoBehaviour
 	}
 	public void ShowQuest(Quest quest)
 	{
+	
 		currentlyOpenedQuest = quest;
 		nextArrow.SetActive(true);
 		rewardsText.text = "Rewards: ";

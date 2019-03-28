@@ -39,6 +39,9 @@ public class Dialog : ScriptableObject, IInterpretable
 
 		OnStart.AddListener(() =>
 	   {
+		   PlayerScript.Instance.DisableAgent();
+		   MouseManager.Instance.CanClick = false;
+
 		   subtitlesIndex = 0;
 		   if (subtitles[subtitlesIndex].Speaker != null)
 		   {
@@ -69,8 +72,9 @@ public class Dialog : ScriptableObject, IInterpretable
 	   });
 		OnEnd.AddListener(() =>
 		{
-			DialogManager.Instance.StopAllCoroutines();
-
+			//DialogManager.Instance.StopAllCoroutines();
+			PlayerScript.Instance.RestoreAgent();
+			MouseManager.Instance.CanClick = true;
 			DialogManager.Instance.SubtitleArea.text = "";
 
 			DialogManager.Instance.AudioPlayer.clip = null;
@@ -123,7 +127,20 @@ public class Dialog : ScriptableObject, IInterpretable
 			OnEnd.Invoke();
 		}
 	}
-	
+	public void Play()
+	{
+
+		if (DialogManager.Instance.DefaultInterpret)
+		{
+			Destroy(DialogManager.Instance.DefaultInterpret.gameObject);
+		}
+		DialogManager.Instance.DefaultInterpret = Instantiate(DialogManager.Instance.defaultInterPref).GetComponent<DialogInterpret>();
+		DialogManager.Instance.DefaultInterpret.dialog = this;
+		DialogManager.Instance.DefaultInterpret.Init();
+		DialogManager.Instance.DefaultInterpret.dialog.OnStart.Invoke();
+		DialogManager.Instance.DefaultInterpret.OnDialogEnd.AddListener(delegate { DialogManager.Instance.DefaultInterpret.dialog.OnEnd.Invoke(); });
+
+	}
 }
 
 

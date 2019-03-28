@@ -5,10 +5,15 @@ public abstract class Entity : Character
 {
 	protected IncrementTimer walkBackTimer = new IncrementTimer();
 	public UnityEvent OnDie;
+	public UnityEvent OnStun;
+	protected bool wasStunt = false;
+	public bool Killable = true;
 
 	protected override void Awake()
 	{
-
+		 wasStunt = false;
+		RestoreHealth();
+		RestoreStamina();
 		//walkBackTimer.OnTimerUpdate += new TimerHandler(RestoreStamina);
 		//walkBackTimer.OnTimerStart += delegate
 		//{
@@ -27,11 +32,30 @@ public abstract class Entity : Character
 
 	public virtual void Die()
 	{
-		anim.SetBool("isDead", true);
+		if (!Killable)
+		{
+			return;
+		}
+		Debug.Log("I am dead");
+			anim.SetBool("isDead", true);
+		
+
 		if (OnDie != null)
 		{
+
 			OnDie.Invoke();
 		}
+	}
+	public void Stun()
+	{
+		stats.Health += 100;
+		Debug.Log("I am stunt" );
+
+		if (OnStun != null)
+		{
+			OnStun.Invoke();
+		}
+
 	}
 
 	public void Jump()
@@ -49,5 +73,9 @@ public abstract class Entity : Character
 		}*/
 		base.OnDrawGizmos();
 	}
-	
+	public void RestoreHealth()
+	{
+		
+		
+	}
 }

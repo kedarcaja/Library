@@ -10,7 +10,6 @@ public class Enemy : Entity, IID
 {
 	public Equipment Head, Spaulder, Arm, Chest, Trausers, Shoes;
 	public Weapon Weapon, Bow, SecondHand;
-
 	private Vector3 lastPlayerPosition;// save
 	[SerializeField]
 	private float playerSearchRadius;
@@ -51,7 +50,7 @@ public class Enemy : Entity, IID
 	}
 	public override void Die()
 	{
-		Debug.Log("died");
+		
 		QuestManager.Instance.UpdateKillQuestParts(this);
 		base.Die();
 	}
@@ -212,12 +211,12 @@ public class Enemy : Entity, IID
 	{
 		if (stats.Health > 0)
 		{ 
-			stats.Health -= damage;
-			Debug.Log("Právě jsi mi dal hit za: "+damage+", ale zbývá mi ještě: "+stats.Health+" hp");
-			if (!stats.IsAlive)
+			stats.Health -= damage;if (!stats.IsAlive)
 			{
-				Debug.Log("<color=red>Začínám si myslet že jsem zemřel</color>");
-				Die();
+				if (wasStunt)
+					Die();
+				else
+					Stun();
 			}
 		}
 	}

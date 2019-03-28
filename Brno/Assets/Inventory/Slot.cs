@@ -77,7 +77,6 @@ public class Slot : MonoBehaviour, ICollection, ITarget
 		if (remoteSlot&&remoteSlot.container)
 		{
 
-			Debug.Log(container);
 			remoteSlot.container.OnUse += Remove;
 			container.OnUse += remoteSlot.Remove;
 		}
