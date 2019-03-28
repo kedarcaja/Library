@@ -49,7 +49,7 @@ public class Character : MonoBehaviour
 	protected virtual void Awake()
 	{
 		AgentAvailable = true;
-
+		stats.Stamina = stats.MaxStamina;
 		ResetDestination();
 		if (startPoint)
 		{

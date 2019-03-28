@@ -170,7 +170,7 @@ public class PlayerScript : Entity
 			Attack();
 		}
 		SetAnimatorInt("attackIndex", attack);
-		MeleeAttack();
+	
 
 	}
 	void ResetAnimatorAttack()

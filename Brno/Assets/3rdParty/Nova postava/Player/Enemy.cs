@@ -254,7 +254,7 @@ public class Enemy : Entity, IID
 				
 
 				var dist = Vector3.Distance(hit.transform.position, transform.position);
-				if (dist <= maxDistanceFromPlayer && angle <= 45)
+				if (dist <= maxDistanceFromPlayer && angle <= 90)
 				{
 					hit.SendMessage("GotHit");
 				}
