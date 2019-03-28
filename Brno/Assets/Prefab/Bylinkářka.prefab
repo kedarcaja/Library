@@ -73,7 +73,7 @@ GameObject:
   - component: {fileID: 17101570}
   - component: {fileID: 17101572}
   m_Layer: 0
-  m_Name: "Bylink\xE1\u0159ka 1"
+  m_Name: "Bylink\xE1\u0159ka"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -27,7 +27,15 @@ public class Character : MonoBehaviour
 	{
 		get
 		{
-			return Math.Round((double)Agent.remainingDistance, 1) != Mathf.Infinity && Agent.pathStatus == NavMeshPathStatus.PathComplete && Math.Round(Agent.remainingDistance) == Agent.stoppingDistance;
+			try
+			{
+				return Math.Round((double)Agent.remainingDistance, 1) != Mathf.Infinity && Agent.pathStatus == NavMeshPathStatus.PathComplete && Math.Round(Agent.remainingDistance) == Agent.stoppingDistance;
+			}
+			catch
+			{
+				Debug.Log(name);
+				return false;
+			}
 
 		}
 	}
