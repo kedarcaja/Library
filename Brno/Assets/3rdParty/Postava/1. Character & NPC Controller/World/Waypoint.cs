@@ -1,9 +1,12 @@
+using System;
 using UnityEngine;
 using UnityEngine.Events;
-public enum EPointType {Sitting,Waiting,Lieing,SittingWaiting,LieingWaiting,InstantNext }
+using Random = UnityEngine.Random;
+
+public enum EPointType { Sitting, Waiting, Lieing, SittingWaiting, LieingWaiting, InstantNext }
 public class Waypoint : MonoBehaviour
 {
-	public UnityEvent PlayerEvent,NPCEvent,EnemyEvent;
+	public UnityEvent PlayerEvent, NPCEvent, EnemyEvent;
 	[SerializeField]
 	private EPointType type;
 
@@ -19,46 +22,61 @@ public class Waypoint : MonoBehaviour
 	public UnityEvent<Vector3> OnTriggerEnterEvent;
 	[SerializeField]
 	private int sitting_Lieing_Rotation, waitTime;
-	private int time = 0;
-
+	private float time = 0;
+	bool startTime = false;
 	private void Awake()
 	{
-	
+
 	}
-	private void OnTriggerEnter(Collider other)
+	private void Update()
+	{
+		if (startTime)
+		{
+			time -= Time.deltaTime;
+			Debug.Log(time);
+		}
+	}
+	private void OnTriggerStay(Collider other)
 	{
 		if (other.CompareTag("Player"))
 		{
-		
+
 			PlayerEvent.Invoke();
 		}
 		else if (other.GetComponent<NPC>())
 		{
-			waitTime = Random.Range(0,5);
+			waitTime = Random.Range(0, 5);
 			time = 0;
 			GetComponent<SphereCollider>().enabled = false;
 			NPC n = other.GetComponent<NPC>();
-		
+
 
 			switch (type)
 			{
 				case EPointType.Sitting:
 					n.Agent.updateRotation = false;
-					transform.Rotate(sitting_Lieing_Rotation, 0,0);
+					transform.Rotate(sitting_Lieing_Rotation, 0, 0);
 					n.Sit();
 					break;
 				case EPointType.Waiting:
 					IncrementTimer t = new IncrementTimer();
-					t.Init(1,1,this);
-					t.OnTimerEnd += delegate {
-						if (n.Stats.TargetVector.Target == transform && NextPoint != null)
-						{
-							n.SetTarget(NextPoint);
-						}
-					};
+					t.Init(1, 1, this);
 					t.OnTimerUpdate += delegate { if (t.Time == waitTime) t.Stop(); };
+					t.OnTimerEnd += delegate
+					{
+						if (t.Time == waitTime)
+						{
+
+							if (n.Stats.TargetVector.Target == transform && NextPoint != null)
+							{
+								n.SetTarget(NextPoint);
+							}
+						}
+
+					};
+
 					t.Start();
-					
+
 					break;
 				case EPointType.Lieing:
 					n.Agent.updateRotation = false;
@@ -79,7 +97,8 @@ public class Waypoint : MonoBehaviour
 					tm.Init(1, 1, this);
 					tm.OnTimerUpdate += delegate { if (tm.Time == waitTime) tm.Stop(); };
 
-					tm.OnTimerEnd += delegate {
+					tm.OnTimerEnd += delegate
+					{
 						if (tm.Time == waitTime)
 						{
 							n.StandUp();
@@ -88,24 +107,96 @@ public class Waypoint : MonoBehaviour
 								n.SetTarget(NextPoint);
 							}
 						}
-						
+
 					};
 
 					tm.Start();
 					break;
 
 			}
-			
+
 		}
-	}
-	private void OnDrawGizmos()
-	{
-		if (NextPoint != null)
+		else if (other.GetComponent<Enemy>())
 		{
-			Gizmos.color = new Color32(255,125,0,255);
-			Gizmos.DrawLine(transform.position,nextPoint.position);
+
+		
+			Enemy n = other.GetComponent<Enemy>();
+
+
+			switch (type)
+			{
+				case EPointType.Sitting:
+					n.Agent.updateRotation = false;
+					transform.Rotate(sitting_Lieing_Rotation, 0, 0);
+					//n.Sit();
+					break;
+				case EPointType.Waiting:
+					if(!startTime)
+					{
+						time = Random.Range(0, 5);
+						startTime = true;
+
+					}
+
+					if (time < 0)
+					{
+						startTime = false;
+						if (n.Stats.TargetVector.Target == transform && NextPoint != null)
+						{
+							n.SetTarget(NextPoint);
+						}
+					}
+
+					break;
+				case EPointType.Lieing:
+					n.Agent.updateRotation = false;
+					transform.Rotate(sitting_Lieing_Rotation, 0, 0);
+					//n.Lie();
+					break;
+				case EPointType.InstantNext:
+					if (n.Stats.TargetVector.Target == transform && NextPoint != null)
+					{
+						n.SetTarget(NextPoint);
+					}
+					break;
+				case EPointType.SittingWaiting:
+					n.Agent.updateRotation = false;
+					transform.Rotate(sitting_Lieing_Rotation, 0, 0);
+					//	n.Sit();
+
+					if (time == 0)
+					{
+						//	n.StandUp();
+						if (n.Stats.TargetVector.Target == transform && NextPoint != null)
+						{
+							n.SetTarget(NextPoint);
+						}
+
+
+
+
+
+
+					}
+					break;
+
+			}
 		}
+	
+
+}
+
+
+private void OnDrawGizmos()
+{
+	if (NextPoint != null)
+	{
+		Gizmos.color = new Color32(255, 125, 0, 255);
+		Gizmos.DrawLine(transform.position, nextPoint.position);
 	}
+}
+
+	
 }
 
 

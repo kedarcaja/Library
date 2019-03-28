@@ -9,14 +9,14 @@ public abstract class Entity : Character
 	protected override void Awake()
 	{
 
-		walkBackTimer.OnTimerUpdate += new TimerHandler(RestoreStamina);
-		walkBackTimer.OnTimerStart += delegate
-		{
-			walkTimer.Stop();
-			runTimer.Stop();
-			idleTimer.Stop();
-		};
-		walkBackTimer.Init(1, 4, this);
+		//walkBackTimer.OnTimerUpdate += new TimerHandler(RestoreStamina);
+		//walkBackTimer.OnTimerStart += delegate
+		//{
+		//	walkTimer.Stop();
+		//	runTimer.Stop();
+		//	idleTimer.Stop();
+		//};
+		//walkBackTimer.Init(1, 4, this);
 
 		base.Awake();
 	}

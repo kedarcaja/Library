@@ -14,6 +14,8 @@ public delegate void TimerEventHandler();
 public class Character : MonoBehaviour
 {
 	[SerializeField]
+	protected Transform startPoint;
+	[SerializeField]
 	private ECharacterState state;
 	[SerializeField]
 	protected CharacterStats stats;
@@ -41,8 +43,11 @@ public class Character : MonoBehaviour
 	{
 		AgentAvailable = true;
 
-		ResetDestination();
-
+	//	ResetDestination();
+		if (startPoint)
+		{
+			SetTarget(startPoint);
+		}
 		anim = GetComponent<Animator>();
 		rigid = GetComponent<Rigidbody>();
 

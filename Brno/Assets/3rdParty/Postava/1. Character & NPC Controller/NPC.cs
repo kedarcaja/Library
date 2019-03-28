@@ -9,19 +9,14 @@ public class NPC : Character
 {
 	[SerializeField]
 	private MoveArea randomMoveArea;
-	[SerializeField]
-	private Transform startPoint;
-	[SerializeField]
-	Transform smazat;
+
+
 	protected override void Awake()
 	{
 
 		NPCWatcher.NPCS.Add(this);
 		base.Awake();
-		if (startPoint)
-		{
-			SetTarget(startPoint);
-		}
+	
 	}
 
 	protected override void Update()
@@ -82,7 +77,6 @@ public class NPC : Character
 		if (State != ECharacterState.Standing) return;
 		stats.TargetVector.Target = null;
 		stats.TargetVector.Destination = Vector3.zero;
-		transform.LookAt(smazat);
 		anim.SetBool("isSitting", true);
 
 		State = ECharacterState.Sitting;

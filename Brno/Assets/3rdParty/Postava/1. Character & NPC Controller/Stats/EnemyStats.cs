@@ -8,6 +8,8 @@ public enum ETemperament{ Neutral,Agresive }
 public class EnemyStats : EntityStats
 {
 	[SerializeField]
+	private bool randomMove = false;
+	[SerializeField]
 	private ETemperament temperament;
 	[ExecuteAlways]
 	[SerializeField]
@@ -31,6 +33,18 @@ public class EnemyStats : EntityStats
 		get
 		{
 			return temperament;
+		}
+	}
+	public bool RandomMove
+	{
+		get
+		{
+			return randomMove;
+		}
+
+		set
+		{
+			randomMove = value;
 		}
 	}
 }

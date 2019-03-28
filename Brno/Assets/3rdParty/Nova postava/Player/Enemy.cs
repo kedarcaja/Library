@@ -34,6 +34,8 @@ public class Enemy : Entity, IID
 			return id;
 		}
 	}
+	[SerializeField]
+	private MoveArea randomMoveArea;
 
 	protected override void Awake()
 	{
@@ -55,56 +57,81 @@ public class Enemy : Entity, IID
 	}
 	protected override void Update()
 	{
-		if (Input.GetKeyDown(KeyCode.B))
-		{
-			Die();
-		}
+		//if (Input.GetKeyDown(KeyCode.B))
+		//{
+		//	Die();
+		//}
 
-		if (CanSeeTarget(PlayerScript.Instance.transform, PlayerScript.Instance.Agent.height))
-		{
-			/////////////////////// interaction
-			QuestManager.Instance.UpdateKillQuestParts(this);
+		//if (CanSeeTarget(PlayerScript.Instance.transform, PlayerScript.Instance.Agent.height))
+		//{
+		//	/////////////////// interaction
+		//	QuestManager.Instance.UpdateKillQuestParts(this);
 
-			//////////////////////
-			//Attack(PlayerScript.Instance);
-			lastPlayerPosition = PlayerScript.Instance.transform.position;
-			(stats as EnemyStats).State = EEnemyState.Attack;
-			if (playerSearchTimer.isRunning)
+		//	//////////////////
+		//	Attack(PlayerScript.Instance);
+		//	lastPlayerPosition = PlayerScript.Instance.transform.position;
+		//	(stats as EnemyStats).State = EEnemyState.Attack;
+		//	if (playerSearchTimer.isRunning)
+		//	{
+		//		playerSearchTimer.Stop();
+		//	}
+		//}
+		//else
+		//{
+		//	if ((stats as EnemyStats).State == EEnemyState.Attack || (stats as EnemyStats).State == EEnemyState.Search)
+		//	{
+		//		(stats as EnemyStats).State = EEnemyState.Search;
+		//		if (!playerSearchTimer.isRunning && Vector3.Distance(transform.position, lastPlayerPosition) <= Agent.stoppingDistance)
+		//		{
+		//			playerSearchTimer.Start();
+		//		}
+		//		if (playerSearchTimer.isRunning && playerSearchTimer.GetTimeInt() < playerSearchTime)
+		//		{
+		//			stats.TargetVector.Target = null;
+		//			if (AgentIsOnPosition)
+		//			{
+		//				SetDestination(GetRandomPosition(lastPlayerPosition, playerSearchRadius));
+		//			}
+		//		}
+		//		else if (playerSearchTimer.isRunning)
+		//		{
+
+		//			playerSearchTimer.Stop();
+		//			SetDestination(startPosition);
+
+		//		}
+
+		//	}
+		//	if ((stats as EnemyStats).State != EEnemyState.Search && stats.TargetVector.Destination == startPosition && AgentIsOnPosition)
+		//	{
+		//		(stats as EnemyStats).State = EEnemyState.Neutral;
+		//	}
+
+		//}
+		if (AgentIsOnPosition)
+		{
+			if ((stats as EnemyStats).RandomMove)
 			{
-				playerSearchTimer.Stop();
+				SetDestination(GetRandomPosition(randomMoveArea.transform.position, randomMoveArea.Range));
 			}
+
+			else
+			{
+				Idle();
+			}
+
 		}
 		else
 		{
-			if ((stats as EnemyStats).State == EEnemyState.Attack || (stats as EnemyStats).State == EEnemyState.Search)
+			if ((stats.TargetVector.Target != null && TargetInRange(stats.TargetVector.Target, InteractionRadius)) || (stats.TargetVector.Destination != Vector3.zero && DestinationInRange(stats.TargetVector.Destination, InteractionRadius)))
 			{
-				(stats as EnemyStats).State = EEnemyState.Search;
-				if (!playerSearchTimer.isRunning && Vector3.Distance(transform.position, lastPlayerPosition) <= Agent.stoppingDistance)
-				{
-					playerSearchTimer.Start();
-				}
-				if (playerSearchTimer.isRunning && playerSearchTimer.GetTimeInt() < playerSearchTime)
-				{
-					stats.TargetVector.Target = null;
-					if (AgentIsOnPosition)
-					{
-						SetDestination(GetRandomPosition(lastPlayerPosition, playerSearchRadius));
-					}
-				}
-				else if (playerSearchTimer.isRunning)
-				{
-
-					playerSearchTimer.Stop();
-					SetDestination(startPosition);
-
-				}
-
-			}
-			if ((stats as EnemyStats).State != EEnemyState.Search && stats.TargetVector.Destination == startPosition && AgentIsOnPosition)
-			{
-				(stats as EnemyStats).State = EEnemyState.Neutral;
+				Run();
 			}
 
+			else
+			{
+				Walk();
+			}
 		}
 
 
