@@ -30,7 +30,7 @@ public class NPC : Character
 		{
 			if ((stats as NPCStats).RandomMove)
 			{
-				SetDestination(GetRandomPosition(randomMoveArea.transform.position, randomMoveArea.Range));
+				SetDestination(GetRandomPosition(randomMoveArea.transform.position,50));
 			}
 
 			else

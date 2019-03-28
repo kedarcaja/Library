@@ -33,7 +33,7 @@ public class Waypoint : MonoBehaviour
 		if (startTime)
 		{
 			time -= Time.deltaTime;
-			Debug.Log(time);
+
 		}
 	}
 	private void OnTriggerStay(Collider other)

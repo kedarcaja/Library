@@ -35,9 +35,9 @@ MonoBehaviour:
   runSpeed: 4
   TargetVector:
     target: {fileID: 0}
-    destination: {x: 205.83334, y: 0, z: 101.32474}
+    destination: {x: 245.57263, y: 0.2205368, z: 102.926926}
   Followers: []
-  walkSpeed: 1
+  walkSpeed: 2
   mood: 0
   profession: 0
   randomMove: 1

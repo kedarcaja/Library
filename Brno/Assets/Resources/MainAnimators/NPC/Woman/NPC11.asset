@@ -37,7 +37,7 @@ MonoBehaviour:
     target: {fileID: 0}
     destination: {x: 0, y: 0, z: 0}
   Followers: []
-  walkSpeed: 1
+  walkSpeed: 2
   mood: 0
   profession: 0
   randomMove: 1

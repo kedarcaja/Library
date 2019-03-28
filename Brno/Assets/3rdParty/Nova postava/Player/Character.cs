@@ -7,7 +7,6 @@ using UnityEngine.AI;
 using UnityEngine.Events;
 
 public delegate void TimerEventHandler();
-[RequireComponent(typeof(CapsuleCollider))]
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(NavMeshAgent))]
 [RequireComponent(typeof(Animator))]
@@ -43,7 +42,7 @@ public class Character : MonoBehaviour
 	{
 		AgentAvailable = true;
 
-	//	ResetDestination();
+		ResetDestination();
 		if (startPoint)
 		{
 			SetTarget(startPoint);

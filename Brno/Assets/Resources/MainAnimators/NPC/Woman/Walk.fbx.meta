@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: c1814e2b3ce3c7947ac72d2c46012d6a
+guid: b8c8bdd1a04f9894ca0f50a5e40c6bf2
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
@@ -137,7 +137,6 @@ ModelImporter:
     400130: Spine2
     7400000: Walk
     9500000: //RootNode
-    2186277476908879412: ImportLogs
   externalObjects: {}
   materials:
     importMaterials: 1
@@ -170,9 +169,9 @@ ModelImporter:
       name: Walk
       takeName: mixamo.com
       firstFrame: 0
-      lastFrame: 35
+      lastFrame: 62
       wrapMode: 0
-      orientationOffsetY: 0.61
+      orientationOffsetY: 0
       level: 0
       cycleOffset: 0
       loop: 0
@@ -181,7 +180,7 @@ ModelImporter:
       loopBlend: 0
       loopBlendOrientation: 1
       loopBlendPositionY: 1
-      loopBlendPositionXZ: 0
+      loopBlendPositionXZ: 1
       keepOriginalOrientation: 0
       keepOriginalPositionY: 1
       keepOriginalPositionXZ: 0
