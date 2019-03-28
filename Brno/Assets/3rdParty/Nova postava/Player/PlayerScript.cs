@@ -216,4 +216,8 @@ public class PlayerScript : Entity
 			w.DrawWeapon(CharacterPanel.Instance.WeaponSlot.FyzicPlacementInUse.gameObject, CharacterPanel.Instance.WeaponSlot.FyzicPlacementInNotUse.gameObject);
 		}
 	}
+	public void GotHit()
+	{
+		anim.SetTrigger("hit");
+	}
 }

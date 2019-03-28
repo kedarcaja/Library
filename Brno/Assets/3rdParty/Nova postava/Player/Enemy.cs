@@ -107,6 +107,17 @@ public class Enemy : Entity, IID
 		//	}
 
 		//}
+
+
+		if (TargetInRange(PlayerScript.Instance.transform, maxDistanceFromPlayer))
+		{
+			MeelAttack();
+			DisableAgent();
+		}
+		else
+		{
+			RestoreAgent();
+		}
 		if (AgentIsOnPosition)
 		{
 			if ((stats as EnemyStats).RandomMove)
@@ -203,7 +214,8 @@ public class Enemy : Entity, IID
 		{
 			fieldsOfView.ForEach(f => f.Draw());
 		}
-
+		Gizmos.color = Color.red;
+		Gizmos.DrawWireSphere(transform.position,maxDistanceFromPlayer);
 		base.OnDrawGizmos();
 	}
  
@@ -229,4 +241,24 @@ public class Enemy : Entity, IID
             PlayerScript.Instance.Attack();
         }
     }
+	public void MeelAttack()
+	{
+		anim.SetTrigger("attack");
+		SetTarget(PlayerScript.Instance.transform);
+		Collider[] colls = Physics.OverlapSphere(transform.position, maxDistanceFromPlayer);
+		foreach (Collider hit in colls)
+		{
+			if (hit && hit.tag == "Player")
+			{
+				float angle = Vector3.Angle(transform.position, hit.transform.position);
+				
+
+				var dist = Vector3.Distance(hit.transform.position, transform.position);
+				if (dist <= maxDistanceFromPlayer && angle <= 45)
+				{
+					hit.SendMessage("GotHit");
+				}
+			}
+		}
+	}
 }

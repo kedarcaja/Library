@@ -2,9 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
-using UnityEditor.SceneManagement;
-using UnityEngine;
 
+using UnityEngine;
+#if UNITY_EDITOR
 [ItemCustomEditorAtributte(typeof(Item), true),CanEditMultipleObjects]
 public class ItemEditor : Editor
 {
@@ -92,3 +92,4 @@ public class ItemEditor : Editor
 		return list;
 	}
 }
+#endif

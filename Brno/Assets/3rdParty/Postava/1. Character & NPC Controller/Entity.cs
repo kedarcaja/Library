@@ -12,7 +12,7 @@ public abstract class Entity : Character
 	protected override void Awake()
 	{
 		 wasStunt = false;
-		RestoreHealth();
+		RestoreHealth(); // odebrat
 		RestoreStamina();
 		//walkBackTimer.OnTimerUpdate += new TimerHandler(RestoreStamina);
 		//walkBackTimer.OnTimerStart += delegate
