@@ -16,7 +16,9 @@ public class QuestManager : MonoBehaviour
 	private Button mc_button;
 	[SerializeField]
 	private Transform questPartParent, itemRewardParent;
-	public GameObject QuestPref
+	[SerializeField]
+	private Transform questLog;
+		public GameObject QuestPref
 	{
 		get
 		{
@@ -159,6 +161,8 @@ public class QuestManager : MonoBehaviour
 		q.transform.GetComponentInChildren<TextMeshProUGUI>().text = quest.name;
 		q.transform.Find("Raycaster").GetComponent<Button>().onClick.AddListener(() => ShowQuest(quest));
 		quest.GO = q;
+		questLog.GetComponent<Animator>().SetTrigger("newQuest");
+
 	}
 	public void ShowQuest(Quest quest)
 	{

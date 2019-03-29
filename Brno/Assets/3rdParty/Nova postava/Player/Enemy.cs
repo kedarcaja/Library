@@ -35,10 +35,13 @@ public class Enemy : Entity, IID
 	}
 	[SerializeField]
 	private MoveArea randomMoveArea;
-
+	IncrementTimer attTimer = new IncrementTimer();
 	protected override void Awake()
 	{
-
+		attTimer.Init(1,3,this);
+		attTimer.OnTimerUpdate += delegate {
+			anim.SetTrigger("attack");
+			SetTarget(PlayerScript.Instance.transform); ; MeelAttack(); };
 		playerSearchTimer.Init(1, 1, this);
 		startPosition = transform.position;
 		playerSearchTimer.OnTimerStart += new TimerHandler(() => (stats as EnemyStats).State = EEnemyState.Search);
@@ -108,16 +111,16 @@ public class Enemy : Entity, IID
 
 		//}
 
-
 		if (TargetInRange(PlayerScript.Instance.transform, maxDistanceFromPlayer))
 		{
-			MeelAttack();
-			DisableAgent();
+			attTimer.Start();
 		}
 		else
 		{
-			RestoreAgent();
+			attTimer.Stop();
 		}
+		
+		
 		if (AgentIsOnPosition)
 		{
 			if ((stats as EnemyStats).RandomMove)
@@ -222,13 +225,14 @@ public class Enemy : Entity, IID
  void ApplyDamage(float damage)
 	{
 		if (stats.Health > 0)
-		{ 
+		{
+			Debug.Log("hitl jsi mě");
+
 			stats.Health -= damage;if (!stats.IsAlive)
 			{
-				if (wasStunt)
-					Die();
-				else
-					Stun();
+				Debug.Log("jsem mrtev");
+
+				Die();
 			}
 		}
 	}
@@ -243,8 +247,8 @@ public class Enemy : Entity, IID
     }
 	public void MeelAttack()
 	{
-		anim.SetTrigger("attack");
-		SetTarget(PlayerScript.Instance.transform);
+	
+	
 		Collider[] colls = Physics.OverlapSphere(transform.position, maxDistanceFromPlayer);
 		foreach (Collider hit in colls)
 		{
@@ -254,9 +258,11 @@ public class Enemy : Entity, IID
 				
 
 				var dist = Vector3.Distance(hit.transform.position, transform.position);
-				if (dist <= maxDistanceFromPlayer && angle <= 90)
+				if (dist <= maxDistanceFromPlayer && angle <= 60)
 				{
-					hit.SendMessage("GotHit");
+				
+						hit.SendMessage("GotHit");
+					
 				}
 			}
 		}
