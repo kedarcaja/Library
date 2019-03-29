@@ -35,7 +35,9 @@ MonoBehaviour:
   equipable: 1
   Equiped: 0
   OnCharPanel: {fileID: 0}
-  fyzicalEquipment: {fileID: 0}
+  mat: {fileID: 0}
+  mesh: {fileID: 0}
+  helm: {fileID: 0}
   FireResistance: 0
   WaterResistance: 0
   ColdResistance: 0

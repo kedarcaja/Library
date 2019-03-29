@@ -19,7 +19,7 @@ MonoBehaviour:
   quality: 6
   level: 0
   sellable: 0
-  Sprite: {fileID: 0}
+  Sprite: {fileID: 21300000, guid: e97c63ca3c3692b41bb6b28fc52a4aed, type: 3}
   maxCount: 1
   SellGold: 0
   SellSilver: 0
@@ -36,7 +36,9 @@ MonoBehaviour:
   equipable: 1
   Equiped: 0
   OnCharPanel: {fileID: 0}
-  fyzicalEquipment: {fileID: 0}
+  mat: {fileID: 0}
+  mesh: {fileID: 0}
+  helm: {fileID: 0}
   FireResistance: 0
   WaterResistance: 0
   ColdResistance: 0

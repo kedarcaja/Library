@@ -72,7 +72,7 @@ public class Dialog : ScriptableObject, IInterpretable
 	   });
 		OnEnd.AddListener(() =>
 		{
-			//DialogManager.Instance.StopAllCoroutines();
+			DialogManager.Instance.StopAllCoroutines();
 			PlayerScript.Instance.RestoreAgent();
 			MouseManager.Instance.CanClick = true;
 			DialogManager.Instance.SubtitleArea.text = "";
