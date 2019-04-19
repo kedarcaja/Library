@@ -12,7 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7cef896cf46742048ab37a42b47d00c6, type: 3}
   m_Name: Troll
   m_EditorClassIdentifier: 
-  speed: 6
   health: 0
   stamina: 100
   minDamage: 0
@@ -33,13 +32,16 @@ MonoBehaviour:
   intellect: 0
   charisma: 0
   level: 0
+  runSpeed: 0
   TargetVector:
     target: {fileID: 0}
     destination: {x: 0, y: 0, z: 0}
   Followers: []
+  walkSpeed: 0
   armor: 0
   regeneration: 0
   chanceToCritical: 0
   chanceToStunt: 0
+  randomMove: 0
   temperament: 0
   state: 2
