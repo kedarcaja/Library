@@ -1,27 +1,18 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Speaker", menuName = "Dialog/New Speaker")]
+[CreateAssetMenu(menuName = "Dialog/Speaker", fileName = "NewSpeaker")]
 public class Speaker : ScriptableObject
 {
-   
     [SerializeField]
-    private Color color;
-    private void Awake()
-    {
-        color.a = 255;
-    }
-    public string SpeakerName
-    {
-        get
-        {
-            return string.Format("<color=#{1}>{0}:</color> ", name, ColorUtility.ToHtmlStringRGBA(color));
-        }
+    private Color nameColor;
 
-    }
-  
+    private Color NameColor { get => new Color(nameColor.r, nameColor.g, nameColor.b, 1); }
 
+    public override string ToString()
+    {
+        return string.Format("<color=#" + ColorUtility.ToHtmlStringRGBA(NameColor) + ">" + name + "</color>");
+    }
 
 }

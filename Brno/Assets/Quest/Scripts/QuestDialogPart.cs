@@ -7,12 +7,12 @@ using System.Linq;
 public class QuestDialogPart : QuestPart
 {
 	 [SerializeField]
-	 private Dialog dialog;
+	// private Dialog dialog;
 	 
 	 
 	public override bool Completed()
 	{
-		if (dialog.WasPlayed)
+		//if (dialog.WasPlayed)
 		{
 			if (quest.Completed)
 			{
