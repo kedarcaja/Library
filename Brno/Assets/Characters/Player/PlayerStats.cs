@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using System.Linq;
-[CreateAssetMenu(menuName = "Character/Stats/PlayerStats", fileName = "NewPlayerStats")]
+[CreateAssetMenu(menuName = "CharacterScript/Stats/PlayerStats", fileName = "NewPlayerStats")]
 public class PlayerStats : EntityStats
 {
 	[SerializeField]

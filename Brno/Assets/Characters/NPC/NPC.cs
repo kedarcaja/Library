@@ -5,7 +5,7 @@ using System;
 
 using UnityEngine.AI;
 public enum ECharacterState {Standing,Sitting,Croutching,Lie }
-public class NPC : Character
+public class NPC : CharacterScript
 {
 	[SerializeField]
 	private MoveArea randomMoveArea;

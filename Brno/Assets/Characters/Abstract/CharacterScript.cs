@@ -10,7 +10,7 @@ public delegate void TimerEventHandler();
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(NavMeshAgent))]
 [RequireComponent(typeof(Animator))]
-public class Character : MonoBehaviour
+public class CharacterScript : MonoBehaviour
 {
 	[SerializeField]
 	protected Transform startPoint;
@@ -151,16 +151,16 @@ public class Character : MonoBehaviour
 	public void SetTarget(Transform trg)
 	{
 		stats.TargetVector.Target = trg;
-		if (stats.TargetVector.Target != null && stats.TargetVector.Target.GetComponent<Character>() != null)
+		if (stats.TargetVector.Target != null && stats.TargetVector.Target.GetComponent<CharacterScript>() != null)
 		{
-			stats.TargetVector.Target.GetComponent<Character>().stats.Followers.Remove(this);
+			stats.TargetVector.Target.GetComponent<CharacterScript>().stats.Followers.Remove(this);
 		}
 		if (trg != null)
 		{
 			SetDestination(trg.position);
-			if (trg.GetComponent<Character>() != null)
+			if (trg.GetComponent<CharacterScript>() != null)
 			{
-				trg.GetComponent<Character>().stats.Followers.Add(this);
+				trg.GetComponent<CharacterScript>().stats.Followers.Add(this);
 			}
 		}
 	}

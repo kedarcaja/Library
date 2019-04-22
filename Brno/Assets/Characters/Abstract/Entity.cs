@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
 
-public abstract class Entity : Character
+public abstract class Entity : CharacterScript
 {
 	protected IncrementTimer walkBackTimer = new IncrementTimer();
 	public UnityEvent OnDie;

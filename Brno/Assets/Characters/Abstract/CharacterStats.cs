@@ -9,7 +9,7 @@ public class CharacterStats : ScriptableObject
 	[SerializeField]
 	protected int strength, agility, intellect, charisma, level,runSpeed;
 	public TargetVector TargetVector = new TargetVector();
-	public List<Character> Followers = new List<Character>();
+	public List<CharacterScript> Followers = new List<CharacterScript>();
 	public const int KEDAR = 5;
 	[SerializeField]
 	protected int walkSpeed;

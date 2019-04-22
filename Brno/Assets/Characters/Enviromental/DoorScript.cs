@@ -82,9 +82,9 @@ public class DoorScript : MonoBehaviour, IOpenable
 		{
 			// odebral jsem sackTrigger z hráče, musí se nahradit hráčem
 			other.GetComponent<NavMeshAgent>().Warp(firstDoors.Place.position); // vyřešit přesun kamery
-			other.GetComponent<Character>().SetTarget(null); 
-			other.GetComponent<Character>().SetDestination(Vector3.zero);//
-			foreach (Character f in other.GetComponent<Character>().Stats.Followers.Where(f => !(f is Enemy)))
+			other.GetComponent<CharacterScript>().SetTarget(null); 
+			other.GetComponent<CharacterScript>().SetDestination(Vector3.zero);//
+			foreach (CharacterScript f in other.GetComponent<CharacterScript>().Stats.Followers.Where(f => !(f is Enemy)))
 			{
 				f.SetTarget(transform);
 			}

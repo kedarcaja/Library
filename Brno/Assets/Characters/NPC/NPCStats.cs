@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using System.Linq;
-public enum EMood { Angry, Happy, Sad, frightened, Neutral, Hangover, }
+//public enum EMood { Angry, Happy, Sad, frightened, Neutral, Hangover, }
 public enum EProffesion { LamberJack, Miner, Blacksmith, ShopKeeper, InnKeeper, Herbalis, Guardian, Official, Baker, Librarian, Butcher, Farmer, Peasant, Cook, Alchemist, NONE }
-[CreateAssetMenu(menuName = "Character/Stats/NPCStats", fileName = "NewNPCStats")]
+[CreateAssetMenu(menuName = "CharacterScript/Stats/NPCStats", fileName = "NewNPCStats")]
 public class NPCStats : CharacterStats
 {
 	[SerializeField]

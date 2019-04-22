@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 
-[CreateAssetMenu(menuName ="Character/Stats/BarStats",fileName ="NewBarStats")]
+[CreateAssetMenu(menuName ="CharacterScript/Stats/BarStats",fileName ="NewBarStats")]
 public class BarStats: ScriptableObject
 { 
     #region Varibles

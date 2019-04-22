@@ -3,7 +3,7 @@ using UnityEngine;
 
 public enum EEnemyState { Attack, Detected, Neutral,Search }
 public enum ETemperament{ Neutral,Agresive }
-[CreateAssetMenu(menuName = "Character/Stats/EnemyStats", fileName = "NewEnemyState")]
+[CreateAssetMenu(menuName = "CharacterScript/Stats/EnemyStats", fileName = "NewEnemyState")]
 [ExecuteAlways]
 public class EnemyStats : EntityStats
 {
