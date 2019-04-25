@@ -25,7 +25,15 @@ public class Character : ScriptableObject
 
     #region Stats
     [SerializeField]
-    protected float health, stamina, minDamage, maxDamage, maxHealth, maxStamina, influence, talking, luck, fireResistance, waterResistance, coldResistance, lightResistance, poisonResistance, magicResistance;
+    protected float health, maxHealth, stamina, maxStamina, minDamage, maxDamage;
+
+    protected float damage;
+   
+    [SerializeField]
+    [Range(0, 100)]
+    [Header("Staty [%]")]
+    protected float fireResistance, waterResistance, coldResistance, lightResistance, poisonResistance, magicResistance, influence, talking, luck;
+
     [SerializeField]
     protected int strength, agility, intellect, charisma, runSpeed;
     public TargetVector TargetVector = new TargetVector();
@@ -53,6 +61,11 @@ public class Character : ScriptableObject
     {
         get { return maxDamage; }
         set { maxDamage = value <= minDamage ? minDamage : value; }
+    }
+    public float Damage
+    {
+        get { return damage; }
+        set { damage += value; }
     }
 
     public float MaxHealth
@@ -113,10 +126,6 @@ public class Character : ScriptableObject
         set { magicResistance = value <= 60 ? value : 60; }
     }
 
-    public float Damage
-    {
-        get { return (float)Math.Round(UnityEngine.Random.Range(minDamage, maxDamage), 2); }
-    }
     public int Strength
     {
         get { return strength; }
