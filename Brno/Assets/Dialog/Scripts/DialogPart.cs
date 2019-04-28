@@ -8,7 +8,7 @@ using UnityEngine;
 public class DialogPart : ScriptableObject
 {
     [SerializeField]
-    private Speaker speaker;
+    private Character speaker;
     [TextArea(10,100)]
     [SerializeField]
     private string subtitles;

@@ -7,7 +7,7 @@ public class WorldTime : MonoBehaviour
 {
 	private int minutes, seconds, hours;
 	private EDays days = EDays.Monday;
-	public event TimerHandler OnTimerStart, OnTimerEnd, OnTimerUpdate, OnDayChange, OnTimeSkip;
+	public event Action OnTimerStart, OnTimerEnd, OnTimerUpdate, OnDayChange, OnTimeSkip;
 	private const float delay = 1.5f;
 	public bool IsRunning = true;
 	public int Seconds { get; private set; }

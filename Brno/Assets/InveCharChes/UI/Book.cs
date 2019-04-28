@@ -63,7 +63,7 @@ public class Book : MonoBehaviour, IPointerClickHandler, IOpenable
     }
     public void Close()
 	{
-		PlayerScript.Instance.RestoreAgent();
+		//PlayerScript.Instance.RestoreAgent();
 		MouseManager.Instance.CanClick = true;
 
 		if (OnClose != null)
@@ -88,7 +88,7 @@ public class Book : MonoBehaviour, IPointerClickHandler, IOpenable
 
 	public void Open()
 	{
-		PlayerScript.Instance.DisableAgent();
+		//PlayerScript.Instance.DisableAgent();
 		MouseManager.Instance.CanClick = false;
 
 		if (OnOpen != null)

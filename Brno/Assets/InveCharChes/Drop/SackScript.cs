@@ -70,7 +70,7 @@ public class SackScript : BagScript
 
 	public void TakeAll()
 	{
-		PlayerScript.Instance.Gathering();
+		//PlayerScript.Instance.Gathering();
 		Resize();
 		for (int i = 0; i < slots.Count; i++)
 		{

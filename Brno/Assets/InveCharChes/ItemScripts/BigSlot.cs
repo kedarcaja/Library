@@ -31,7 +31,7 @@ public class BigSlot : Slot
 			}
 
 			RemoveAll();
-			PlayerScript.Instance.Gathering();
+			//PlayerScript.Instance.Gathering();
 			return;
 		}
 		RemoveAll(); // item se dropne takže se musí zase odebrat

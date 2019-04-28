@@ -33,8 +33,8 @@ public class Equipment : Item
 	private GameObject helm;
 	public override void Use()
 	{
-		if (!PlayerScript.Instance.CanSwapEquipment) return;
-		if (!equipable || PlayerScript.Instance.Stats.Level < level) return;
+		//if (!PlayerScript.Instance.CanSwapEquipment) return;
+		//if (!equipable || PlayerScript.Instance.Stats.Level < level) return;
 		if (!Equiped)
 		{
 
@@ -199,7 +199,7 @@ public class Equipment : Item
 		if (this is Weapon)
 		{
 			t1.gameObject.SetActive(false);
-			PlayerScript.Instance.HideSword();
+			//PlayerScript.Instance.HideSword();
 			return;
 		}
 		if (ItemType == ItemType.Helm)

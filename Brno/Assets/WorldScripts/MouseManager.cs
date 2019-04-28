@@ -72,25 +72,25 @@ public class MouseManager : MonoBehaviour
                 CanClick = true;
                 SetCursor(pointerAttack);
             }
-            else if ((Math.Pow(2, hit.collider.gameObject.layer) != MoveLayer.value && Math.Pow(2, hit.collider.gameObject.layer) != DoorLayer && Math.Pow(2, hit.collider.gameObject.layer) != OpenLayer.value)|| Vector3.Distance(PlayerScript.Instance.transform.position, hit.point) > MoveClickRange)
-            {
-                CanClick = false;
-                SetCursor(pointerForbidden);
-            }
+            //else if ((Math.Pow(2, hit.collider.gameObject.layer) != MoveLayer.value && Math.Pow(2, hit.collider.gameObject.layer) != DoorLayer && Math.Pow(2, hit.collider.gameObject.layer) != OpenLayer.value)|| Vector3.Distance(PlayerScript.Instance.transform.position, hit.point) > MoveClickRange)
+            //{
+            //    CanClick = false;
+            //    SetCursor(pointerForbidden);
+            //}
 
-            if (Input.GetMouseButton(0) && CanClick && Vector3.Distance(PlayerScript.Instance.transform.position, hit.point) <= MoveClickRange)
-            {
-                if (PointInstance != null)
-                {
-                    Destroy(PointInstance);
-                }
-                PointInstance = Instantiate(PointPref, hit.point, Quaternion.identity);
-				if (PlayerScript.Instance.Stats.TargetVector.Target != null)
-				{
-					PlayerScript.Instance.Stats.TargetVector.Target = null;
-				}
-                PlayerScript.Instance.SetDestination(hit.point);
-            }
+    //        if (Input.GetMouseButton(0) && CanClick && Vector3.Distance(PlayerScript.Instance.transform.position, hit.point) <= MoveClickRange)
+    //        {
+    //            if (PointInstance != null)
+    //            {
+    //                Destroy(PointInstance);
+    //            }
+    //            PointInstance = Instantiate(PointPref, hit.point, Quaternion.identity);
+				//if (PlayerScript.Instance.Stats.TargetVector.Target != null)
+				//{
+				//	PlayerScript.Instance.Stats.TargetVector.Target = null;
+				//}
+    //            PlayerScript.Instance.SetDestination(hit.point);
+    //        }
           
 
         }

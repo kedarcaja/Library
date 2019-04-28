@@ -10,7 +10,7 @@ public class ItemContainer : MonoBehaviour, ITarget, IPointerClickHandler
 	protected Image image;
 	private Text itemCount;
 	protected Slot slot;
-	private IncrementTimer timer = new IncrementTimer();
+    private _Timer timer;
 	[SerializeField]
 	private bool canUseItem = true;
 	[SerializeField]
@@ -23,12 +23,12 @@ public class ItemContainer : MonoBehaviour, ITarget, IPointerClickHandler
 	private void Start()
 	{
 		itemCount = transform.GetComponentInChildren<Text>();
-		timer.Init(1, 0.3f, this); // timer ovládající čas objevení TT
+		timer = new _Timer(1, 0.3f, this); // timer ovládající čas objevení TT
 
 	}
 	protected virtual void Awake()
 	{
-		timer.OnTimerUpdate += delegate { if (timer.GetTimeFloat() == 2) { timer.Stop(); } };
+		timer.OnUpdate += delegate { if (timer.ElapsedTimeF == 2) { timer.Stop(); } };
 
 		image = GetComponent<Image>();
 		slot = GetComponentInParent<Slot>();
@@ -78,7 +78,7 @@ public class ItemContainer : MonoBehaviour, ITarget, IPointerClickHandler
 		if (slot.CurrentItem == null) return;
 
 
-		timer.OnTimerEnd += delegate
+		timer.OnStop += delegate
 		{
 
 			slot.CurrentItem.GetTooltip();
@@ -108,7 +108,7 @@ public class ItemContainer : MonoBehaviour, ITarget, IPointerClickHandler
 		}
 		if (slot.CurrentItem == null) return;
 
-		timer.OnTimerEnd -= delegate
+		timer.OnStop -= delegate
 		{
 			slot.CurrentItem.GetTooltip();
 			Tooltip.Instance.Open();
@@ -120,7 +120,7 @@ public class ItemContainer : MonoBehaviour, ITarget, IPointerClickHandler
 
 	public void OnPointerClick(PointerEventData eventData)
 	{
-		timer.OnTimerEnd -= delegate
+		timer.OnStop -= delegate
 		{
 			slot.CurrentItem.GetTooltip();
 			Tooltip.Instance.Open();

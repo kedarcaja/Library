@@ -57,10 +57,10 @@ public class Quest : ScriptableObject
 		{
 			Inventory.Instance.AddItem(i.Item, i.Count);
 		}
-		PlayerScript.Instance.XP += rewards.Xp;
-		PlayerScript.Instance.Gold += rewards.Gold;
-		PlayerScript.Instance.Silver += rewards.Silver;
-		PlayerScript.Instance.Copper += rewards.Copper;
+		//PlayerScript.Instance.XP += rewards.Xp;
+		//PlayerScript.Instance.Gold += rewards.Gold;
+		//PlayerScript.Instance.Silver += rewards.Silver;
+		//PlayerScript.Instance.Copper += rewards.Copper;
 	}
 	public bool Accepted { get; set; }
 	public bool Available { get; set; }

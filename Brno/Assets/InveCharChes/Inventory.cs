@@ -157,7 +157,7 @@ public class Inventory : MonoBehaviour, IOpenable
 
 			v *= 1;
 
-			sack.Sack = Instantiate(InventoryManager.Instance.Sack, PlayerScript.Instance.transform.position - v, Quaternion.identity);
+			//sack.Sack = Instantiate(InventoryManager.Instance.Sack, PlayerScript.Instance.transform.position - v, Quaternion.identity);
 		}
 		else
 		{

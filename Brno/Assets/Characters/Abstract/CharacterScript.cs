@@ -12,324 +12,322 @@ public delegate void TimerEventHandler();
 [RequireComponent(typeof(Animator))]
 public class CharacterScript : MonoBehaviour
 {
-	[SerializeField]
-	protected Transform startPoint;
-	[SerializeField]
-	private ECharacterState state;
-	[SerializeField]
-	protected CharacterStats stats;
-	public CharacterStats Stats { get { return stats; } }
-	protected Animator anim;
-	[ExecuteAlways]
-	public NavMeshAgent Agent { get { return GetComponent<NavMeshAgent>(); } }
-	protected Rigidbody rigid;
-	public bool AgentIsOnPosition
-	{
-		get
-		{
-			try
-			{
-				return Math.Round((double)Agent.remainingDistance, 1) != Mathf.Infinity && Agent.pathStatus == NavMeshPathStatus.PathComplete && Math.Round(Agent.remainingDistance) == Agent.stoppingDistance;
-			}
-			catch
-			{
-				Debug.Log(name);
-				return false;
-			}
+//	[SerializeField]
+//	protected Transform startPoint;
 
-		}
-	}
-	protected IncrementTimer idleTimer = new IncrementTimer(), walkTimer = new IncrementTimer(), runTimer = new IncrementTimer();
-	[SerializeField]
-	protected float interactionRadius;
-	public float InteractionRadius { get { return interactionRadius; } }
-	public bool AgentAvailable { get; set; }
-	protected ECharacterState State { get => state; set => state = value; }
+//	[SerializeField]
+//	//protected CharacterStats stats;
+//	//public CharacterStats Stats { get { return stats; } }
+//	protected Animator anim;
+//	[ExecuteAlways]
+//	public NavMeshAgent Agent { get { return GetComponent<NavMeshAgent>(); } }
+//	protected Rigidbody rigid;
+//	public bool AgentIsOnPosition
+//	{
+//		get
+//		{
+//			try
+//			{
+//				return Math.Round((double)Agent.remainingDistance, 1) != Mathf.Infinity && Agent.pathStatus == NavMeshPathStatus.PathComplete && Math.Round(Agent.remainingDistance) == Agent.stoppingDistance;
+//			}
+//			catch
+//			{
+//				Debug.Log(name);
+//				return false;
+//			}
 
-	protected virtual void Awake()
-	{
-		AgentAvailable = true;
-		stats.Stamina = stats.MaxStamina;
-		ResetDestination();
-		if (startPoint)
-		{
-			SetTarget(startPoint);
-		}
-		anim = GetComponent<Animator>();
-		rigid = GetComponent<Rigidbody>();
+//		}
+//	}
+//	protected IncrementTimer idleTimer = new IncrementTimer(), walkTimer = new IncrementTimer(), runTimer = new IncrementTimer();
+//	[SerializeField]
+//	protected float interactionRadius;
+//	public float InteractionRadius { get { return interactionRadius; } }
+//	public bool AgentAvailable { get; set; }
+
+//	protected virtual void Awake()
+//	{
+//		AgentAvailable = true;
+//		stats.Stamina = stats.MaxStamina;
+//		ResetDestination();
+//		if (startPoint)
+//		{
+//			SetTarget(startPoint);
+//		}
+//		anim = GetComponent<Animator>();
+//		rigid = GetComponent<Rigidbody>();
 
 
-		walkTimer.OnTimerUpdate += new TimerHandler(RestoreStamina);
-		idleTimer.OnTimerUpdate += new TimerHandler(RestoreStamina);
+//		walkTimer.OnTimerUpdate += new TimerHandler(RestoreStamina);
+//		idleTimer.OnTimerUpdate += new TimerHandler(RestoreStamina);
 
-		runTimer.OnTimerUpdate += new TimerHandler(delegate { stats.Stamina -= CharacterStats.KEDAR + runTimer.GetTimeInt() * 0.5f; });
+//		runTimer.OnTimerUpdate += new TimerHandler(delegate { stats.Stamina -= CharacterStats.KEDAR + runTimer.GetTimeInt() * 0.5f; });
 
-		walkTimer.OnTimerStart += delegate
-		{
-			idleTimer.Stop();
-			runTimer.Stop();
-		};
-		idleTimer.OnTimerStart += delegate
-		{
-			walkTimer.Stop();
-			runTimer.Stop();
-		};
-		runTimer.OnTimerStart += delegate
-		{
-			walkTimer.Stop();
-			idleTimer.Stop();
-		};
+//		walkTimer.OnTimerStart += delegate
+//		{
+//			idleTimer.Stop();
+//			runTimer.Stop();
+//		};
+//		idleTimer.OnTimerStart += delegate
+//		{
+//			walkTimer.Stop();
+//			runTimer.Stop();
+//		};
+//		runTimer.OnTimerStart += delegate
+//		{
+//			walkTimer.Stop();
+//			idleTimer.Stop();
+//		};
 
 
 
-		idleTimer.Init(1, 2, this);
-		walkTimer.Init(1, 4, this);
-		runTimer.Init(1, 2, this);
+//		idleTimer.Init(1, 2, this);
+//		walkTimer.Init(1, 4, this);
+//		runTimer.Init(1, 2, this);
 
 
-	}
-	protected virtual void Update()
-	{
-		Move();
-		//Debug.Log("Walk: " + walkTimer.isRunning + " Run: " + runTimer.isRunning + " Idle: " + idleTimer.isRunning);// kontrola spouštění časovačů
+//	}
+//	protected virtual void Update()
+//	{
+//		Move();
+//		//Debug.Log("Walk: " + walkTimer.isRunning + " Run: " + runTimer.isRunning + " Idle: " + idleTimer.isRunning);// kontrola spouštění časovačů
 
-	}
+//	}
 
-	public void Move()
-	{
-		if (!Agent.isStopped&&MouseManager.Instance.CanClick)
-		{
-			anim.SetFloat("speed", Agent.velocity.magnitude);
-			Agent.SetDestination(stats.TargetVector.Destination);
-		}
-	}
-
-
-	public void Idle()
-	{
-		if (!idleTimer.isRunning)
-		{
-			idleTimer.Start();
-		}
-		Agent.speed = 0;
-
-	}
-	public void Walk()
-	{
-
-		if (!walkTimer.isRunning)
-		{
-			walkTimer.Start();
-		}
-		Agent.speed = stats.WalkSpeed; // do statů dát walk speed = walkSpeed
-	}
-	public void Run()
-	{
-
-		RestoreAgent();
-		if (stats.Stamina > 0)
-		{
-
-			if (!runTimer.isRunning)
-			{
-				runTimer.Start();
-			}
-
-			Agent.speed = stats.RunSpeed;
-		}
-		else
-		{
-			runTimer.Stop();
-			Walk();
-		}
-	}
-	public void SetDestination(Vector3 trg)
-	{
-		stats.TargetVector.Destination = trg;
-
-	}
-	public void SetTarget(Transform trg)
-	{
-		stats.TargetVector.Target = trg;
-		if (stats.TargetVector.Target != null && stats.TargetVector.Target.GetComponent<CharacterScript>() != null)
-		{
-			stats.TargetVector.Target.GetComponent<CharacterScript>().stats.Followers.Remove(this);
-		}
-		if (trg != null)
-		{
-			SetDestination(trg.position);
-			if (trg.GetComponent<CharacterScript>() != null)
-			{
-				trg.GetComponent<CharacterScript>().stats.Followers.Add(this);
-			}
-		}
-	}
-	protected void RestoreStamina()
-	{
-		stats.Stamina += 10;
-	}
-	public void DisableAgent()
-	{
-		Agent.speed = 0;
-		Agent.velocity = Vector3.zero;
-		anim.SetFloat("speed", 0);
-		Agent.isStopped = true;
-		ResetDestination();
-
-	}
-	public void RestoreAgent()
-	{
-		Agent.isStopped = false;
-	}
-	public void ResetDestination()
-	{
-		SetDestination(Vector3.zero);
-		SetTarget(null);
-	}
-	protected virtual void OnDrawGizmos()
-	{
-		Gizmos.color = Color.yellow;
-		//interaction radius
-		Gizmos.DrawWireSphere(new Vector3(transform.position.x, transform.position.y, transform.position.z), InteractionRadius);
+//	public void Move()
+//	{
+//		if (!Agent.isStopped&&MouseManager.Instance.CanClick)
+//		{
+//			anim.SetFloat("speed", Agent.velocity.magnitude);
+//			Agent.SetDestination(stats.TargetVector.Destination);
+//		}
+//	}
 
 
-	}
+//	public void Idle()
+//	{
+//		if (!idleTimer.isRunning)
+//		{
+//			idleTimer.Start();
+//		}
+//		Agent.speed = 0;
 
-	public bool TargetInRange(Transform target, float radius)
-	{
-		return Vector3.Distance(transform.position, target.position) < radius;
-	}
-	public bool DestinationInRange(Vector3 dest, float radius)
-	{
-		return Vector3.Distance(transform.position, dest) < radius;
-	}
+//	}
+//	public void Walk()
+//	{
+
+//		if (!walkTimer.isRunning)
+//		{
+//			walkTimer.Start();
+//		}
+//		Agent.speed = stats.WalkSpeed; // do statů dát walk speed = walkSpeed
+//	}
+//	public void Run()
+//	{
+
+//		RestoreAgent();
+//		if (stats.Stamina > 0)
+//		{
+
+//			if (!runTimer.isRunning)
+//			{
+//				runTimer.Start();
+//			}
+
+//			Agent.speed = stats.RunSpeed;
+//		}
+//		else
+//		{
+//			runTimer.Stop();
+//			Walk();
+//		}
+//	}
+//	public void SetDestination(Vector3 trg)
+//	{
+//		stats.TargetVector.Destination = trg;
+
+//	}
+//	public void SetTarget(Transform trg)
+//	{
+//		stats.TargetVector.Target = trg;
+//		if (stats.TargetVector.Target != null && stats.TargetVector.Target.GetComponent<CharacterScript>() != null)
+//		{
+//			stats.TargetVector.Target.GetComponent<CharacterScript>().stats.Followers.Remove(this);
+//		}
+//		if (trg != null)
+//		{
+//			SetDestination(trg.position);
+//			if (trg.GetComponent<CharacterScript>() != null)
+//			{
+//				trg.GetComponent<CharacterScript>().stats.Followers.Add(this);
+//			}
+//		}
+//	}
+//	protected void RestoreStamina()
+//	{
+//		stats.Stamina += 10;
+//	}
+//	public void DisableAgent()
+//	{
+//		Agent.speed = 0;
+//		Agent.velocity = Vector3.zero;
+//		anim.SetFloat("speed", 0);
+//		Agent.isStopped = true;
+//		ResetDestination();
+
+//	}
+//	public void RestoreAgent()
+//	{
+//		Agent.isStopped = false;
+//	}
+//	public void ResetDestination()
+//	{
+//		SetDestination(Vector3.zero);
+//		SetTarget(null);
+//	}
+//	protected virtual void OnDrawGizmos()
+//	{
+//		Gizmos.color = Color.yellow;
+//		//interaction radius
+//		Gizmos.DrawWireSphere(new Vector3(transform.position.x, transform.position.y, transform.position.z), InteractionRadius);
+
+
+//	}
+
+//	public bool TargetInRange(Transform target, float radius)
+//	{
+//		return Vector3.Distance(transform.position, target.position) < radius;
+//	}
+//	public bool DestinationInRange(Vector3 dest, float radius)
+//	{
+//		return Vector3.Distance(transform.position, dest) < radius;
+//	}
 	
-}
-public class IncrementTimer
-{
-	public event TimerHandler OnTimerStart, OnTimerEnd, OnTimerUpdate;
-	[SerializeField]
-	private float updateValue = 0, time = 0;
-	private float delay;
-	private MonoBehaviour starter;
-	public bool isRunning { get; private set; }
-	public int Time;
-	public void Init(float updateValue, float delay, MonoBehaviour coroutineStarter)
-	{
-		starter = coroutineStarter;
-		this.updateValue = updateValue;
-		this.delay = delay;
-		isRunning = false;
-	}
-	public void Start()
-	{
-		time = 0;
-		isRunning = true;
-		if (OnTimerStart != null)
-		{
-			OnTimerStart();
-		}
+//}
+//public class IncrementTimer
+//{
+//	public event TimerHandler OnTimerStart, OnTimerEnd, OnTimerUpdate;
+//	[SerializeField]
+//	private float updateValue = 0, time = 0;
+//	private float delay;
+//	private MonoBehaviour starter;
+//	public bool isRunning { get; private set; }
+//	public int Time;
+//	public void Init(float updateValue, float delay, MonoBehaviour coroutineStarter)
+//	{
+//		starter = coroutineStarter;
+//		this.updateValue = updateValue;
+//		this.delay = delay;
+//		isRunning = false;
+//	}
+//	public void Start()
+//	{
+//		time = 0;
+//		isRunning = true;
+//		if (OnTimerStart != null)
+//		{
+//			OnTimerStart();
+//		}
 
-		starter.StartCoroutine(Update());
+//		starter.StartCoroutine(Update());
 
-	}
-	protected void Reset()
-	{
-		Stop();
-		isRunning = true;
-		if (OnTimerStart != null)
-		{
-			OnTimerStart();
-		}
+//	}
+//	protected void Reset()
+//	{
+//		Stop();
+//		isRunning = true;
+//		if (OnTimerStart != null)
+//		{
+//			OnTimerStart();
+//		}
 
-		starter.StartCoroutine(Update());
-	}
-	protected IEnumerator Update()
-	{
+//		starter.StartCoroutine(Update());
+//	}
+//	protected IEnumerator Update()
+//	{
 
-		if (isRunning)
-		{
+//		if (isRunning)
+//		{
 
-			while (isRunning)
-			{
+//			while (isRunning)
+//			{
 
-				yield return new WaitForSeconds(delay); //  přičítat 1 za delší čas ?
-				time += updateValue;
+//				yield return new WaitForSeconds(delay); //  přičítat 1 za delší čas ?
+//				time += updateValue;
 
-				if (OnTimerUpdate != null)
-				{
-					OnTimerUpdate();
-				}
-				Time++;
-				Reset();
-			}
-		}
+//				if (OnTimerUpdate != null)
+//				{
+//					OnTimerUpdate();
+//				}
+//				Time++;
+//				Reset();
+//			}
+//		}
 
-	}
-	public void Stop()
-	{
-		if (isRunning)
-		{
-			if (OnTimerEnd != null)
-			{
-				OnTimerEnd();
-			}
-			isRunning = false;
+//	}
+//	public void Stop()
+//	{
+//		if (isRunning)
+//		{
+//			if (OnTimerEnd != null)
+//			{
+//				OnTimerEnd();
+//			}
+//			isRunning = false;
 
-			starter.StopAllCoroutines();
+//			starter.StopAllCoroutines();
 
-		}
-	}
-	public int GetTimeInt()
-	{
-		return (int)time;
-	}
-	public float GetTimeFloat()
-	{
-		return time;
-	}
+//		}
+//	}
+//	public int GetTimeInt()
+//	{
+//		return (int)time;
+//	}
+//	public float GetTimeFloat()
+//	{
+//		return time;
+//	}
 
-}
-public delegate void TimerHandler();
-[Serializable]
-public struct TargetVector
-{
-	[SerializeField]
-	private Transform target;
-	[SerializeField]
-	private Vector3 destination;
+//}
+//public delegate void TimerHandler();
+//[Serializable]
+//public struct TargetVector
+//{
+//	[SerializeField]
+//	private Transform target;
+//	[SerializeField]
+//	private Vector3 destination;
 
-	public Vector3 Destination
-	{
-		get
-		{
-			if (target == null)
-			{
-				return destination;
-			}
+//	public Vector3 Destination
+//	{
+//		get
+//		{
+//			if (target == null)
+//			{
+//				return destination;
+//			}
 
-			return target.position;
+//			return target.position;
 
-		}
+//		}
 
-		set
-		{
+//		set
+//		{
 
-			destination = value;
+//			destination = value;
 
-		}
-	}
+//		}
+//	}
 
-	public Transform Target
-	{
-		get
-		{
-			return target;
-		}
+//	public Transform Target
+//	{
+//		get
+//		{
+//			return target;
+//		}
 
-		set
-		{
-			target = value;
-		}
-	}
+//		set
+//		{
+//			target = value;
+//		}
+//	}
 }
