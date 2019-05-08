@@ -15,6 +15,7 @@ MonoBehaviour:
   clip: {fileID: 8300000, guid: 3fe7829506718a24a8e5262aee47b34a, type: 3}
   parts:
   - {fileID: 11400000, guid: ef3f79f1fdfe5134abc14a149e43a53d, type: 2}
+  - {fileID: 11400000, guid: 88bc1cc00f4c4c448b08e9b7a1567d50, type: 2}
   OnStart:
     m_PersistentCalls:
       m_Calls: []
@@ -36,9 +37,10 @@ MonoBehaviour:
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   wasPlayed: 1
-  repeatable: 0
-  repeatLimit: 10
+  repeatable: 1
+  repeatLimit: 53
   isPaused: 0
-  isPlaying: 1
+  isPlaying: 0
   IsEnable: 1
   destroyOnEnd: 1
+  isInitialized: 1

@@ -25,11 +25,18 @@ public class Dialog : ScriptableObject
     private _Timer timer;
     public bool IsEnable = true;
     public bool destroyOnEnd = false;
+    [SerializeField] // vzdy po startu nastavit na false
     private bool isInitialized = false;
+    /// <summary>
+    /// Method used to restore some variables
+    /// </summary>
+    public void StartInit()
+    {
+        isPlaying = false;
+        isInitialized = false;
+        isPaused = false;
+    }
 
-    // for testing
-   
-     //
     public void InitParts()
     {
         partsStack.Clear();
@@ -47,63 +54,43 @@ public class Dialog : ScriptableObject
     {
         if (!IsEnable || isInitialized) return;
         InitParts();
-        timer = new _Timer(0, 0, starter);
+        timer = new _Timer(1, partsStack.Peek().StartDuration, starter);
+
         isInitialized = true;
         timer.OnUpdate += delegate
         {
+            if(partsStack.Peek())
+            {
+                partsStack.Pop();
+            }
 
-            partsStack.Pop();
-            Begin(partsStack.Peek());
-          
+            if (partsStack.Peek())
+            {
+                Begin(partsStack.Peek());
+            }
         };
-        timer.OnStart += delegate
-        {
-            DialogManager.Instance.currentDialog = this;
-            DialogManager.Instance.AudioPlayer.clip = clip;
-            DialogManager.Instance.AudioPlayer.Play();
-            Begin(partsStack.Peek());
 
-
-        };
-        timer.OnStop += delegate
-        {
-
-            DialogManager.Instance.AudioPlayer.Stop();
-            SetSubtitles("");
-          
-
-        };
-        timer.OnPause += delegate
-        {
-
-            DialogManager.Instance.AudioPlayer.Pause();
-
-        };
-        timer.OnRestore += delegate
-        {
-
-            DialogManager.Instance.AudioPlayer.UnPause();
-
-
-        };
     }
     /// <summary>
     /// starts dialog
     /// </summary>
     public void Play(MonoBehaviour starter)
     {
+        
         Init(starter);
 
         if ((repeatable && repeatLimit == 0) || (!repeatable && wasPlayed) || isPlaying || isPaused || !IsEnable||!isInitialized) return;
-        Debug.Log("Dialog is playing");
-
         wasPlayed = true;
         isPaused = false;
-        isPlaying = true;
-      
+        DialogManager.Instance.currentDialog = this;
+        DialogManager.Instance.AudioPlayer.clip = clip;
+        DialogManager.Instance.AudioPlayer.Play();
         Begin(partsStack.Peek());
-     
-        if(repeatable)
+        isPlaying = true;
+
+        Debug.Log(isPlaying);
+
+        if (repeatable)
         {
             repeatLimit--;
         }
@@ -125,8 +112,7 @@ public class Dialog : ScriptableObject
     {
         
         if (part == null || !IsEnable) { Stop(); return; };
-        Debug.Log("Begin: " + part.ToString());
-        timer.Init(1, part.StartDuration);
+        timer.Init(1,part.StartDuration);
         SetSubtitles(part.ToString());
 
     }
@@ -137,7 +123,12 @@ public class Dialog : ScriptableObject
     {
         if (isPaused || !isPlaying) return;
         timer.Pause();
-       
+        isPaused = true;
+        isPlaying = false;
+
+        DialogManager.Instance.AudioPlayer.Pause();
+
+
     }
 
     /// <summary>
@@ -149,7 +140,9 @@ public class Dialog : ScriptableObject
         timer.Stop();
         isPlaying = false;
         isPaused = false;
-       
+        DialogManager.Instance.AudioPlayer.Stop();
+        SetSubtitles("");
+        Debug.Log("stopped");
         DialogManager.Instance.currentDialog = null;
 
     }
@@ -160,8 +153,16 @@ public class Dialog : ScriptableObject
     public void UnPause()
     {
         if (isPlaying) return;
+
         timer.Restore();
+        isPaused = false;
+        isPlaying = true;
+        DialogManager.Instance.AudioPlayer.UnPause();
+
     }
 
-  
+    public void Log(string txt)
+    {
+        Debug.Log(txt);
+    }
 }

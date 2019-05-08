@@ -7,8 +7,15 @@ public class DialogPlayer : MonoBehaviour
 {
     [SerializeField]
     private Dialog dialog;
-    public Dialog Dialog { get => dialog; set => dialog = value; }
-
+    public Dialog Dialog { get => dialog; set  { dialog = value; dialog.StartInit(); } }
+    private void Awake()
+    {
+        if (dialog)
+        {
+            dialog.StartInit();
+        }
+    }
+  
     public void Play()
     {
         if (Dialog)
@@ -53,15 +60,26 @@ public class DialogPlayer : MonoBehaviour
             }
         }
     }
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            Play();
-        }
+    //private void Update()
+    //{
+    //    if (Input.GetKeyDown(KeyCode.Space))
+    //    {
+    //        Play();
+    //    }
+    //    if (Input.GetKeyDown(KeyCode.P))
+    //    {
+    //        Pause();
+    //    }
+    //    if (Input.GetKeyDown(KeyCode.U))
+    //    {
+    //        UnPause();
+    //    }
+    //    if (Input.GetKeyDown(KeyCode.S))
+    //    {
+    //        Stop();
+    //    }
 
-
-    }
+    //}
 
 
     private void OnApplicationQuit()
@@ -71,7 +89,7 @@ public class DialogPlayer : MonoBehaviour
             dialog.Stop();
         }
     }
-  
+
 }
 
 

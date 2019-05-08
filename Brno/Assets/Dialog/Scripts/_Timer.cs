@@ -32,11 +32,12 @@ public class _Timer
     /// <param name="delay"></param>
     public void Init(float updateValue, float delay)
     {
-        Reset();
+        //Reset();
         this.updateValue = updateValue;
         this.delay = delay;
-        IsRunning = false;
-        IsStopped = true;
+        Debug.Log(delay);
+        //IsRunning = false;
+        //IsStopped = true;
         if (OnInit != null)
         {
             OnInit();
@@ -89,10 +90,13 @@ public class _Timer
         if (!IsStopped && IsRunning)
         {
             IsRunning = false;
+            IsStopped = false;
+
             if (OnPause != null)
             {
                 OnPause();
             }
+            starter.StopCoroutine(Run());
         }
     }
     /// <summary>
@@ -103,15 +107,18 @@ public class _Timer
         if (!IsStopped && !IsRunning)
         {
             IsRunning = true;
+            IsStopped = false;
             if (OnRestore != null)
             {
                 OnRestore();
             }
+            starter.StartCoroutine(Run());
+
         }
     }
     public void Update()
     {
-
+        if (IsStopped || !IsRunning) return;
         currentTime += updateValue;
         ElapsedTimeF = currentTime;
         ElapsedTimeI = (int)currentTime;
@@ -136,11 +143,14 @@ public class _Timer
     }
     private IEnumerator Run()
     {
+       
         while (!IsStopped && IsRunning)
         {
-           
-            yield return new WaitForSeconds(delay);
-            Update();
+          
+
+                yield return new WaitForSeconds(delay);
+                Update();
+            
         }
     }
 }
