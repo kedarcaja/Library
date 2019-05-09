@@ -12,7 +12,7 @@ public class Dialog : ScriptableObject
     private AudioClip clip;
     [SerializeField]
     private List<DialogPart> parts = new List<DialogPart>();
-    private Stack<DialogPart> partsStack = new Stack<DialogPart>();
+    private Queue<DialogPart> partsStack = new Queue<DialogPart>();
     public UnityEvent OnStart, OnEnd, OnPause, OnUnPause;
     [SerializeField]
     private bool wasPlayed = false;
@@ -42,7 +42,7 @@ public class Dialog : ScriptableObject
         partsStack.Clear();
         for (int i = 0; i < parts.Count(); i++)
         {
-            partsStack.Push(parts[i]);
+            partsStack.Enqueue(parts[i]);
         }
     }
 
@@ -61,7 +61,7 @@ public class Dialog : ScriptableObject
         {
             if(partsStack.Peek())
             {
-                partsStack.Pop();
+                partsStack.Dequeue();
             }
 
             if (partsStack.Peek())
