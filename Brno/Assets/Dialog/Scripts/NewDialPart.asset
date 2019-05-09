@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: NewDialPart
   m_EditorClassIdentifier: 
   speaker: {fileID: 11400000, guid: 48680ab0895e7274f9dd5a8a1908045d, type: 2}
-  subtitles: "kjskcysdcnysdm,v fsd,f vsdkfj vsdkfjnvsdlf\u016Fjdfn bd"
-  startDuration: 8.71
+  subtitles: "Nerada t\u011B zklamu, ale nic moc si odem\u011B nekoup\xED\u0161"
+  startDuration: 3

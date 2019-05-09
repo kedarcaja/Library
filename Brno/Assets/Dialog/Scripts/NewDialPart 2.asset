@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 28435c408ed6aed488d2ca9cf7579352, type: 3}
-  m_Name: NewDialPart 1
+  m_Name: NewDialPart 2
   m_EditorClassIdentifier: 
-  speaker: {fileID: 11400000, guid: f28846219e13d4d42b99cea9deeb6112, type: 2}
-  subtitles: "Pro\u010D ??"
-  startDuration: 1
+  speaker: {fileID: 11400000, guid: 48680ab0895e7274f9dd5a8a1908045d, type: 2}
+  subtitles: "Proto\u017Ee j\xE1 moc bojovat neum\xEDm"
+  startDuration: 3

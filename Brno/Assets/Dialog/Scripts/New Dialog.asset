@@ -15,7 +15,8 @@ MonoBehaviour:
   clip: {fileID: 8300000, guid: 3fe7829506718a24a8e5262aee47b34a, type: 3}
   parts:
   - {fileID: 11400000, guid: ef3f79f1fdfe5134abc14a149e43a53d, type: 2}
-  - {fileID: 11400000, guid: 88bc1cc00f4c4c448b08e9b7a1567d50, type: 2}
+  - {fileID: 11400000, guid: 74891ec58cdd16c438379210acd5ccb6, type: 2}
+  - {fileID: 11400000, guid: b94a1cbfc2361f843b730642debe7fe1, type: 2}
   OnStart:
     m_PersistentCalls:
       m_Calls: []
@@ -38,7 +39,7 @@ MonoBehaviour:
       Culture=neutral, PublicKeyToken=null
   wasPlayed: 1
   repeatable: 1
-  repeatLimit: 53
+  repeatLimit: 46
   isPaused: 0
   isPlaying: 0
   IsEnable: 1
