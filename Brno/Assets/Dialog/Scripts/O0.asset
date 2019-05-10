@@ -9,9 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 28435c408ed6aed488d2ca9cf7579352, type: 3}
-  m_Name: NewDialPart 2
+  m_Script: {fileID: 11500000, guid: 89932168b461c294895454037c78a4a4, type: 3}
+  m_Name: O0
   m_EditorClassIdentifier: 
-  speaker: {fileID: 11400000, guid: 48680ab0895e7274f9dd5a8a1908045d, type: 2}
-  subtitles: "Proto\u017Ee j\xE1 moc bojovat neum\xEDm"
-  startDuration: 3
+  dialog: {fileID: 11400000, guid: 4c8df815e758fc7469a65d965eb1136d, type: 2}
+  text: draky
+  speach: 10
+  type: 0
+  repeatLimit: 1
+  unlimitedRepeating: 1

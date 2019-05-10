@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3db41c9764c001a4384f3cae10c4092f, type: 3}
+  m_Name: Decision
+  m_EditorClassIdentifier: 
+  options:
+  - {fileID: 11400000, guid: 752e58c38ae91b845998d750fc6204c4, type: 2}
+  - {fileID: 11400000, guid: 7fe1501c18dc704479b3f85770a10f45, type: 2}
+  - {fileID: 11400000, guid: 829a623bf04a5df44a883d1f9031c647, type: 2}

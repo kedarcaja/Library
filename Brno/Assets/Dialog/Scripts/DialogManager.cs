@@ -13,9 +13,12 @@ public class DialogManager : MonoBehaviour
 
     public static DialogManager Instance { get { return FindObjectOfType<DialogManager>(); } }
     public Dialog currentDialog { get; set; }
+
     public UnityEvent OnStart;
     [SerializeField]
     private DialogPlayer defaultPlayer;
+    public DialogPlayer DefaultPlayer { get => defaultPlayer; }
+
     /// <summary>
     /// Plays specific dialog
     /// </summary>
@@ -25,10 +28,10 @@ public class DialogManager : MonoBehaviour
         if (d)
         {
             d.Play(this);
-            Instantiate(defaultPlayer.gameObject);
-            defaultPlayer.Dialog = d;
-            defaultPlayer.Dialog.destroyOnEnd = true;
-            defaultPlayer.Play();
+            Instantiate(DefaultPlayer.gameObject);
+            DefaultPlayer.Dialog = d;
+            DefaultPlayer.Dialog.destroyOnEnd = true;
+            DefaultPlayer.Play();
         }
     }
     /// <summary>

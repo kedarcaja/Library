@@ -8,12 +8,15 @@ public class MenuTextHighliter : MonoBehaviour
     [SerializeField]
     private List<TextMeshProUGUI> items = new List<TextMeshProUGUI>();
     private int index = 0, maxIndex, minIndex;
+
+    public List<TextMeshProUGUI> Items { get => items;  }
+
     void Awake()
     {
         minIndex = 0;
-        maxIndex = items.Count;
+        maxIndex = Items.Count;
         index = 0;
-        Highlite(Color.yellow, items[index]);
+        Highlite(Color.yellow, Items[index]);
     }
     public int  GetSelectedIndex()
     {
@@ -32,7 +35,7 @@ public class MenuTextHighliter : MonoBehaviour
             {
                 index = minIndex;
             }
-            Highlite(Color.yellow, items[index]);
+            Highlite(Color.yellow, Items[index]);
 
         }
         else if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
@@ -45,19 +48,19 @@ public class MenuTextHighliter : MonoBehaviour
             {
                 index = maxIndex;
             }
-            Highlite(Color.yellow, items[index]);
+            Highlite(Color.yellow, Items[index]);
 
         }
 
     }
     private void Highlite(Color col, TextMeshProUGUI item)
     {
-        foreach (TextMeshProUGUI t in items)
+        foreach (TextMeshProUGUI t in Items)
         {
             t.color = Color.white;
         }
         item.color = col;
-        index = items.IndexOf(item);
+        index = Items.IndexOf(item);
     }
     public void SelectItem(TextMeshProUGUI t)
     {
