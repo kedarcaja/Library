@@ -18,15 +18,15 @@ MonoBehaviour:
   OnStart:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: 
-        m_Mode: 1
+      - m_Target: {fileID: 11400000}
+        m_MethodName: AddItemToInventory
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: Srp*10
           m_BoolArgument: 0
         m_CallState: 2
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
@@ -34,12 +34,13 @@ MonoBehaviour:
   OnEnd:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: 
-        m_Mode: 1
+      - m_Target: {fileID: 11400000}
+        m_MethodName: AddNewQuest
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgument: {fileID: 11400000, guid: fc0ea2509ad52504898877768bf33e52,
+            type: 2}
+          m_ObjectArgumentAssemblyTypeName: Quest, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -59,9 +60,9 @@ MonoBehaviour:
       Culture=neutral, PublicKeyToken=null
   wasPlayed: 1
   repeatable: 1
-  repeatLimit: 94
+  repeatLimit: 87
   isPaused: 0
   isPlaying: 0
   IsEnable: 1
   destroyOnEnd: 0
-  isInitialized: 0
+  isInitialized: 1

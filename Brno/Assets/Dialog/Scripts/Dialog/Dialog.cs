@@ -59,12 +59,12 @@ public class Dialog : ScriptableObject
         isInitialized = true;
         timer.OnUpdate += delegate
         {
-            if(partsStack.Peek())
+            if(partsStack.Peek() !=null)
             {
                 partsStack.Dequeue();
             }
 
-            if (partsStack.Peek())
+            if (partsStack.Peek()!=null)
             {
                 Begin(partsStack.Peek());
             }
@@ -164,5 +164,15 @@ public class Dialog : ScriptableObject
     public void Log(string txt)
     {
         Debug.Log(txt);
+    }
+
+    // events
+    public void AddItemToInventory(string namecount)
+    {
+        Inventory.Instance.AddItemWithName(namecount.Split('*')[0], int.Parse(namecount.Split('*')[1]));
+    }
+    public void AddNewQuest(Quest q)
+    {
+        QuestManager.Instance.AddQuest(q);
     }
 }

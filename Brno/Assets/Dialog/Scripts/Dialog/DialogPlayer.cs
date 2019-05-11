@@ -8,6 +8,7 @@ public class DialogPlayer : MonoBehaviour
     [SerializeField]
     private Dialog dialog;
     public Dialog Dialog { get => dialog; set { dialog = value; dialog.StartInit(); } }
+    public UnityEvent OnStart, OnEnd, OnPause, OnUnPause;
     private void Awake()
     {
         if (dialog)
@@ -25,6 +26,10 @@ public class DialogPlayer : MonoBehaviour
             {
                 Dialog.OnStart.Invoke();
             }
+            if (OnStart != null)
+            {
+                OnStart.Invoke();
+            }
         }
     }
     public void Stop()
@@ -35,6 +40,10 @@ public class DialogPlayer : MonoBehaviour
             if (Dialog.OnEnd != null)
             {
                 Dialog.OnEnd.Invoke();
+            }
+            if (OnEnd != null)
+            {
+                OnEnd.Invoke();
             }
         }
     }
@@ -47,6 +56,10 @@ public class DialogPlayer : MonoBehaviour
             {
                 Dialog.OnPause.Invoke();
             }
+            if (OnPause != null)
+            {
+                OnPause.Invoke();
+            }
         }
     }
     public void UnPause()
@@ -58,14 +71,18 @@ public class DialogPlayer : MonoBehaviour
             {
                 Dialog.OnUnPause.Invoke();
             }
+            if (OnUnPause != null)
+            {
+                OnUnPause.Invoke();
+            }
         }
     }
     private void Update()
     {
-        //if (Input.GetKeyDown(KeyCode.Space))
-        //{
-        //    Play();
-        //}
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            Play();
+        }
         //    if (Input.GetKeyDown(KeyCode.P))
         //    {
         //        Pause();
@@ -74,10 +91,10 @@ public class DialogPlayer : MonoBehaviour
         //    {
         //        UnPause();
         //    }
-        //    if (Input.GetKeyDown(KeyCode.S))
-        //    {
-        //        Stop();
-        //    }
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            Stop();
+        }
 
     }
 
