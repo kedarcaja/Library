@@ -164,8 +164,18 @@ public class Slot : MonoBehaviour, ICollection, ITarget
 			if (CanContain(InventoryManager.Instance.MovingSlot.GetComponent<Slot>().CurrentItem))
 			{
 				Bag.AddFromTo(InventoryManager.Instance.MovingSlot.GetComponent<Slot>(), this);
-				InventoryManager.Instance.ClearMovingSlot();
-				return;
+               
+                    InventoryManager.Instance.ClearMovingSlot();
+                if (CurrentItem is Equipment && (Bag is CharBag) )
+                {
+                    (CurrentItem as Equipment).Equiped = true;
+
+                }
+                else
+                {
+                    (CurrentItem as Equipment).Equiped = false;
+                }
+                return;
 			}
 			Inventory.Instance.PullItemBack();
 		}

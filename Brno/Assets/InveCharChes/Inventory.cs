@@ -147,7 +147,7 @@ public class Inventory : MonoBehaviour, IOpenable
 	public void DropItem(Item item, int count)
 	{
 
-		SackScript sack;
+        SackScript sack = null;
 		if (InventoryManager.Instance.SackNearby == null)
 		{
 			sack = Instantiate(InventoryManager.Instance.SackSlotsPrefab, InventoryManager.Instance.DropSackSlotsParent.transform).GetComponent<SackScript>();

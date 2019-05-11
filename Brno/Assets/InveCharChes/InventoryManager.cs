@@ -274,7 +274,7 @@ public class InventoryManager : MonoBehaviour
 		{
 			movingSlot.GetComponent<Slot>().Add(from.CurrentItem);
 		}
-		MovingSlot.transform.Find("quality").GetComponent<Image>().color = new Color(0, 0, 0, 0);
+		MovingSlot.transform.Find("Quality").GetComponent<Image>().color = new Color(0, 0, 0, 0);
 		from.RemoveAll();
 		MovingSlot.transform.SetAsLastSibling();
 	

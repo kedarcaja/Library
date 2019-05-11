@@ -23,12 +23,13 @@ public class ItemContainer : MonoBehaviour, ITarget, IPointerClickHandler
 	private void Start()
 	{
 		itemCount = transform.GetComponentInChildren<Text>();
-		timer = new _Timer(1, 0.3f, this); // timer ovládající čas objevení TT
 
 	}
 	protected virtual void Awake()
 	{
-		timer.OnUpdate += delegate { if (timer.ElapsedTimeF == 2) { timer.Stop(); } };
+        timer = new _Timer(1, 0.3f, this); // timer ovládající čas objevení TT
+
+        timer.OnUpdate += delegate { if (timer.ElapsedTimeF == 2) { timer.Stop(); } };
 
 		image = GetComponent<Image>();
 		slot = GetComponentInParent<Slot>();
@@ -42,8 +43,8 @@ public class ItemContainer : MonoBehaviour, ITarget, IPointerClickHandler
 		image.sprite = item.Sprite;
 		image.raycastTarget = slot != FindObjectOfType<InventoryManager>().MovingSlot.GetComponent<Slot>() && slot != FindObjectOfType<InventoryManager>().SplitSlot ? true : false;
 		itemCount.text = slot.Items.Count > 1 ? slot.Items.Count.ToString() : string.Empty;
-		slot.gameObject.transform.Find("quality").GetComponent<Image>().sprite = item.QualityColor;
-		slot.gameObject.transform.Find("quality").GetComponent<Image>().color = Color.white;
+		slot.gameObject.transform.Find("Quality").GetComponent<Image>().sprite = item.QualityColor;
+		slot.gameObject.transform.Find("Quality").GetComponent<Image>().color = Color.white;
 
 	}
 
@@ -55,7 +56,7 @@ public class ItemContainer : MonoBehaviour, ITarget, IPointerClickHandler
 
 		if (!slot.Filled)
 		{
-			slot.transform.Find("quality").GetComponent<Image>().color = new Color(0, 0, 0, 0);
+			slot.transform.Find("Quality").GetComponent<Image>().color = new Color(0, 0, 0, 0);
 		}
 	}
 
@@ -64,7 +65,7 @@ public class ItemContainer : MonoBehaviour, ITarget, IPointerClickHandler
 		image.sprite = InventoryManager.Instance.EmptyItem;
 		itemCount.text = string.Empty;
 		image.raycastTarget = false;
-		slot.transform.Find("quality").GetComponent<Image>().color = new Color(0, 0, 0, 0);
+		slot.transform.Find("Quality").GetComponent<Image>().color = new Color(0, 0, 0, 0);
 	}
 
 	public void OnPointerEnter(PointerEventData eventData)
@@ -164,7 +165,6 @@ public class ItemContainer : MonoBehaviour, ITarget, IPointerClickHandler
                 {
                     OnUse();
                 }
-                return;
 
             }
         }
