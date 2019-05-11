@@ -90,7 +90,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ae0789c139646041a7be8930a2bf453, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  remoteSlot: {fileID: 0}
   canContain: 0
+  fyzicPlacementInUse: {fileID: 0}
+  fyzicPlacementInNotUse: {fileID: 0}
 --- !u!114 &114563974671816922
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -118,7 +121,7 @@ GameObject:
   - component: {fileID: 222829425716306124}
   - component: {fileID: 114169149789204486}
   m_Layer: 5
-  m_Name: quality
+  m_Name: Quality
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -269,6 +272,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70a58a87d1f9ec54f8c9c56394bd568f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canUseItem: 1
+  showUI: 1
 --- !u!114 &114841487739125228
 MonoBehaviour:
   m_ObjectHideFlags: 0
