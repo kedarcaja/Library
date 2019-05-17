@@ -10,5 +10,5 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 606c6eafd6d723e499bae546deb7f732, type: 3}
-  m_Name: New State
+  m_Name: normal
   m_EditorClassIdentifier: 
