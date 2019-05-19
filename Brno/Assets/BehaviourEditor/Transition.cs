@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 namespace BehaviourTreeEditor {
+    [System.Serializable]
 	public class Transition 
 	{
 		public Condition condition;

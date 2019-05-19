@@ -5,9 +5,25 @@ using UnityEngine;
 namespace BehaviourTreeEditor
 {
 
-	public class StateManager : MonoBehaviour
-	{
-		public float health;
-		public State currentState;
-	}
+    public class StateManager : MonoBehaviour
+    {
+        public float health;
+        public State currentState;
+
+        [HideInInspector]
+        public float delta;
+        [HideInInspector]
+        public Transform mTransform;
+
+        private void Start()
+        {
+            mTransform = this.transform;
+        }
+
+        private void Update()
+        {
+            if (currentState != null)
+                currentState.Tick(this);
+        }
+    }
 }

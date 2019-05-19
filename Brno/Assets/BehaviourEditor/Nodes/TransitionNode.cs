@@ -37,7 +37,7 @@ namespace BehaviourTreeEditor
 				rect.y += windowRect.height * 0.5f;
 				rect.width = 1;
 				rect.height = 1;
-				BehaviourEditor.DrawNodeCurve(enterState.windowRect,rect,true,Color.cyan);
+				BehaviourEditor.DrawNodeCurve(enterState.windowRect,rect,true,Color.red);
 			}
 			
 		}
