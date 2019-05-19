@@ -60,6 +60,7 @@ namespace BehaviourTreeEditor
                     {
                     }
                 }
+               
             }
             if (isDuplicate)
             {
@@ -67,6 +68,7 @@ namespace BehaviourTreeEditor
                 windowRect.height = 100;
                 return;
             }
+
             if (currentState != null)
             {
                 if (serializedState == null)

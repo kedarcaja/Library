@@ -38,7 +38,6 @@ namespace BehaviourTreeEditor
         {
             bool rVal = false;
             StateNode prevNode = null;
-
             stateDict.TryGetValue(node.currentState, out prevNode);
             if(prevNode != null)
             {
@@ -72,13 +71,14 @@ namespace BehaviourTreeEditor
             s.isCollepsed = node.collapse;
             stateDict.Add(s.state, node);
         }
-        void ClearStateNode(StateNode node)
+       public void ClearStateNode(StateNode node)
         {
             Saved_StateNode s = GetSavedState(node);
             if (s != null)
             {
                 savedStateNodes.Remove(s);
                 stateNodesDict.Remove(node);
+                stateDict.Remove(s.state);
             }
         }
         public Saved_StateNode GetSavedState(StateNode node)

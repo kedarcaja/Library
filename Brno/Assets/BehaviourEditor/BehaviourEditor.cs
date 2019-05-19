@@ -95,7 +95,7 @@ namespace BehaviourTreeEditor
                         StateNode target = (StateNode)selectedNode;
                         target.ClearReferences();
                         windows.Remove(target);
-                        //currentGraph.savedStateNodes.Remove(currentGraph.GetSavedState(selectedNode as StateNode));
+                        currentGraph.ClearStateNode(target);
                     }
                     if (selectedNode is TransitionNode)
                     {
