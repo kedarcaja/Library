@@ -4,9 +4,9 @@ using UnityEngine;
 
 namespace BehaviourTreeEditor
 {
-	public class CommentNode : BaseNode
+	public class CommentNode 
 	{
-		string comment = "This is comment";
+	/*	string comment = "This is comment";
 		public override void DrawCurve()
 		{
 		}
@@ -14,6 +14,6 @@ namespace BehaviourTreeEditor
 		{
 			comment = GUILayout.TextArea(comment, 200);
 
-		}
+		}*/
 	}
 }
