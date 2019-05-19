@@ -13,25 +13,10 @@ MonoBehaviour:
   m_Name: moving
   m_EditorClassIdentifier: 
   transitions:
-  - condition: {fileID: 0}
+  - condition: {fileID: 11400000, guid: 754d4d407b8940d40ab1c52e6dd682f2, type: 2}
     targetState: {fileID: 0}
     disable: 0
-  - condition: {fileID: 0}
-    targetState: {fileID: 0}
-    disable: 0
-  - condition: {fileID: 0}
-    targetState: {fileID: 0}
-    disable: 0
-  - condition: {fileID: 0}
-    targetState: {fileID: 0}
-    disable: 0
-  - condition: {fileID: 0}
-    targetState: {fileID: 0}
-    disable: 0
-  - condition: {fileID: 0}
-    targetState: {fileID: 0}
-    disable: 0
-  - condition: {fileID: 0}
+  - condition: {fileID: 11400000, guid: 754d4d407b8940d40ab1c52e6dd682f2, type: 2}
     targetState: {fileID: 0}
     disable: 0
   - condition: {fileID: 0}

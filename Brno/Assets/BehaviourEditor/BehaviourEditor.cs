@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace BehaviourTreeEditor
 {
@@ -83,8 +84,8 @@ namespace BehaviourTreeEditor
                     if (selectedNode is StateNode)
                     {
                         StateNode from = (StateNode)selectedNode;
-                        Transition t = from.AddTransition();
-                        AddTransitionNode(from.currentState.transitions.Count, t, from);
+                     //   Transition t = from.AddTransition();
+                        AddTransitionNode(from.currentState.transitions.Count, null, from);
                     }
                     break;
 
@@ -94,15 +95,16 @@ namespace BehaviourTreeEditor
                         StateNode target = (StateNode)selectedNode;
                         target.ClearReferences();
                         windows.Remove(target);
+                        //currentGraph.savedStateNodes.Remove(currentGraph.GetSavedState(selectedNode as StateNode));
                     }
                     if (selectedNode is TransitionNode)
                     {
                         TransitionNode target = (TransitionNode)selectedNode;
                         windows.Remove(target);
-                        if (target.enterState.currentState.transitions.Contains(target.targetTransition))
-                        {
-                            target.enterState.currentState.transitions.Remove(target.targetTransition);
-                        }
+                        //if (target.enterState.currentState.transitions.Contains(target.transition))
+                        //{
+                        //    target.enterState.currentState.transitions.Remove(target.transition);
+                        //}
 
                     }
                     if (selectedNode is CommentNode)
@@ -228,7 +230,7 @@ namespace BehaviourTreeEditor
             stateNode.windowTitle = "State";
 
             windows.Add(stateNode);
-            currentGraph.SetStateNode(stateNode);
+            //  currentGraph.SetStateNode(stateNode);
             return stateNode;
         }
         public static CommentNode AddCommentNode(Vector2 pos)
@@ -295,6 +297,7 @@ namespace BehaviourTreeEditor
             if (currentGraph == null)
                 return;
             currentGraph.Init();
+            
             List<Saved_StateNode> l = new List<Saved_StateNode>();
             l.AddRange(currentGraph.savedStateNodes);
             currentGraph.savedStateNodes.Clear();
@@ -303,11 +306,17 @@ namespace BehaviourTreeEditor
                 StateNode s = AddStateNode(l[i].position);
                 s.currentState = l[i].state;
                 s.collapse = l[i].isCollepsed;
-                currentGraph.SetStateNode(s);
-                // load transitions
+
+                for (int j = l[i].savedConditions.Count - 1; j >= 0; j--)
+                {
+                    TransitionNode trNode = AddTransitionNode(l[i].savedConditions[j].position, l[i].savedConditions[j].transition, s);
+                }
 
             }
 
         }
-    }
+
+    } 
+   
+ 
 }

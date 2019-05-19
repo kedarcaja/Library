@@ -7,28 +7,52 @@ namespace BehaviourTreeEditor
 {
 	public class TransitionNode : BaseNode
 	{
-		public Transition targetTransition;
+        public bool isDuplicate;
+		public Condition targeCondition;
+        public Condition previousCondition;
+        public Transition transition;
 		public StateNode enterState,targetState;
 		public void Init(StateNode enterState,Transition transition)
 		{
 			this.enterState = enterState;
-			targetTransition = transition;
 		}
 		public override void DrawWindow()
 		{
-			if(targetTransition == null)return;
+			
 
 			EditorGUILayout.LabelField("");
-			targetTransition.condition = (Condition)EditorGUILayout.ObjectField(targetTransition.condition,typeof(Condition),false);
-			if(targetTransition.condition == null)
+			targeCondition = (Condition)EditorGUILayout.ObjectField(targeCondition,typeof(Condition),false);
+			if(targeCondition == null)
 			{
 				EditorGUILayout.LabelField("No Condition!");
-			}
-			else
+           
+            }
+       
+            else
 			{
-				targetTransition.disable = EditorGUILayout.Toggle("Disabled: ",targetTransition.disable);
+                if (isDuplicate)
+                {
+                    EditorGUILayout.LabelField("Duplicate Condition!");
+                }
+                else
+                {
+                    //targeCondition.disable = EditorGUILayout.Toggle("Disabled: ", targeCondition.disable);
+                }
 			}
-		}
+
+     
+
+            if (previousCondition != targeCondition)
+            {
+                isDuplicate = BehaviourEditor.currentGraph.IsTransitionDuplicate(this);
+                if (!isDuplicate)
+                {
+                    BehaviourEditor.currentGraph.SetNode(this);
+                }
+                previousCondition = targeCondition;
+
+            }
+        }
 		public override void DrawCurve()
 		{
 			if (enterState)
@@ -39,7 +63,6 @@ namespace BehaviourTreeEditor
 				rect.height = 1;
 				BehaviourEditor.DrawNodeCurve(enterState.windowRect,rect,true,Color.red);
 			}
-			
 		}
 	}
 }

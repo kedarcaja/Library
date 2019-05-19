@@ -12,10 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 606c6eafd6d723e499bae546deb7f732, type: 3}
   m_Name: normal
   m_EditorClassIdentifier: 
-  transitions:
-  - condition: {fileID: 0}
-    targetState: {fileID: 0}
-    disable: 0
+  transitions: []
   onState:
   - {fileID: 11400000, guid: 92511a718e164ea44bef69dedd3eecf0, type: 2}
   onEnter: []

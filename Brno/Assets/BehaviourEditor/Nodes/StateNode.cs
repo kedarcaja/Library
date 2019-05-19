@@ -9,9 +9,10 @@ namespace BehaviourTreeEditor
     public class StateNode : BaseNode
     {
         public bool collapse;
+        public bool isDuplicate;
         bool previousCollapse;
         public State currentState;
-        State previousState;
+        public State previousState;
         SerializedObject serializedState;
         ReorderableList onStateList;
         ReorderableList onExitList;
@@ -43,16 +44,28 @@ namespace BehaviourTreeEditor
             if (previousCollapse != collapse)
             {
                 previousCollapse = collapse;
-                BehaviourEditor.currentGraph.SetStateNode(this);
+                 //BehaviourEditor.currentGraph.SetNode(this);
+                 //
             }
             if (previousState != currentState)
             {
                 serializedState = null;
-                previousState = currentState;
-                BehaviourEditor.currentGraph.SetStateNode(this);
-                for (int i = 0; i < currentState.transitions.Count; i++)
+                isDuplicate = BehaviourEditor.currentGraph.IsStateNodeDuplicate(this);
+                if (!isDuplicate)
                 {
+                    BehaviourEditor.currentGraph.SetNode(this);
+                    previousState = currentState;
+
+                    for (int i = 0; i < currentState.transitions.Count; i++)
+                    {
+                    }
                 }
+            }
+            if (isDuplicate)
+            {
+                EditorGUILayout.LabelField("State is a duplicate!");
+                windowRect.height = 100;
+                return;
             }
             if (currentState != null)
             {
