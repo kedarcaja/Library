@@ -2,59 +2,24 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
-using UnityEditorInternal;
 using UnityEngine;
+
 namespace BehaviourTreeEditor
 {
-    [Serializable]
-    public class BaseNode
+    public class BaseNode : ScriptableObject
     {
-       // [HideInInspector]
-        public DrawNode drawNode;
-        //[HideInInspector]
-        public Rect windowRect;
-       // [HideInInspector]
-        public string windowTitle;
-        public StateNodeReferences stateRef;
+        public int ID { get; set; }
+        public Rect WindowRect { get; set; }
+        public string WindowTitle { get; set; }
+        public BaseNode(float x, float y, float width, float height, string title) { }
 
-        public void DrawWindow()
-        {
-            if(drawNode != null)
-            {
-                drawNode.DrawWindow(this);
-            }
-        }
-        public void DrawCurve()
-        {
-            if (drawNode != null)
-            {
-                drawNode.DrawCurve(this);
-            }
-        }
+        public BaseNode(Rect windowRect, string title) { }
+        public BaseNode(Vector2 position, Vector2 size, string title) { }
 
-    }
-    [Serializable]
-    public class StateNodeReferences
-    {
-        [HideInInspector]
-        public bool collapse;
-        [HideInInspector]
-        public bool isDuplicate;
-        [HideInInspector]
-        public bool previousCollapse;
-        [HideInInspector]
-        public State currentState;
-        [HideInInspector]
-        public State previousState;
-        [HideInInspector]
-        public SerializedObject serializedState;
-        [HideInInspector]
-        public ReorderableList onStateList;
-        [HideInInspector]
-        public ReorderableList onExitList;
-        [HideInInspector]
-        public ReorderableList onEnterList;
-        [HideInInspector]
-        public List<BaseNode> depencies = new List<BaseNode>();
+
+        public virtual void DrawWindow()
+        {
+
+        }
     }
 }
