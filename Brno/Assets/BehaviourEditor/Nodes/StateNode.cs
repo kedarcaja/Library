@@ -6,31 +6,13 @@ using UnityEngine;
 
 namespace BehaviourTreeEditor
 {
-    [CreateAssetMenu(menuName = "BehaviourEditor/Nodes/State")]
     public class StateNode : BaseNode
     {
-        public StateNode(Rect windowRect, string title) : base(windowRect, title)
-        {
-            WindowRect = windowRect;
-            WindowTitle = title;
-
-        }
-
-        public StateNode(Vector2 position, Vector2 size, string title) : base(position, size, title)
-        {
-            WindowRect = new Rect(position.x, position.y, size.x, size.y);
-            WindowTitle = title;
-        }
-
-        public StateNode(float x, float y, float width, float height, string title) : base(x, y, width, height, title)
-        {
-            WindowRect = new Rect(x, y, width, height);
-            WindowTitle = title;
-
-        }
         public override void DrawWindow()
         {
-            EditorGUILayout.LabelField("Add State to modify: ");
+            base.DrawWindow();
+         //   EditorGUI.DrawRect(new Rect(0, 16, WindowRect.width, WindowRect.height - 16), Color.red);
+         //   GUI.DrawTexture(new Rect(WindowRect.width / 2 - 3, WindowRect.height / 2 - 16, 100, 100), (Texture)Resources.Load<Texture>("rtg"));
         }
     }
 }
