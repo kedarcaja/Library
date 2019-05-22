@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
@@ -40,7 +41,6 @@ namespace BehaviourTreeEditor
         private void ModifyNode(Event e)
         {
             GenericMenu menu = new GenericMenu();
-
             menu.AddItem(new GUIContent("Delete"), false, ContextCallback, UserActions.deleteNode);
             if (selectedNode is StateNode)
             {
@@ -136,8 +136,6 @@ namespace BehaviourTreeEditor
                 case UserActions.stateNode:
                     currentCharacter.AddNode<StateNode>(mousePosition.x, mousePosition.y, 200, 300, "State");
                     break;
-
-
                 case UserActions.commentNode:
                     currentCharacter.AddNode<CommentNode>(mousePosition.x, mousePosition.y, 200, 150, "Comment");
                     break;
@@ -170,13 +168,7 @@ namespace BehaviourTreeEditor
 
         public void DrawWindows()
         {
-            if (currentCharacter != null)
-            {
-                foreach (BaseNode n in currentCharacter.nodes)
-                {
-                    n.DrawCurve();
-                }
-            }
+
             BeginWindows();
             EditorGUI.DrawRect(new Rect(0, 0, 250, 80), new Color32(47, 50, 56, 255));
             EditorGUI.LabelField(new Rect(0, 0, 200, 50), "Character:");
@@ -189,6 +181,11 @@ namespace BehaviourTreeEditor
             }
             else
             {
+                foreach (BaseNode n in currentCharacter.nodes)
+                {
+                    n.DrawCurve();
+                }
+
                 EditorGUI.DrawRect(new Rect(210, 0, 80, 80), new Color32(44, 47, 53, 255));
                 GUI.DrawTexture(new Rect(210, 0, 70, 70), currentCharacter.Character.Portait.texture);
 
@@ -234,6 +231,10 @@ namespace BehaviourTreeEditor
             Handles.DrawBezier(startPos, endPos, startTan, endTan, curveColor, null, 1);
 
         }
+
+
+
+
 
     }
 

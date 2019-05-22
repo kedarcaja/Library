@@ -13,5 +13,22 @@ MonoBehaviour:
   m_Name: New Character Graph
   m_EditorClassIdentifier: 
   nodes:
-  - {fileID: 0}
+  - ID: 14
+    WindowRect:
+      serializedVersion: 2
+      x: 15
+      y: 143
+      width: 200
+      height: 300
+    WindowTitle: State
+    transitions: []
+  - ID: 15
+    WindowRect:
+      serializedVersion: 2
+      x: 322
+      y: 359
+      width: 200
+      height: 300
+    WindowTitle: State
+    transitions: []
   character: {fileID: 11400000, guid: 48680ab0895e7274f9dd5a8a1908045d, type: 2}
