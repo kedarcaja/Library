@@ -164,6 +164,7 @@ namespace BehaviourTreeEditor
 
             }
             EditorUtility.SetDirty(currentCharacter);
+
         }
 
         public void DrawWindows()
@@ -176,6 +177,7 @@ namespace BehaviourTreeEditor
 
             if (currentCharacter == null)
             {
+                GUI.contentColor = Color.red;
                 GUILayout.Label("No Character Assign!", GUILayout.Width(150));
                 return;
             }
