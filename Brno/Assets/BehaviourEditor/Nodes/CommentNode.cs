@@ -12,5 +12,6 @@ namespace BehaviourTreeEditor
             GUI.contentColor = Color.green;
             comment = GUILayout.TextArea(comment,200);
         }
+     
     }
 }

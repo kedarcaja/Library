@@ -12,23 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a3d501ae2aac5e4aac88fb12af507ac, type: 3}
   m_Name: New Character Graph
   m_EditorClassIdentifier: 
-  nodes:
-  - ID: 14
-    WindowRect:
-      serializedVersion: 2
-      x: 15
-      y: 143
-      width: 200
-      height: 300
-    WindowTitle: State
-    transitions: []
-  - ID: 15
-    WindowRect:
-      serializedVersion: 2
-      x: 322
-      y: 359
-      width: 200
-      height: 300
-    WindowTitle: State
-    transitions: []
+  nodes: []
   character: {fileID: 11400000, guid: 48680ab0895e7274f9dd5a8a1908045d, type: 2}
+  removeNodesIDs: 
+  nodeIDS: 13

@@ -12,11 +12,14 @@ namespace BehaviourTreeEditor
 
         Vector3 mousePosition;
         bool clickedOnWindow;
-        BaseNode selectedNode;
+        public static BaseNode selectedNode;
         public static CharacterGraph currentCharacter;
-        bool isMakingTransition = false;
-
-        public enum UserActions { stateNode, deleteNode, commentNode, conditionNode, makeTransition }
+        public static bool isMakingTransition = false;
+        public enum UserActions
+        {
+            stateNode, deleteNode, commentNode, conditionNode, makeDefaultTransition,
+            makeTrueTransition, makeFalseTransition, removeDefaultTransition, removeTrueTransition, removeFalseTransition
+        }
 
 
         [MenuItem("Behaviour Editor/Editor")]
@@ -32,7 +35,10 @@ namespace BehaviourTreeEditor
             mousePosition = e.mousePosition;
             UserInput(e);
             DrawWindows();
-
+            if (GUI.changed)
+            {
+                Repaint();
+            }
         }
 
 
@@ -42,17 +48,48 @@ namespace BehaviourTreeEditor
         {
             GenericMenu menu = new GenericMenu();
             menu.AddItem(new GUIContent("Delete"), false, ContextCallback, UserActions.deleteNode);
-            if (selectedNode is StateNode)
+            menu.AddItem(new GUIContent("Add Condition"), false, ContextCallback, UserActions.conditionNode);
+            if(!(selectedNode is ConditionNode))
+            menu.AddItem(new GUIContent("Make Transition"), false, ContextCallback, UserActions.makeDefaultTransition);
+
+            if (selectedNode is ConditionNode)
             {
-                menu.AddItem(new GUIContent("Make Transition"), false, ContextCallback, UserActions.makeTransition);
+                ConditionNode node = (ConditionNode)selectedNode;
+
+                if (node.TrueTransition == null && node.Condition != null)
+                    menu.AddItem(new GUIContent("Add True"), false, ContextCallback, UserActions.makeTrueTransition);
+                else
+                    if (node.TrueTransition != null)
+                    menu.AddItem(new GUIContent("Remove True"), false, ContextCallback, UserActions.removeTrueTransition);
+                if (node.FalseTransition == null && node.Condition != null)
+                    menu.AddItem(new GUIContent("Add False"), false, ContextCallback, UserActions.makeFalseTransition);
+                else
+                    if (node.FalseTransition != null)
+                    menu.AddItem(new GUIContent("Remove False"), false, ContextCallback, UserActions.removeFalseTransition);
 
             }
-
             menu.ShowAsContext();
             e.Use();
         }
         private void UserInput(Event e)
         {
+            if (currentCharacter == null) return;
+            clickedOnWindow = false;
+            BaseNode start = selectedNode;
+
+            if ((e.button == 0 || e.button == 1) && e.type == EventType.MouseDown)
+            {
+                for (int i = 0; i < currentCharacter.nodes.Count; i++)
+                {
+                    if (currentCharacter.nodes[i].WindowRect.Contains(e.mousePosition))
+                    {
+                        clickedOnWindow = true;
+                        selectedNode = currentCharacter.nodes[i];
+                        break;
+                    }
+                }
+            }
+
 
             if (e.button == 1)
             {
@@ -67,33 +104,38 @@ namespace BehaviourTreeEditor
                 {
                     if (isMakingTransition)
                     {
+                        BaseNode end = selectedNode;
+                        Transition ct = new Transition(start, end, start.WindowRect, end.WindowRect);
 
-                        BaseNode start = selectedNode;
-                        if (clickedOnWindow)
+                        if (start is ConditionNode)
                         {
-                            for (int i = 0; i < currentCharacter.nodes.Count; i++)
+                            ConditionNode c = (ConditionNode)start;
+                            if (c.CreatingTrueTransition)
                             {
-                                if (currentCharacter.nodes[i].WindowRect.Contains(e.mousePosition))
-                                {
-                                    clickedOnWindow = true;
-                                    selectedNode = currentCharacter.nodes[i];
-                                    break;
-                                }
+                                c.TrueTransition = ct;
+
                             }
-                            isMakingTransition = false;
-
-                            Transition t = new Transition()
+                            else if (c.CreatingFalseTransition)
                             {
-                                Start = start,
-                                End = selectedNode,
+                                c.FalseTransition = ct;
 
-
-
-                            };
-                            if (start.transitions.Exists(c => c.Start == t.Start && c.End == t.End) || t.Start == t.End) return;
-                            start.transitions.Add(t);
-
+                            }
+                            c.CreatingFalseTransition = false;
+                            c.CreatingTrueTransition = false;
                         }
+                        if (ct != null)
+                        {
+                            if (!(start is ConditionNode))
+                            {
+                                start.TransitionsIds++;
+                                start.transitions.Add(ct);
+                            }
+                            end.depencies.Add(ct);
+                            ct.ReadyToDraw = true;
+                        }
+
+                        isMakingTransition = false;
+
                     }
                 }
                 if (e.type == EventType.MouseDrag)
@@ -105,19 +147,10 @@ namespace BehaviourTreeEditor
         private void RightClick(Event e)
         {
             if (currentCharacter == null) return;
-            clickedOnWindow = false;
 
-            for (int i = 0; i < currentCharacter.nodes.Count; i++)
-            {
-                if (currentCharacter.nodes[i].WindowRect.Contains(e.mousePosition))
-                {
-                    clickedOnWindow = true;
-                    selectedNode = currentCharacter.nodes[i];
-                    break;
-                }
-            }
             if (!clickedOnWindow)
             {
+                selectedNode = null;
                 AddNewNode(e);
                 isMakingTransition = false;
 
@@ -140,30 +173,59 @@ namespace BehaviourTreeEditor
                     currentCharacter.AddNode<CommentNode>(mousePosition.x, mousePosition.y, 200, 150, "Comment");
                     break;
                 case UserActions.conditionNode:
-                    currentCharacter.AddNode<ConditionNode>(mousePosition.x, mousePosition.y, 200, 150, "Condition");
-                    break;
 
-                case UserActions.deleteNode:
-                    selectedNode.transitions.Clear();
-                    currentCharacter.RemoveNode(selectedNode.ID);
-                    foreach (BaseNode b in currentCharacter.nodes)
+                    ConditionNode c = currentCharacter.AddNode<ConditionNode>(mousePosition.x, mousePosition.y, 200, 150, "Condition");
+                    if (selectedNode != null)
                     {
-                        foreach (Transition t in b.transitions)
-                        {
-                            if (t.End == selectedNode)
-                            {
-                                b.transitions.Remove(t);
-                            }
-                        }
+                        c.MainTransition = new Transition(selectedNode, c, selectedNode.WindowRect, c.WindowRect);
+                        c.MainTransition.ReadyToDraw = true;
                     }
                     break;
-                case UserActions.makeTransition:
+
+
+                case UserActions.deleteNode:
+                  
+                    currentCharacter.AddToRemoveNode(selectedNode.ID);
+                    break;
+
+                case UserActions.makeDefaultTransition:
+                    Transition t = new Transition(selectedNode,null,selectedNode.WindowRect,new Rect());
+                    t.ReadyToDraw = true;
                     isMakingTransition = true;
                     break;
 
+                case UserActions.makeTrueTransition:
 
+                    if (!(selectedNode is ConditionNode)) return;
+
+                    ConditionNode d = (ConditionNode)selectedNode;
+                    isMakingTransition = true;
+                    d.CreatingFalseTransition = false;
+                    d.CreatingTrueTransition = true;
+                    break;
+                case UserActions.makeFalseTransition:
+
+
+                    if (!(selectedNode is ConditionNode)) return;
+
+                    ConditionNode x = (ConditionNode)selectedNode;
+                    isMakingTransition = true;
+                    x.CreatingFalseTransition = true;
+                    x.CreatingTrueTransition = false;
+                    break;
+
+                case UserActions.removeFalseTransition:
+                    if (selectedNode is ConditionNode)
+                        (selectedNode as ConditionNode).FalseTransition.ReadyToDraw = false;
+                    (selectedNode as ConditionNode).FalseTransition = null;
+                    break;
+                case UserActions.removeTrueTransition:
+                    (selectedNode as ConditionNode).TrueTransition.ReadyToDraw = false;
+                    (selectedNode as ConditionNode).TrueTransition = null;
+                    break;
             }
             EditorUtility.SetDirty(currentCharacter);
+
 
         }
 
@@ -183,6 +245,7 @@ namespace BehaviourTreeEditor
             }
             else
             {
+                currentCharacter.RemoveNodeSelectedNodes();
                 foreach (BaseNode n in currentCharacter.nodes)
                 {
                     n.DrawCurve();
@@ -219,21 +282,23 @@ namespace BehaviourTreeEditor
             e.Use();
         }
 
-        public static void DrawNodeCurve(Rect start, Rect end, bool left, Color curveColor)
+        public static void DrawNodeCurve(Rect start, Rect end, bool left, Color curveColor, string lable, Color lableTextColor, Vector3 dir)
         {
             Vector3 startPos = new Vector3(left ? start.x + start.width : start.x, start.y + (start.height * 0.5f), 0);
             Vector3 endPos = new Vector3(end.x + (end.width * 0.5f), end.y + (end.height * 0.5f), 0);
-            Vector3 startTan = startPos + Vector3.right * 50;
+            Vector3 startTan = startPos + dir * 50;
             Vector3 endTan = endPos + Vector3.left * 50;
-            Color shadow = new Color(0, 0, 0, 0.6f);
+
+            GUIStyle style = new GUIStyle();
+            style.normal.textColor = lableTextColor;
+            GUI.Label(new Rect(left ? startPos.x +20: startTan.x, startPos.y, 40, 20), lable, style);
             for (int i = 0; i < 3; i++)
             {
-                Handles.DrawBezier(startPos, endPos, startTan, endTan, shadow, null, (i + 1) * 0.5f);
+                Handles.DrawBezier(startPos, endPos, startTan, endTan, curveColor, null, 4);
             }
-            Handles.DrawBezier(startPos, endPos, startTan, endTan, curveColor, null, 1);
+            Handles.DrawBezier(startPos, endPos, startTan, endTan, curveColor, null, 3);
 
         }
-
 
 
 
