@@ -28,7 +28,6 @@ namespace BehaviourTreeEditor
             BehaviourEditor editor = EditorWindow.GetWindow<BehaviourEditor>();
             editor.minSize = new Vector2(800, 600);
         }
-
         private void OnGUI()
         {
             Event e = Event.current;
@@ -39,6 +38,7 @@ namespace BehaviourTreeEditor
             {
                 Repaint();
             }
+
         }
 
 
@@ -48,7 +48,6 @@ namespace BehaviourTreeEditor
         {
             GenericMenu menu = new GenericMenu();
             menu.AddItem(new GUIContent("Delete"), false, ContextCallback, UserActions.deleteNode);
-            menu.AddItem(new GUIContent("Add Condition"), false, ContextCallback, UserActions.conditionNode);
             if(!(selectedNode is ConditionNode))
             menu.AddItem(new GUIContent("Make Transition"), false, ContextCallback, UserActions.makeDefaultTransition);
 
@@ -106,6 +105,8 @@ namespace BehaviourTreeEditor
                     {
                         BaseNode end = selectedNode;
                         Transition ct = new Transition(start, end, start.WindowRect, end.WindowRect);
+
+                        if (start.IsTransitionDuplicateOrSelve(ct)) return; // checks if condition exists or is connected to its self
 
                         if (start is ConditionNode)
                         {
@@ -245,6 +246,7 @@ namespace BehaviourTreeEditor
             }
             else
             {
+                currentCharacter.RetypeNodes();
                 currentCharacter.RemoveNodeSelectedNodes();
                 foreach (BaseNode n in currentCharacter.nodes)
                 {
@@ -300,9 +302,9 @@ namespace BehaviourTreeEditor
 
         }
 
-
+      
 
 
     }
-
+    
 }

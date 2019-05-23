@@ -14,18 +14,17 @@ namespace BehaviourTreeEditor
         public int ID;
         public Rect WindowRect;
         public string WindowTitle;
-        protected Color32 nodeColor = Color.grey;
+        public Color32 nodeColor = Color.grey;
         public List<Transition> transitions = new List<Transition>();
-        private bool collapse = false;
+        public bool collapse = false;
         public float normalHeight = 0;
         public int TransitionsIds = 0;
         public List<Transition> depencies = new List<Transition>();
-
+        public Type nodeType = null;
 
 
         public virtual void DrawWindow()
         {
-            nodeColor = new Color32(nodeColor.r, nodeColor.g, nodeColor.b, 255);
             EditorGUI.DrawRect(new Rect(0, 17, WindowRect.width, WindowRect.height - 17), nodeColor);
             EditorGUILayout.LabelField("Node Color: ");
             nodeColor = EditorGUILayout.ColorField(nodeColor);
@@ -40,6 +39,10 @@ namespace BehaviourTreeEditor
 
             }
 
+        }
+        public bool IsTransitionDuplicateOrSelve(Transition tr)
+        {
+            return tr.StartNode.ID == tr.EndNode.ID || transitions.Exists(f => f.StartNode.ID == tr.StartNode.ID && f.EndNode.ID == tr.EndNode.ID);
         }
         public virtual void DrawCurve()
         {
@@ -59,6 +62,7 @@ namespace BehaviourTreeEditor
         public Color CurveColor = Color.black;
         public bool ReadyToDraw { get; set; }
         public int ID = 0;
+
 
         public Transition(BaseNode start, BaseNode end, Rect start_, Rect end_)
         {
