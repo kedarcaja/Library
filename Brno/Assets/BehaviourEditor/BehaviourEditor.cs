@@ -246,7 +246,6 @@ namespace BehaviourTreeEditor
             }
             else
             {
-                currentCharacter.RetypeNodes();
                 currentCharacter.RemoveNodeSelectedNodes();
                 foreach (BaseNode n in currentCharacter.nodes)
                 {

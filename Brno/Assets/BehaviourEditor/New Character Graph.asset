@@ -15,4 +15,4 @@ MonoBehaviour:
   nodes: []
   character: {fileID: 11400000, guid: 48680ab0895e7274f9dd5a8a1908045d, type: 2}
   removeNodesIDs: 
-  nodeIDS: 7
+  nodeIDS: 9
