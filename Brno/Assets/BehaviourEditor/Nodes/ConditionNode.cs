@@ -1,9 +1,11 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 namespace BehaviourTreeEditor
 {
+    [Serializable]
     public class ConditionNode : BaseNode
     {
         public Condition Condition { get; private set; }

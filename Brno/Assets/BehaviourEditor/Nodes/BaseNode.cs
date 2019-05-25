@@ -71,6 +71,7 @@ namespace BehaviourTreeEditor
             StartNode = start;
             EndNode = end;
             ID = start.transitions.Count;
+            StartNode.CharacterGraph.Saved = false;
 
         }
 

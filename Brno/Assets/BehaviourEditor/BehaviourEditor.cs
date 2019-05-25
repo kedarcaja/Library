@@ -1,7 +1,9 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEditor;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,6 +17,12 @@ namespace BehaviourTreeEditor
         public static BaseNode selectedNode;
         public static CharacterGraph currentCharacter;
         public static bool isMakingTransition = false;
+        bool graphSet = false;
+        bool useAutoSave = false;
+        float elapsedTime = 0;
+        private  float delay = 30;
+
+
         public enum UserActions
         {
             stateNode, deleteNode, commentNode, conditionNode, makeDefaultTransition,
@@ -27,6 +35,7 @@ namespace BehaviourTreeEditor
         {
             BehaviourEditor editor = EditorWindow.GetWindow<BehaviourEditor>();
             editor.minSize = new Vector2(800, 600);
+
         }
         private void OnGUI()
         {
@@ -39,6 +48,8 @@ namespace BehaviourTreeEditor
                 Repaint();
             }
 
+
+
         }
 
 
@@ -48,8 +59,8 @@ namespace BehaviourTreeEditor
         {
             GenericMenu menu = new GenericMenu();
             menu.AddItem(new GUIContent("Delete"), false, ContextCallback, UserActions.deleteNode);
-            if(!(selectedNode is ConditionNode))
-            menu.AddItem(new GUIContent("Make Transition"), false, ContextCallback, UserActions.makeDefaultTransition);
+            if (!(selectedNode is ConditionNode))
+                menu.AddItem(new GUIContent("Make Transition"), false, ContextCallback, UserActions.makeDefaultTransition);
 
             if (selectedNode is ConditionNode)
             {
@@ -141,6 +152,11 @@ namespace BehaviourTreeEditor
                 }
                 if (e.type == EventType.MouseDrag)
                 {
+                    if (clickedOnWindow)
+                    {
+                        currentCharacter.Saved = false;
+
+                    }
 
                 }
             }
@@ -185,12 +201,12 @@ namespace BehaviourTreeEditor
 
 
                 case UserActions.deleteNode:
-                  
+                    currentCharacter.Saved = false;
                     currentCharacter.AddToRemoveNode(selectedNode.ID);
                     break;
 
                 case UserActions.makeDefaultTransition:
-                    Transition t = new Transition(selectedNode,null,selectedNode.WindowRect,new Rect());
+                    Transition t = new Transition(selectedNode, null, selectedNode.WindowRect, new Rect());
                     t.ReadyToDraw = true;
                     isMakingTransition = true;
                     break;
@@ -233,19 +249,32 @@ namespace BehaviourTreeEditor
         public void DrawWindows()
         {
 
+            GUI.color = currentCharacter != null && currentCharacter.Saved ? Color.green : Color.red;
+
+            if (currentCharacter && GUI.Button(new Rect(500, 0, 200, 40), "Save current Graph"))
+            {
+                currentCharacter?.SaveNodes();
+            }
+            GUI.color = new Color32(99, 104, 112, 125);
             BeginWindows();
             EditorGUI.DrawRect(new Rect(0, 0, 250, 80), new Color32(47, 50, 56, 255));
+            GUI.color = Color.white;
             EditorGUI.LabelField(new Rect(0, 0, 200, 50), "Character:");
             currentCharacter = (CharacterGraph)EditorGUILayout.ObjectField(currentCharacter, typeof(CharacterGraph), false, GUILayout.Width(200));
 
             if (currentCharacter == null)
             {
-                GUI.contentColor = Color.red;
-                GUILayout.Label("No Character Assign!", GUILayout.Width(150));
+                GUI.color = Color.red;
+                GUI.Label(new Rect(5, 20, 150, 20), "No Character Assign!");
                 return;
             }
             else
             {
+                useAutoSave = GUI.Toggle(new Rect(700, 0, 100, 20), useAutoSave, "AutoSave");
+
+                GUILayout.BeginArea(new Rect(700, 20, 50, 20));
+                delay = EditorGUILayout.FloatField(delay, GUILayout.Width(50));
+                GUILayout.EndArea();
                 currentCharacter.RemoveNodeSelectedNodes();
                 foreach (BaseNode n in currentCharacter.nodes)
                 {
@@ -255,6 +284,7 @@ namespace BehaviourTreeEditor
                 EditorGUI.DrawRect(new Rect(210, 0, 80, 80), new Color32(44, 47, 53, 255));
                 GUI.DrawTexture(new Rect(210, 0, 70, 70), currentCharacter.Character.Portait.texture);
 
+
             }
 
             for (int i = 0; i < currentCharacter.nodes.Count; i++)
@@ -263,6 +293,33 @@ namespace BehaviourTreeEditor
             }
             EndWindows();
 
+        }
+        private void Update()
+        {
+            SaveAndLoadCurrentGraph();
+            if (currentCharacter != null&&useAutoSave)
+            {
+                if (elapsedTime >= delay)
+                {
+                    currentCharacter.SaveNodes();
+                    SaveAndLoadCurrentGraph();
+                    Debug.Log(string.Format("<color=red>Auto save</color>"));
+                    elapsedTime = 0;
+                    useAutoSave = false;
+                }
+                else
+                {
+                    elapsedTime += Time.deltaTime/10;
+                    Debug.Log(elapsedTime);
+                }
+            }
+        }
+        public void SaveAndLoadCurrentGraph()
+        {
+            if (currentCharacter != null && currentCharacter.nodes.Count == 0 && currentCharacter.Saved)
+            {
+                currentCharacter.LoadNodes();
+            }
         }
         void DrawNodeWindow(int id)
         {
@@ -292,18 +349,40 @@ namespace BehaviourTreeEditor
 
             GUIStyle style = new GUIStyle();
             style.normal.textColor = lableTextColor;
-            GUI.Label(new Rect(left ? startPos.x +20: startTan.x, startPos.y, 40, 20), lable, style);
+            GUI.Label(new Rect(left ? startPos.x + 20 : startTan.x, startPos.y, 40, 20), lable, style);
             for (int i = 0; i < 3; i++)
             {
                 Handles.DrawBezier(startPos, endPos, startTan, endTan, curveColor, null, 4);
             }
             Handles.DrawBezier(startPos, endPos, startTan, endTan, curveColor, null, 3);
-
         }
 
-      
+        private void OnDestroy()
+        {
+            SaveAllGraphs(true);
+        }
+        private void OnEnable()
+        {
+            currentCharacter?.LoadNodes();
+        }
 
+
+        public void SaveAllGraphs(bool withCurrent)
+        {
+            foreach (CharacterGraph g in Resources.LoadAll("Graphs", typeof(CharacterGraph)))
+            {
+                if (withCurrent)
+                {
+                    g.SaveNodes();
+                }
+                else
+                {
+                    if (currentCharacter != null && g == currentCharacter) continue;
+                    g.SaveNodes();
+                }
+            }
+        }
 
     }
-    
+
 }
