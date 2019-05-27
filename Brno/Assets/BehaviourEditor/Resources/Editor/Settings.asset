@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f28c573b69e5469459f913df9b51cb59, type: 3}
   m_Name: Settings
   m_EditorClassIdentifier: 
-  InitTransitions: []
+  skin: {fileID: 11400000, guid: e916ba2be0ed386419236e95d7cf1888, type: 2}

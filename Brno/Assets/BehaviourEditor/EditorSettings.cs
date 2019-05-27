@@ -6,5 +6,6 @@ namespace BehaviourTreeEditor
     [CreateAssetMenu(menuName = "BehaviourEditor/EditorSettings")]
     public class EditorSettings : ScriptableObject
     {
+        public GUISkin skin;
     }
 }
