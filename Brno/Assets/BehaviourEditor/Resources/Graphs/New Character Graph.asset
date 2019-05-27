@@ -14,26 +14,74 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nodes:
   - CharacterGraph: {fileID: 11400000}
-    ID: 18
+    ID: 13
     WindowRect:
       serializedVersion: 2
-      x: 604
-      y: 171
+      x: 1826.1133
+      y: 810.2297
       width: 200
       height: 300
     WindowTitle: State
     nodeColor:
       serializedVersion: 2
       rgba: 4286545791
-    transitions: []
     collapse: 0
     normalHeight: 300
     TransitionsIds: 0
-    depencies: []
+    Enable: 1
+  - CharacterGraph: {fileID: 11400000}
+    ID: 14
+    WindowRect:
+      serializedVersion: 2
+      x: 507.2388
+      y: -1051.0729
+      width: 200
+      height: 300
+    WindowTitle: State
+    nodeColor:
+      serializedVersion: 2
+      rgba: 4286545791
+    collapse: 0
+    normalHeight: 300
+    TransitionsIds: 0
+    Enable: 1
   character: {fileID: 11400000, guid: 48680ab0895e7274f9dd5a8a1908045d, type: 2}
   removeNodesIDs: 
-  nodeIDS: 19
-  Saved: 1
+  nodeIDS: 15
   conds: []
-  states: []
+  states:
+  - CharacterGraph: {fileID: 11400000}
+    ID: 13
+    WindowRect:
+      serializedVersion: 2
+      x: 1826.1133
+      y: 810.2297
+      width: 200
+      height: 300
+    WindowTitle: State
+    nodeColor:
+      serializedVersion: 2
+      rgba: 4286545791
+    collapse: 0
+    normalHeight: 300
+    TransitionsIds: 0
+    Enable: 1
+  - CharacterGraph: {fileID: 11400000}
+    ID: 14
+    WindowRect:
+      serializedVersion: 2
+      x: 507.2388
+      y: -1051.0729
+      width: 200
+      height: 300
+    WindowTitle: State
+    nodeColor:
+      serializedVersion: 2
+      rgba: 4286545791
+    collapse: 0
+    normalHeight: 300
+    TransitionsIds: 0
+    Enable: 1
   coms: []
+  InitTransitions: []
+  InitTransitionsToRemove: []

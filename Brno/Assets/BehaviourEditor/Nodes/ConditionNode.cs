@@ -8,9 +8,9 @@ namespace BehaviourTreeEditor
     [Serializable]
     public class ConditionNode : BaseNode
     {
-        public Condition Condition { get; private set; }
-        public Transition MainTransition, TrueTransition, FalseTransition;
-        public bool CreatingFalseTransition = false, CreatingTrueTransition = false;
+        public Condition Condition;
+        public Transition MainTransition = null, TrueTransition = null, FalseTransition = null;
+        public bool CreatingFalseTransition = false, CreatingTrueTransition = false, T_drawed, F_drawed;
 
         public override void DrawWindow()
         {
@@ -24,26 +24,32 @@ namespace BehaviourTreeEditor
             }
             else
             {
-            }
 
+
+            }
         }
 
+        public bool IsTransitionInSameState(Transition t)
+        {
+            return  (T_drawed && TrueTransition.EndNode == t.EndNode) || (F_drawed && FalseTransition.EndNode == t.EndNode);
+        }
         public override void DrawCurve()
         {
-            if (TrueTransition != null && TrueTransition.ReadyToDraw)
+            if (TrueTransition != null && TrueTransition.ReadyToDraw && T_drawed)
             {
                 TrueTransition.CurveColor = Color.red;
-                BehaviourEditor.DrawNodeCurve(TrueTransition.StartNode.WindowRect, TrueTransition.EndNode.WindowRect, false, TrueTransition.CurveColor,"True",Color.red,Vector3.left);
+                TrueTransition.DrawConnection(Vector3.left, Color.red, "True", true);
             }
-            if (FalseTransition != null && FalseTransition.ReadyToDraw)
+            if (FalseTransition != null && FalseTransition.ReadyToDraw && F_drawed)
             {
                 FalseTransition.CurveColor = Color.blue;
-                BehaviourEditor.DrawNodeCurve(FalseTransition.StartNode.WindowRect, FalseTransition.EndNode.WindowRect, true, FalseTransition.CurveColor,"False",Color.blue,Vector3.right);
+                FalseTransition.DrawConnection(Vector3.right, Color.blue, "False", true);
+
             }
             if (MainTransition != null)
             {
                 MainTransition.CurveColor = Color.white;
-                BehaviourEditor.DrawNodeCurve(MainTransition.StartNode.WindowRect, MainTransition.EndNode.WindowRect, true, MainTransition.CurveColor,"",Color.black,Vector3.zero);
+                MainTransition.DrawConnection(Vector3.zero, Color.black, "", false);
             }
         }
     }

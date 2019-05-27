@@ -12,11 +12,44 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a3d501ae2aac5e4aac88fb12af507ac, type: 3}
   m_Name: New Character Graph 1
   m_EditorClassIdentifier: 
-  nodes: []
+  nodes:
+  - CharacterGraph: {fileID: 11400000}
+    ID: 1
+    WindowRect:
+      serializedVersion: 2
+      x: 867
+      y: 194
+      width: 200
+      height: 300
+    WindowTitle: State
+    nodeColor:
+      serializedVersion: 2
+      rgba: 4286545791
+    collapse: 0
+    normalHeight: 300
+    TransitionsIds: 3
+    Enable: 1
   character: {fileID: 11400000, guid: 48680ab0895e7274f9dd5a8a1908045d, type: 2}
   removeNodesIDs: 
-  nodeIDS: 0
-  Saved: 0
+  nodeIDS: 2
   conds: []
-  states: []
+  states:
+  - CharacterGraph: {fileID: 11400000}
+    ID: 1
+    WindowRect:
+      serializedVersion: 2
+      x: 867
+      y: 194
+      width: 200
+      height: 300
+    WindowTitle: State
+    nodeColor:
+      serializedVersion: 2
+      rgba: 4286545791
+    collapse: 0
+    normalHeight: 300
+    TransitionsIds: 3
+    Enable: 1
   coms: []
+  InitTransitions: []
+  InitTransitionsToRemove: []

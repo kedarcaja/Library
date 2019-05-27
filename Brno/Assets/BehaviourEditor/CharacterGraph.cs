@@ -3,12 +3,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
-
+using System.Linq;
 namespace BehaviourTreeEditor
 {
     [CreateAssetMenu(menuName = "BehaviourEditor/Character Graph")]
     public class CharacterGraph : ScriptableObject
     {
+
+
+
+
         public List<BaseNode> nodes = new List<BaseNode>();
         [SerializeField]
         private Character character;
@@ -17,63 +21,42 @@ namespace BehaviourTreeEditor
         [SerializeField]
         private int nodeIDS = 0;
 
-        public bool Saved = false;
 
         #region Saving/Loading
+
 
         public List<ConditionNode> conds = new List<ConditionNode>();
         public List<StateNode> states = new List<StateNode>();
         public List<CommentNode> coms = new List<CommentNode>();
-        public List<T> CloneList<T>() where T : BaseNode
+        public List<Transition> InitTransitions = new List<Transition>();
+        public List<string> InitTransitionsToRemove = new List<string>();
+        public bool SaveListsAreNotEmpty()
         {
-
-
-
-            List<T> saved = new List<T>();
-            
-            foreach (BaseNode b in nodes)
-            {
-                if (b?.GetType() == typeof(T))
-                {
-
-                    saved.Add((T)b);
-                }
-            }
-
-            return saved;
+            return coms.Count > 0 || conds.Count > 0 || states.Count > 0;
         }
-        public void SaveNodes()
-        {
-            coms = CloneList<CommentNode>();
-            conds = CloneList<ConditionNode>();
-            states = CloneList<StateNode>();
-            nodes.Clear();
-            Debug.Log(string.Format("<color=green>Nodes has been saved</color>"));
-            Saved = true;
 
+        private void OnEnable()
+        {
+            LoadNodes();
+            InitializeTransitions();
         }
         public void LoadNodes()
         {
+            if (!SaveListsAreNotEmpty()) return;
+
+            nodes.Clear();
+
             if (coms.Count > 0)
                 nodes.AddRange(coms);
             if (conds.Count > 0)
                 nodes.AddRange(conds);
             if (states.Count > 0)
                 nodes.AddRange(states);
-
-            conds.Clear();
-            coms.Clear();
-            states.Clear();
-
-            Debug.Log(string.Format("<color=green>Nodes has been loaded</color>"));
-
         }
 
         #endregion
-
         public T AddNode<T>(float x, float y, float width, float height, string title) where T : BaseNode
         {
-            Saved = false;
 
             BaseNode n = (T)Activator.CreateInstance(typeof(T));
             n.WindowRect = new Rect(x, y, width, height);
@@ -83,22 +66,25 @@ namespace BehaviourTreeEditor
             n.ID = nodeIDS;
             nodeIDS++;
             n.normalHeight = n.WindowRect.height;
-            n.nodeType = typeof(T);
-            return n as T;
-        }
 
 
-        public void AddToRemoveNode(int id)
-        {
-            for (int i = 0; i < nodes.Count; i++)
+            if (typeof(T) == typeof(ConditionNode))
             {
-                if (id == nodes[i].ID)
-                {
-                    removeNodesIDs.Add(id);
-                }
-
+                ConditionNode c = n as ConditionNode;
+                conds.Add(c);
+            }
+            if (typeof(T) == typeof(CommentNode))
+            {
+                CommentNode c = n as CommentNode;
+                coms.Add(c);
+            }
+            if (typeof(T) == typeof(StateNode))
+            {
+                StateNode c = n as StateNode;
+                states.Add(c);
             }
 
+            return n as T;
         }
 
         public void RemoveNodeSelectedNodes()
@@ -109,36 +95,38 @@ namespace BehaviourTreeEditor
 
                 if (removeNodesIDs.Contains(nodes[i].ID))
                 {
-                    ClearNodeDepencies(nodes[i]);
                     nodes.Remove(nodes[i]);
                 }
 
             }
             removeNodesIDs.Clear();
         }
-
-        public void ClearNodeDepencies(BaseNode node)
+        public void AddInitiTransitionToRemove(string id)
         {
-            for (int i = 0; i < node.depencies.Count; i++)
+            InitTransitionsToRemove.Add(id);
+
+        }
+        public void RemoveInitTransitions()
+        {
+
+            for (int i = 0;i < InitTransitions.Count;i++)
             {
-                if (node.depencies[i] == null) continue;
-
-                if (node.depencies[i].StartNode is ConditionNode)
+                if (InitTransitionsToRemove.Contains(InitTransitions[i].ID))
                 {
-                    ConditionNode c = node.depencies[i].StartNode as ConditionNode;
-                    if (node.depencies[i] == c.TrueTransition)
-                    {
-                        c.TrueTransition.ReadyToDraw = false;
-                        c.TrueTransition = null;
-                    }
-                    else if (node.depencies[i] == c.FalseTransition)
-                    {
-                        c.FalseTransition.ReadyToDraw = false;
-                        c.FalseTransition = null;
-                    }
+                    InitTransitions.Remove(InitTransitions[i]);
                 }
-                node.depencies[i].StartNode.transitions.Remove(node.depencies[i]);
+            }
 
+            InitTransitionsToRemove.Clear();
+        }
+
+
+        public void InitializeTransitions()
+        {
+            foreach (Transition t in InitTransitions)
+            {
+                t.graph = this;
+                t.Init();
             }
         }
     }
