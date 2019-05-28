@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nodes:
   - CharacterGraph: {fileID: 11400000}
-    ID: 1
+    ID: 3
     WindowRect:
       serializedVersion: 2
-      x: 867
-      y: 194
+      x: 1383
+      y: 312
       width: 200
       height: 300
     WindowTitle: State
@@ -27,19 +27,19 @@ MonoBehaviour:
       rgba: 4286545791
     collapse: 0
     normalHeight: 300
-    TransitionsIds: 3
+    TransitionsIds: 0
     Enable: 1
   character: {fileID: 11400000, guid: 48680ab0895e7274f9dd5a8a1908045d, type: 2}
   removeNodesIDs: 
-  nodeIDS: 2
+  nodeIDS: 4
   conds: []
   states:
   - CharacterGraph: {fileID: 11400000}
-    ID: 1
+    ID: 3
     WindowRect:
       serializedVersion: 2
-      x: 867
-      y: 194
+      x: 1383
+      y: 312
       width: 200
       height: 300
     WindowTitle: State
@@ -48,7 +48,7 @@ MonoBehaviour:
       rgba: 4286545791
     collapse: 0
     normalHeight: 300
-    TransitionsIds: 3
+    TransitionsIds: 0
     Enable: 1
   coms: []
   InitTransitions: []

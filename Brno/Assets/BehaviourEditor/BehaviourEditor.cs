@@ -21,8 +21,9 @@ namespace BehaviourTreeEditor
         public static bool isMakingTransition = false;
         public EditorSettings settings;
         Rect all = new Rect(-5, -5, 10000, 10000); // window 
-
+        bool showSettings = false;
         public GUIStyle style;
+        string searchString = "";
         public enum UserActions
         {
             stateNode, deleteNode, commentNode, conditionNode, makeDefaultTransition,
@@ -151,7 +152,7 @@ namespace BehaviourTreeEditor
                         Transition ct = new Transition(start, end, start.TransitionsIds);
 
 
-                        if (start.IsTransitionDuplicateOrSelve(ct) || (start is ConditionNode && (start as ConditionNode).IsTransitionInSameState(ct))||!start.CanBeConnectedTo(end))
+                        if (start.IsTransitionDuplicateOrSelve(ct) || (start is ConditionNode && (start as ConditionNode).IsTransitionInSameState(ct)) || !start.CanBeConnectedTo(end))
                         {
                             isMakingTransition = false;
                             if (start is ConditionNode)
@@ -322,11 +323,12 @@ namespace BehaviourTreeEditor
         }
         public void DrawWindows()
         {
-           
+
+
             GUILayout.BeginArea(all, style);
             BeginWindows();
 
-            EditorGUI.LabelField(new Rect(10, 30, 200, 50), "Character:");
+            EditorGUI.LabelField(new Rect(10, 30, 200, 50), "Character: " + currentCharacter?.Character?.name);
             GUILayout.BeginArea(new Rect(10, 50, 200, 100));
             currentCharacter = (CharacterGraph)EditorGUILayout.ObjectField(currentCharacter, typeof(CharacterGraph), false, GUILayout.Width(200)); // field to choose graph
             GUILayout.EndArea();
@@ -335,10 +337,8 @@ namespace BehaviourTreeEditor
             if (currentCharacter == null)
             {
 
-                GUIStyle s = new GUIStyle();
-                s.normal.textColor = Color.red;
-                s.richText = true;
-                EditorGUI.LabelField(new Rect(10, 70, 200, 50), "No Character Assign!", s);
+
+                EditorGUI.LabelField(new Rect(10, 70, 200, 50), "No Character Assign!", GetTextStyleColor(Color.red));
                 goto end; // cannot be return because Windows and GL.Area must be closed
             }
 
@@ -352,8 +352,46 @@ namespace BehaviourTreeEditor
                 }
 
                 GUI.DrawTexture(new Rect(210, 20, 70, 70), currentCharacter.Character.Portait.texture); // drawing portait of character
-            }
 
+
+                if (showSettings = GUI.Toggle(new Rect(10, 100, 150, 20), showSettings, "Controlls"))
+                {
+                    EditorGUI.DrawRect(new Rect(10, 100, 150, 200), new Color32(255, 178, 0, 255));
+                    showSettings = GUI.Toggle(new Rect(10, 100, 150, 20), showSettings, "Controlls");// must be here because rect covers toggle on top
+                    EditorGUI.LabelField(new Rect(10, 130, 200, 50), "Nodes: " + currentCharacter.nodes.Count); // apears count of nodes
+                    if (GUI.Button(new Rect(10, 160, 150, 20), "Reset view")) // sets view to start position
+                    {
+                        ResetScroll();
+                    }
+                    if (GUI.Button(new Rect(10, 190, 150, 20), "Reset All nodes position")) // moves all nodes to start position
+                    {
+                        for (int i = 0; i < currentCharacter.nodes.Count; i++)
+                        {
+                            BaseNode b = currentCharacter.nodes[i];
+                            if (b == null) continue;
+
+                            Rect r = b.WindowRect;
+                            r.position = new Vector2(i * 200 < position.x ? i * 200 + 20 : position.x + 200, 400);
+                            b.WindowRect = r;
+
+                        }
+                    }
+                    if (currentCharacter.nodes.Count > 0 && GUI.Button(new Rect(10, 220, 50, 20), "Clear")) // botton to clear all nodes, apears only if nodes not empty
+                    {
+                        int n = 0;
+                        for (int i = 0; i < currentCharacter.nodes.Count; i++)
+                        {
+                            n = i;
+                            BaseNode b = currentCharacter.nodes[n];
+                            if (b == null) continue;
+
+                            b.Destroy();
+                            Repaint();
+                        }
+                        currentCharacter.nodes.Clear();
+                    }
+                }
+            }
             for (int i = 0; i < currentCharacter.nodes.Count; i++)
             {
                 currentCharacter.nodes[i].WindowRect = GUI.Window(i, currentCharacter.nodes[i].WindowRect, DrawNodeWindow, currentCharacter.nodes[i].WindowTitle); // setting up nodes as windows
@@ -397,7 +435,12 @@ namespace BehaviourTreeEditor
             }
             Handles.DrawBezier(startPos, endPos, startTan, endTan, curveColor, null, 3);
         }
-
+        public static GUIStyle GetTextStyleColor(Color color)
+        {
+            GUIStyle s = new GUIStyle();
+            s.normal.textColor = color;
+            return s;
+        }
     }
 
 }

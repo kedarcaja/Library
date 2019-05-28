@@ -12,108 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a3d501ae2aac5e4aac88fb12af507ac, type: 3}
   m_Name: New Character Graph
   m_EditorClassIdentifier: 
-  nodes:
-  - CharacterGraph: {fileID: 11400000}
-    ID: 13
-    WindowRect:
-      serializedVersion: 2
-      x: 1436.717
-      y: 347.029
-      width: 200
-      height: 300
-    WindowTitle: State
-    nodeColor:
-      serializedVersion: 2
-      rgba: 4286545791
-    collapse: 0
-    normalHeight: 300
-    TransitionsIds: 0
-    Enable: 1
-  - CharacterGraph: {fileID: 11400000}
-    ID: 14
-    WindowRect:
-      serializedVersion: 2
-      x: 117.83821
-      y: -1514.2759
-      width: 200
-      height: 300
-    WindowTitle: State
-    nodeColor:
-      serializedVersion: 2
-      rgba: 4286545791
-    collapse: 0
-    normalHeight: 300
-    TransitionsIds: 0
-    Enable: 1
-  - CharacterGraph: {fileID: 11400000}
-    ID: 15
-    WindowRect:
-      serializedVersion: 2
-      x: 366.80017
-      y: 312.1999
-      width: 200
-      height: 300
-    WindowTitle: State
-    nodeColor:
-      serializedVersion: 2
-      rgba: 4286545791
-    collapse: 0
-    normalHeight: 300
-    TransitionsIds: 0
-    Enable: 1
+  nodes: []
   character: {fileID: 11400000, guid: 48680ab0895e7274f9dd5a8a1908045d, type: 2}
   removeNodesIDs: 
-  nodeIDS: 16
+  nodeIDS: 72
   conds: []
-  states:
-  - CharacterGraph: {fileID: 11400000}
-    ID: 13
-    WindowRect:
-      serializedVersion: 2
-      x: 1436.717
-      y: 347.029
-      width: 200
-      height: 300
-    WindowTitle: State
-    nodeColor:
-      serializedVersion: 2
-      rgba: 4286545791
-    collapse: 0
-    normalHeight: 300
-    TransitionsIds: 0
-    Enable: 1
-  - CharacterGraph: {fileID: 11400000}
-    ID: 14
-    WindowRect:
-      serializedVersion: 2
-      x: 117.83821
-      y: -1514.2759
-      width: 200
-      height: 300
-    WindowTitle: State
-    nodeColor:
-      serializedVersion: 2
-      rgba: 4286545791
-    collapse: 0
-    normalHeight: 300
-    TransitionsIds: 0
-    Enable: 1
-  - CharacterGraph: {fileID: 11400000}
-    ID: 15
-    WindowRect:
-      serializedVersion: 2
-      x: 366.80017
-      y: 312.1999
-      width: 200
-      height: 300
-    WindowTitle: State
-    nodeColor:
-      serializedVersion: 2
-      rgba: 4286545791
-    collapse: 0
-    normalHeight: 300
-    TransitionsIds: 0
-    Enable: 1
+  states: []
   coms: []
   InitTransitions: []
   InitTransitionsToRemove: []

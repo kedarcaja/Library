@@ -8,8 +8,7 @@ namespace BehaviourTreeEditor
     [Serializable]
     public class CommentNode : BaseNode
     {
-        private string comment = "Type some comment";
-
+        public string comment = "";
         public override void DrawWindow()
         {
             comment = GUILayout.TextArea(comment,200);
