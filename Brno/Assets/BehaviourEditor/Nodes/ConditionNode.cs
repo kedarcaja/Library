@@ -52,5 +52,6 @@ namespace BehaviourTreeEditor
                 MainTransition.DrawConnection(Vector3.zero, Color.black, "", false);
             }
         }
+        
     }
 }

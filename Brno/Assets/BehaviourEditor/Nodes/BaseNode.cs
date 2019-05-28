@@ -9,6 +9,7 @@ namespace BehaviourTreeEditor
     [Serializable]
     public class BaseNode
     {
+        #region Variables
         [HideInInspector]
         public CharacterGraph CharacterGraph;
         public int ID;
@@ -24,11 +25,15 @@ namespace BehaviourTreeEditor
         [NonSerialized]
         public List<Transition> depencies = new List<Transition>();
         public bool Enable = true;
+        protected List<Type> unconnectableTypes = new List<Type>();
+        #endregion
+        
 
         public BaseNode()
         {
             OnCreate?.Invoke();
             Enable = true;
+            unconnectableTypes.Add(typeof(CommentNode));
         }
         public virtual void DrawWindow()
         {
@@ -112,6 +117,16 @@ namespace BehaviourTreeEditor
             CharacterGraph.removeNodesIDs.Add(ID);
             
             
+        }
+
+        /// <summary>
+        /// cant make transition from this node to unconectable nodes, but you can connect unconectable to this node 
+        /// </summary>
+        /// <param name="other"></param>
+        /// <returns></returns>
+        public bool CanBeConnectedTo(BaseNode other)
+        {
+            return !unconnectableTypes.Contains(other.GetType());
         }
     }
 }

@@ -151,7 +151,7 @@ namespace BehaviourTreeEditor
                         Transition ct = new Transition(start, end, start.TransitionsIds);
 
 
-                        if (start.IsTransitionDuplicateOrSelve(ct) || (start is ConditionNode && (start as ConditionNode).IsTransitionInSameState(ct)))
+                        if (start.IsTransitionDuplicateOrSelve(ct) || (start is ConditionNode && (start as ConditionNode).IsTransitionInSameState(ct))||!start.CanBeConnectedTo(end))
                         {
                             isMakingTransition = false;
                             if (start is ConditionNode)
