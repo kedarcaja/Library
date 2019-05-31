@@ -10,14 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0a3d501ae2aac5e4aac88fb12af507ac, type: 3}
-  m_Name: New Character Graph
+  m_Name: Graph
   m_EditorClassIdentifier: 
   nodes: []
-  character: {fileID: 11400000, guid: 48680ab0895e7274f9dd5a8a1908045d, type: 2}
-  removeNodesIDs: 
-  nodeIDS: 72
-  conds: []
-  states: []
-  coms: []
-  InitTransitions: []
-  InitTransitionsToRemove: []
+  removeNodesIDs: []

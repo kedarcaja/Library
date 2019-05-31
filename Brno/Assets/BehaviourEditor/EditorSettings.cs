@@ -7,5 +7,11 @@ namespace BehaviourTreeEditor
     public class EditorSettings : ScriptableObject
     {
         public GUISkin skin;
+
+        public CommentNode CommentNode;
+        public StateNode StateNode;
+        public ConditionNode ConditionNode;
+
+    
     }
 }

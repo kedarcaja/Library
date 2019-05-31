@@ -9,25 +9,25 @@ using UnityEngine.UI;
 
 namespace BehaviourTreeEditor
 {
+    public enum EWindowCurvePlacement { LeftTop, LeftBottom, CenterBottom, CenterTop, RightTop, RightBottom, RightCenter, LeftCenter, Center }
     public class BehaviourEditor : EditorWindow
     {
 
         Vector2 scrollPos;
         Vector2 scrollStartPos;
         Vector3 mousePosition;
-        bool clickedOnWindow;
+        static bool clickedOnWindow;
         public static BaseNode selectedNode;
-        public static CharacterGraph currentCharacter;
+        public static BehaviourGraph currentGraph;
         public static bool isMakingTransition = false;
         public EditorSettings settings;
         Rect all = new Rect(-5, -5, 10000, 10000); // window 
         bool showSettings = false;
         public GUIStyle style;
-        string searchString = "";
+        static Transition selectedTransition;
         public enum UserActions
         {
-            stateNode, deleteNode, commentNode, conditionNode, makeDefaultTransition,
-            makeTrueTransition, makeFalseTransition, removeDefaultTransition, removeTrueTransition, removeFalseTransition
+            deleteNode, commentNode, stateNode, makeTransition, conditionNode
         }
         [MenuItem("Behaviour Editor/Editor")]
         static void ShowEditor()
@@ -51,7 +51,7 @@ namespace BehaviourTreeEditor
 
             if (isMakingTransition)
             {
-                DrawNodeCurve(selectedNode.WindowRect, new Rect(mousePosition.x, mousePosition.y, 20, 20), true, Color.black, "", Color.black, Vector3.zero);
+                DrawNodeCurve(null, selectedNode.WindowRect, new Rect(mousePosition.x, mousePosition.y, 20, 20), EWindowCurvePlacement.Center, EWindowCurvePlacement.Center, Color.black, false);
                 Repaint();
             }
 
@@ -66,9 +66,9 @@ namespace BehaviourTreeEditor
         }
         void ResetScroll()
         {
-            for (int i = 0; i < currentCharacter?.nodes.Count; i++)
+            for (int i = 0; i < currentGraph?.nodes.Count; i++)
             {
-                BaseNode b = currentCharacter.nodes[i];
+                BaseNode b = currentGraph.nodes[i];
                 b.WindowRect.x -= scrollPos.x;
                 b.WindowRect.y -= scrollPos.y;
             }
@@ -82,9 +82,9 @@ namespace BehaviourTreeEditor
             scrollStartPos = e.mousePosition;
             scrollPos += diff;
 
-            for (int i = 0; i < currentCharacter.nodes.Count; i++)
+            for (int i = 0; i < currentGraph.nodes.Count; i++)
             {
-                BaseNode b = currentCharacter.nodes[i];
+                BaseNode b = currentGraph.nodes[i];
                 b.WindowRect.x += diff.x;
                 b.WindowRect.y += diff.y;
             }
@@ -93,42 +93,32 @@ namespace BehaviourTreeEditor
         {
             GenericMenu menu = new GenericMenu();
             menu.AddItem(new GUIContent("Delete"), false, ContextCallback, UserActions.deleteNode);
-            if (!(selectedNode is ConditionNode))
-                menu.AddItem(new GUIContent("Make Transition"), false, ContextCallback, UserActions.makeDefaultTransition);
-
-            if (selectedNode is ConditionNode)
-            {
-                ConditionNode node = (ConditionNode)selectedNode;
-
-                if (!node.T_drawed && node.Condition != null)
-                    menu.AddItem(new GUIContent("Add True"), false, ContextCallback, UserActions.makeTrueTransition);
-                else
-                    if (node.T_drawed)
-                    menu.AddItem(new GUIContent("Remove True"), false, ContextCallback, UserActions.removeTrueTransition);
-                if (!node.F_drawed && node.Condition != null)
-                    menu.AddItem(new GUIContent("Add False"), false, ContextCallback, UserActions.makeFalseTransition);
-                else
-                    if (node.F_drawed)
-                    menu.AddItem(new GUIContent("Remove False"), false, ContextCallback, UserActions.removeFalseTransition);
-
-            }
+            if (selectedNode.condition != null && (selectedNode.drawNode is ConditionNode) && selectedNode.transitions.Count < 2 || !(selectedNode.drawNode is ConditionNode))
+                menu.AddItem(new GUIContent("Make Transition"), false, ContextCallback, UserActions.makeTransition);
             menu.ShowAsContext();
             e.Use();
         }
         private void UserInput(Event e)
         {
-            if (currentCharacter == null) return;
+            if (currentGraph == null) return;
             clickedOnWindow = false;
             BaseNode start = selectedNode;
 
             if ((e.button == 0 || e.button == 1) && e.type == EventType.MouseDown)
             {
-                for (int i = 0; i < currentCharacter.nodes.Count; i++)
+                if (selectedTransition != null && !new Rect(10, 150, 200, 300).Contains(mousePosition))
                 {
-                    if (currentCharacter.nodes[i].WindowRect.Contains(e.mousePosition))
+                    selectedTransition.clicked = false;
+                    selectedTransition = null;
+                    Repaint();
+
+                }
+                for (int i = 0; i < currentGraph.nodes.Count; i++)
+                {
+                    if (currentGraph.nodes[i].WindowRect.Contains(e.mousePosition))
                     {
                         clickedOnWindow = true;
-                        selectedNode = currentCharacter.nodes[i];
+                        selectedNode = currentGraph.nodes[i];
                         break;
                     }
                 }
@@ -149,55 +139,30 @@ namespace BehaviourTreeEditor
                     if (isMakingTransition)
                     {
                         BaseNode end = selectedNode;
-                        Transition ct = new Transition(start, end, start.TransitionsIds);
-
-
-                        if (start.IsTransitionDuplicateOrSelve(ct) || (start is ConditionNode && (start as ConditionNode).IsTransitionInSameState(ct)) || !start.CanBeConnectedTo(end))
+                        Transition t;
+                        if (start.drawNode is ConditionNode)
                         {
-                            isMakingTransition = false;
-                            if (start is ConditionNode)
+                            if (start.transitions.Count < 2)
                             {
-                                ConditionNode c = start as ConditionNode; c.CreatingFalseTransition = false;
-                                c.CreatingTrueTransition = false;
-                            }
-                            return;
-                        } // checks if condition exists or is connected to its self or if start is condition checks if true and false are not on same state
+                              
 
+                                ConditionNode c = start.drawNode as ConditionNode;
+                                GenericMenu menu = new GenericMenu();
 
-                        start.TransitionsIds++;
-                        currentCharacter.InitTransitions.Add(ct);
+                                if (!start.transitions.Exists(x => (bool)x.Value == true))
+                                    menu.AddItem(new GUIContent("True"), false, delegate { t = new Transition(start, end, EWindowCurvePlacement.RightBottom, EWindowCurvePlacement.LeftCenter, Color.red, false); t.Value = true; });
+                                if (!start.transitions.Exists(x => (bool)x.Value == false))
+                                    menu.AddItem(new GUIContent("False"), false, delegate { t = new Transition(start, end, EWindowCurvePlacement.LeftBottom, EWindowCurvePlacement.LeftCenter, Color.blue, false); t.Value = false; });
 
-                        if (start is ConditionNode)
-                        {
-                            ConditionNode c = (ConditionNode)start;
-                            if (c.CreatingTrueTransition)
-                            {
-                                c.TrueTransition = ct;
-                                c.TrueTransition.ID = ct.ID;
-                                c.T_drawed = true;
+                                menu.ShowAsContext();
                             }
-                            else if (c.CreatingFalseTransition)
-                            {
-                                c.FalseTransition = ct;
-                                c.FalseTransition.ID = ct.ID;
-                                c.F_drawed = true;
-                            }
-                            c.CreatingFalseTransition = false;
-                            c.CreatingTrueTransition = false;
                         }
-                        if (ct != null)
+                        else
                         {
-                            if (!(start is ConditionNode))
-                            {
-                                start.TransitionsIds++;
-                                start.transitions.Add(ct);
-                            }
-                            end.depencies.Add(ct);
-                            ct.ReadyToDraw = true;
-                        }
+                             t = new Transition(start, end, EWindowCurvePlacement.RightCenter, EWindowCurvePlacement.LeftCenter, Color.magenta, false);
 
+                        }
                         isMakingTransition = false;
-
                     }
                 }
                 if (e.type == EventType.MouseDrag)
@@ -220,14 +185,12 @@ namespace BehaviourTreeEditor
                 }
                 else if (e.type == EventType.MouseUp)
                 {
-
                 }
             }
-
         }
         private void RightClick(Event e)
         {
-            if (currentCharacter == null) return;
+            if (currentGraph == null) return;
 
             if (!clickedOnWindow)
             {
@@ -247,78 +210,23 @@ namespace BehaviourTreeEditor
 
             switch (a)
             {
-                case UserActions.stateNode:
-                    currentCharacter.AddNode<StateNode>(mousePosition.x, mousePosition.y, 200, 300, "State");
-                    break;
                 case UserActions.commentNode:
-                    currentCharacter.AddNode<CommentNode>(mousePosition.x, mousePosition.y, 200, 150, "Comment");
+                    currentGraph.AddNode(settings.CommentNode, mousePosition.x, mousePosition.y, 200, 200, "Comment");
+                    break;
+                case UserActions.stateNode:
+                    currentGraph.AddNode(settings.StateNode, mousePosition.x, mousePosition.y, 200, 300, "State");
+                    break;
+                case UserActions.deleteNode:
+                    currentGraph.removeNodesIDs.Add(selectedNode.ID);
+                    break;
+                case UserActions.makeTransition:
+                    isMakingTransition = true;
                     break;
                 case UserActions.conditionNode:
-
-                    ConditionNode c = currentCharacter.AddNode<ConditionNode>(mousePosition.x, mousePosition.y, 200, 150, "Condition");
-                    c.FalseTransition = null;
-                    c.TrueTransition = null;
-
-
-
-                    //if (selectedNode != null)
-                    //{
-                    //    c.MainTransition = new Transition(selectedNode, c, selectedNode.TransitionsIds);
-                    //    selectedNode.TransitionsIds++;
-                    //    c.MainTransition.ReadyToDraw = true;
-                    //}
-                    break;
-
-
-                case UserActions.deleteNode:
-                    selectedNode.Destroy();
-                    break;
-
-                case UserActions.makeDefaultTransition:
-                    Transition t = new Transition(selectedNode, null, selectedNode.TransitionsIds);
-                    selectedNode.TransitionsIds++;
-                    t.ReadyToDraw = true;
-                    isMakingTransition = true;
-                    break;
-
-                case UserActions.makeTrueTransition:
-
-                    if (!(selectedNode is ConditionNode)) return;
-
-                    ConditionNode d = (ConditionNode)selectedNode;
-                    isMakingTransition = true;
-                    d.CreatingFalseTransition = false;
-                    d.CreatingTrueTransition = true;
-                    break;
-                case UserActions.makeFalseTransition:
-
-
-                    if (!(selectedNode is ConditionNode)) return;
-
-                    ConditionNode x = (ConditionNode)selectedNode;
-                    isMakingTransition = true;
-                    x.CreatingFalseTransition = true;
-                    x.CreatingTrueTransition = false;
-                    break;
-
-                case UserActions.removeFalseTransition:
-
-                    ConditionNode s = (selectedNode as ConditionNode);
-                    s.FalseTransition.ReadyToDraw = false;
-                    s.FalseTransition = null;
-                    s.F_drawed = false;
-
-                    currentCharacter?.AddInitiTransitionToRemove(s.FalseTransition.ID);
-                    break;
-                case UserActions.removeTrueTransition:
-                    ConditionNode p = (selectedNode as ConditionNode);
-                    p.TrueTransition.ReadyToDraw = false;
-                    p.T_drawed = false;
-                    p.TrueTransition = null;
-                    currentCharacter?.AddInitiTransitionToRemove(p.TrueTransition.ID);
+                    currentGraph.AddNode(settings.ConditionNode, mousePosition.x, mousePosition.y, 200, 200, "Condition");
                     break;
             }
-            EditorUtility.SetDirty(currentCharacter);
+            EditorUtility.SetDirty(currentGraph);
 
         }
         public void DrawWindows()
@@ -328,84 +236,41 @@ namespace BehaviourTreeEditor
             GUILayout.BeginArea(all, style);
             BeginWindows();
 
-            EditorGUI.LabelField(new Rect(10, 30, 200, 50), "Character: " + currentCharacter?.Character?.name);
+            EditorGUI.LabelField(new Rect(10, 30, 200, 50), "Character: ");
             GUILayout.BeginArea(new Rect(10, 50, 200, 100));
-            currentCharacter = (CharacterGraph)EditorGUILayout.ObjectField(currentCharacter, typeof(CharacterGraph), false, GUILayout.Width(200)); // field to choose graph
+            currentGraph = (BehaviourGraph)EditorGUILayout.ObjectField(currentGraph, typeof(BehaviourGraph), false, GUILayout.Width(200)); // field to choose graph
             GUILayout.EndArea();
 
-
-            if (currentCharacter == null)
+            if (currentGraph == null)
             {
 
 
                 EditorGUI.LabelField(new Rect(10, 70, 200, 50), "No Character Assign!", GetTextStyleColor(Color.red));
                 goto end; // cannot be return because Windows and GL.Area must be closed
             }
-
             else
             {
-                currentCharacter?.RemoveNodeSelectedNodes();
+                currentGraph?.RemoveNodeSelectedNodes();
 
-                foreach (BaseNode n in currentCharacter.nodes)
+                foreach (BaseNode n in currentGraph.nodes)
                 {
                     n.DrawCurve(); // drawing transitions
                 }
-
-                GUI.DrawTexture(new Rect(210, 20, 70, 70), currentCharacter.Character.Portait.texture); // drawing portait of character
-
-
-                if (showSettings = GUI.Toggle(new Rect(10, 100, 150, 20), showSettings, "Controlls"))
-                {
-                    EditorGUI.DrawRect(new Rect(10, 100, 150, 200), new Color32(255, 178, 0, 255));
-                    showSettings = GUI.Toggle(new Rect(10, 100, 150, 20), showSettings, "Controlls");// must be here because rect covers toggle on top
-                    EditorGUI.LabelField(new Rect(10, 130, 200, 50), "Nodes: " + currentCharacter.nodes.Count); // apears count of nodes
-                    if (GUI.Button(new Rect(10, 160, 150, 20), "Reset view")) // sets view to start position
-                    {
-                        ResetScroll();
-                    }
-                    if (GUI.Button(new Rect(10, 190, 150, 20), "Reset All nodes position")) // moves all nodes to start position
-                    {
-                        for (int i = 0; i < currentCharacter.nodes.Count; i++)
-                        {
-                            BaseNode b = currentCharacter.nodes[i];
-                            if (b == null) continue;
-
-                            Rect r = b.WindowRect;
-                            r.position = new Vector2(i * 200 < position.x ? i * 200 + 20 : position.x + 200, 400);
-                            b.WindowRect = r;
-
-                        }
-                    }
-                    if (currentCharacter.nodes.Count > 0 && GUI.Button(new Rect(10, 220, 50, 20), "Clear")) // botton to clear all nodes, apears only if nodes not empty
-                    {
-                        int n = 0;
-                        for (int i = 0; i < currentCharacter.nodes.Count; i++)
-                        {
-                            n = i;
-                            BaseNode b = currentCharacter.nodes[n];
-                            if (b == null) continue;
-
-                            b.Destroy();
-                            Repaint();
-                        }
-                        currentCharacter.nodes.Clear();
-                    }
-                }
             }
-            for (int i = 0; i < currentCharacter.nodes.Count; i++)
+            for (int i = 0; i < currentGraph.nodes.Count; i++)
             {
-                currentCharacter.nodes[i].WindowRect = GUI.Window(i, currentCharacter.nodes[i].WindowRect, DrawNodeWindow, currentCharacter.nodes[i].WindowTitle); // setting up nodes as windows
+                currentGraph.nodes[i].WindowRect = GUI.Window(i, currentGraph.nodes[i].WindowRect, DrawNodeWindow, currentGraph.nodes[i].WindowTitle); // setting up nodes as windows
             }
-            currentCharacter?.RemoveInitTransitions();
-
             end:
             EndWindows();
             GUILayout.EndArea();
+            currentGraph?.RemoveTransitions();
+
         }
         void DrawNodeWindow(int id)
         {
 
-            currentCharacter?.nodes[id].DrawWindow();
+            currentGraph?.nodes[id].DrawWindow();
 
             GUI.DragWindow();
 
@@ -413,27 +278,139 @@ namespace BehaviourTreeEditor
         void AddNewNode(Event e)
         {
             GenericMenu menu = new GenericMenu();
-            menu.AddItem(new GUIContent("Add State"), false, ContextCallback, UserActions.stateNode);
             menu.AddItem(new GUIContent("Add Comment"), false, ContextCallback, UserActions.commentNode);
+            menu.AddItem(new GUIContent("Add State"), false, ContextCallback, UserActions.stateNode);
             menu.AddItem(new GUIContent("Add Condition"), false, ContextCallback, UserActions.conditionNode);
+
             menu.ShowAsContext();
             e.Use();
         }
-        public static void DrawNodeCurve(Rect start, Rect end, bool left, Color curveColor, string lable, Color lableTextColor, Vector3 dir)
+        public static void DrawNodeCurve(Transition t, Rect start, Rect end, EWindowCurvePlacement start_, EWindowCurvePlacement end_, Color curveColor, bool disable)
         {
-            Vector3 startPos = new Vector3(left ? start.x + start.width : start.x, start.y + (start.height * 0.5f), 0);
-            Vector3 endPos = new Vector3(end.x + (end.width * 0.5f), end.y + (end.height * 0.5f), 0);
-            Vector3 startTan = startPos + dir * 50;
+            Vector3 endPos = Vector3.zero;
+            Vector3 startPos = Vector3.zero;
+            switch (start_)
+            {
+                case EWindowCurvePlacement.LeftTop:
+                    startPos = new Vector3(start.x + 1, start.y + 3, 0);
+
+                    break;
+                case EWindowCurvePlacement.LeftBottom:
+                    startPos = new Vector3(start.x + 1, start.y + start.height - 3, 0);
+                    break;
+                case EWindowCurvePlacement.CenterBottom:
+                    startPos = new Vector3(start.x + (start.width * 0.5f), start.y + start.height - 2, 0);
+
+                    break;
+                case EWindowCurvePlacement.CenterTop:
+                    startPos = new Vector3(start.x + (start.width * 0.5f), start.y + 2, 0);
+                    break;
+                case EWindowCurvePlacement.RightTop:
+                    startPos = new Vector3(start.x + start.width, start.y + 3, 0);
+                    break;
+                case EWindowCurvePlacement.RightBottom:
+                    startPos = new Vector3(start.x + start.width, start.y + start.height - 3, 0);
+                    break;
+                case EWindowCurvePlacement.RightCenter:
+                    startPos = new Vector3(start.x + start.width, start.y + (start.height * 0.5f), 0);
+                    break;
+                case EWindowCurvePlacement.LeftCenter:
+                    startPos = new Vector3(start.x, start.y + (start.height * 0.5f), 0);
+
+                    break;
+                case EWindowCurvePlacement.Center:
+                    startPos = new Vector3(start.x + (start.width * 0.5f), start.y + (start.height * 0.5f), 0);
+                    break;
+
+            }
+            switch (end_)
+            {
+                case EWindowCurvePlacement.LeftTop:
+                    endPos = new Vector3(end.x + 1, end.y + 3, 0);
+
+                    break;
+                case EWindowCurvePlacement.LeftBottom:
+                    endPos = new Vector3(end.x + 1, end.y + end.height - 3, 0);
+                    break;
+                case EWindowCurvePlacement.CenterBottom:
+                    endPos = new Vector3(end.x + (end.width * 0.5f), end.y + end.height - 2, 0);
+
+                    break;
+                case EWindowCurvePlacement.CenterTop:
+                    endPos = new Vector3(end.x + (end.width * 0.5f), end.y + 2, 0);
+                    break;
+                case EWindowCurvePlacement.RightTop:
+                    endPos = new Vector3(end.x + end.width, end.y + 3, 0);
+                    break;
+                case EWindowCurvePlacement.RightBottom:
+                    endPos = new Vector3(end.x + end.width, end.y + end.height - 3, 0);
+                    break;
+                case EWindowCurvePlacement.RightCenter:
+                    endPos = new Vector3(end.x + end.width, end.y + (end.height * 0.5f), 0);
+                    break;
+                case EWindowCurvePlacement.LeftCenter:
+                    endPos = new Vector3(end.x, end.y + (end.height * 0.5f), 0);
+
+                    break;
+                case EWindowCurvePlacement.Center:
+                    endPos = new Vector3(end.x + (end.width * 0.5f), end.y + (end.height * 0.5f), 0);
+                    break;
+
+            }
+
+
+            Vector3 startTan = startPos + Vector3.right * 50;
             Vector3 endTan = endPos + Vector3.left * 50;
 
-            GUIStyle style = new GUIStyle();
-            style.normal.textColor = lableTextColor;
-            GUI.Label(new Rect(left ? startPos.x + 20 : startTan.x, startPos.y, 40, 20), lable, style);
+
             for (int i = 0; i < 3; i++)
             {
-                Handles.DrawBezier(startPos, endPos, startTan, endTan, curveColor, null, 4);
+                Handles.DrawBezier(startPos, endPos, startTan, endTan, Color.black, null, 4);
             }
-            Handles.DrawBezier(startPos, endPos, startTan, endTan, curveColor, null, 3);
+            Handles.DrawBezier(startPos, endPos, startTan, endTan, disable ? Color.black : curveColor, null, 3);
+            DrawTransitionClickPoint(t, startPos, endPos);
+        }
+        public static void DrawTransitionClickPoint(Transition t, Vector3 start, Vector3 end)
+        {
+
+            if (t == null) return;
+            Handles.color = t.Color;
+
+            if (Handles.Button((start + end) * .5f, Quaternion.identity, 4, 8, Handles.DotHandleCap))
+            {
+                t.clicked = !t.clicked;
+            }
+            if (t.clicked)
+            {
+                if (selectedTransition != null && selectedTransition != t)
+                {
+                    selectedTransition.clicked = false;
+
+                }
+                selectedTransition = t;
+
+                EditorGUI.DrawRect(new Rect(10, 150, 200, 300), new Color32(188, 188, 188, 255));
+
+                GUILayout.BeginArea(new Rect(10, 150, 200, 300));
+
+                EditorGUILayout.LabelField("Transition settings: ");
+                EditorGUILayout.LabelField("color: ");
+                t.Color = EditorGUILayout.ColorField(t.Color);
+
+                EditorGUILayout.LabelField("start position: ");
+                t.startPlacement = (EWindowCurvePlacement)EditorGUILayout.EnumPopup(t.startPlacement);
+
+                EditorGUILayout.LabelField("end position: ");
+                t.endPlacement = (EWindowCurvePlacement)EditorGUILayout.EnumPopup(t.endPlacement);
+
+                EditorGUILayout.LabelField("Value: " + t?.Value?.ToString());
+                GUILayout.EndArea();
+                if (GUI.Button(new Rect(10, 300, 80, 20), "Remove"))
+                {
+
+                    t.startNode.AddTransitionsToRemove(t.ID);
+                }
+            }
         }
         public static GUIStyle GetTextStyleColor(Color color)
         {

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 namespace BehaviourTreeEditor
@@ -8,54 +9,31 @@ namespace BehaviourTreeEditor
     [Serializable]
     public class Transition
     {
-        public CharacterGraph graph;
-        public BaseNode StartNode, EndNode;
-        public Color CurveColor = Color.black;
-        public bool ReadyToDraw { get; set; }
         public string ID = "";
-        public bool Enable = true;
-        public Transition(BaseNode start, BaseNode end, int id)
+        public Color Color = Color.green;
+        public BaseNode startNode, endNode;
+        public bool disabled = false;
+        public EWindowCurvePlacement startPlacement, endPlacement;
+        public bool clicked = false;
+        public object Value;
+        public Transition(BaseNode start, BaseNode end, EWindowCurvePlacement sPos, EWindowCurvePlacement ePos, Color col, bool disable)
         {
+            DrawConnection(start, end, sPos, ePos, col, disable);
+            start.transitions.Add(this);
+            end.depencies.Add(this);
+            ID = start.GetTransitionId(end.WindowTitle[0]);
+        }
+        public void DrawConnection(BaseNode start, BaseNode end, EWindowCurvePlacement sPos, EWindowCurvePlacement ePos, Color col, bool disable)
+        {
+            Color = col;
+            startNode = start;
+            endNode = end;
+            disabled = disable;
+            startPlacement = sPos;
+            endPlacement = ePos;
+       
+        }
 
-            StartNode = start;
-            EndNode = end;
-            ID = GetID(id);
-            Enable = true;
-        }
-        public string GetID(int id)
-        {
-            return StartNode.WindowTitle[0].ToString() + StartNode.ID.ToString() + id.ToString();
-        }
-
-        public void DrawConnection(Vector3 dir, Color label, string lab,bool left)
-        {
-            if(Enable)
-            BehaviourEditor.DrawNodeCurve(StartNode.WindowRect, EndNode.WindowRect, left, CurveColor, lab, label, dir);
-        }
-        public void Init()
-        {
-            if (StartNode.transitions.Count == 0 && graph.InitTransitions.Count > 0)
-            {
-                Enable = true;
-                StartNode = graph.nodes.Find(x => x.ID == StartNode.ID);
-                EndNode = graph.nodes.Find(x => x.ID == EndNode.ID);
-                StartNode.transitions.Add(this);
-                EndNode.depencies.Add(this);
-                ReadyToDraw = true;
-                if (StartNode is ConditionNode)
-                {
-                    ConditionNode c = (ConditionNode)StartNode;
-                    if (c.T_drawed && ID == c.TrueTransition.ID)
-                    {
-                        c.TrueTransition = this;
-                    }
-                    else if (c.F_drawed && ID == c.FalseTransition.ID)
-                    {
-                        c.FalseTransition = this;
-                    }
-
-                }
-            }
-        }
+      
     }
 }

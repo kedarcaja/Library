@@ -13,3 +13,6 @@ MonoBehaviour:
   m_Name: Settings
   m_EditorClassIdentifier: 
   skin: {fileID: 11400000, guid: e916ba2be0ed386419236e95d7cf1888, type: 2}
+  CommentNode: {fileID: 11400000, guid: 4810b0d1e5d4688449b1f963aa8978f6, type: 2}
+  StateNode: {fileID: 11400000, guid: 62460f789d8b74b469856736624e652c, type: 2}
+  ConditionNode: {fileID: 11400000, guid: ff66ae395c499994fa8a190326c5f331, type: 2}

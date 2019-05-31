@@ -1,7 +1,8 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
+using UnityEditorInternal;
 using UnityEngine;
 
 namespace BehaviourTreeEditor
@@ -10,34 +11,72 @@ namespace BehaviourTreeEditor
     public class BaseNode
     {
         #region Variables
-        [HideInInspector]
-        public CharacterGraph CharacterGraph;
-        public int ID;
+
+        public string ID;
         public Rect WindowRect;
         public string WindowTitle;
         public Color32 nodeColor = Color.grey;
-        public event Action OnDestroy,OnCreate;
-        [NonSerialized]
-        public List<Transition> transitions = new List<Transition>();
         public bool collapse = false;
         public float normalHeight = 0;
-        public int TransitionsIds = 0;
-        [NonSerialized]
+        public DrawNode drawNode;
+        public bool isAssigned;
+        public bool isDuplicate = false;
+        public bool previousCollapse;
+        public List<Transition> transitions = new List<Transition>();
         public List<Transition> depencies = new List<Transition>();
-        public bool Enable = true;
-        protected List<Type> unconnectableTypes = new List<Type>();
-        #endregion
-        
+        public List<string> transitionsIdsToRemove = new List<string>();
 
-        public BaseNode()
+        #endregion
+
+        #region Comment node Variables
+        public string comment = "";
+        #endregion
+        #region State node Variables
+        [SerializeField]
+        public StateNodeReferences stateRef;
+        public bool showActions = false;
+        public bool showEnterExit = false;
+        #endregion
+        #region Condition node Variables
+        public Condition condition;
+        #endregion
+        public string GetTransitionId(char end)
         {
-            OnCreate?.Invoke();
-            Enable = true;
-            unconnectableTypes.Add(typeof(CommentNode));
+            return "T"+ DateTime.Now.Second.ToString() + transitions.Count.ToString() + end;
         }
-        public virtual void DrawWindow()
+        public BaseNode(DrawNode draw, float x, float y, float width, float height, string title, string id)
         {
-            if (!Enable) return;
+            ID = id;
+            WindowRect = new Rect(x, y, width, height);
+            WindowTitle = title;
+            normalHeight = height;
+            drawNode = draw;
+            stateRef = new StateNodeReferences();
+        }
+
+        public void AddTransitionsToRemove(string id)
+        {
+            for (int i = 0; i < transitions.Count; i++)
+            {
+                if (transitions[i].ID == id)
+                {
+                    transitionsIdsToRemove.Add(id);
+                }
+            }
+        }
+        public void RemoveTransitions()
+        {
+            for (int i = 0; i < transitions.Count; i++)
+            {
+                if (transitionsIdsToRemove.Contains(transitions[i].ID))
+                {
+                    transitions.Remove(transitions[i]);
+                }
+            }
+        }
+        public void DrawWindow()
+        {
+
             EditorGUI.DrawRect(new Rect(0, 17, WindowRect.width, WindowRect.height - 17), nodeColor);
             EditorGUILayout.LabelField("Node Color: ");
             nodeColor = EditorGUILayout.ColorField(nodeColor);
@@ -50,84 +89,28 @@ namespace BehaviourTreeEditor
             {
                 WindowRect.height = normalHeight;
             }
+            drawNode?.DrawWindow(this);
 
         }
-        public  bool IsTransitionDuplicateOrSelve(Transition tr)
+
+        public void DrawCurve()
         {
-            return tr.StartNode.ID == tr.EndNode.ID || transitions.Exists(f => f.StartNode.ID == tr.StartNode.ID && f.EndNode.ID == tr.EndNode.ID);
-        }
-        public virtual void DrawCurve()
-        {
-            if (!Enable) return;
-
-            foreach (Transition t in transitions)
-            {
-                if (!t.ReadyToDraw) continue;
-
-                t.DrawConnection(Vector3.zero, Color.black, "", false);
-            }
-        }
-        public void Destroy()
-        {
-            foreach (Transition t in transitions)
-            {
-                t.ReadyToDraw = false;
-                t.Enable = false;
-                if(this is ConditionNode)
-                {
-                    ConditionNode c = this as ConditionNode;
-                    c.T_drawed = false;
-                    c.F_drawed = false;
-                }
-                CharacterGraph.AddInitiTransitionToRemove(t.ID);
-            }
-            foreach (Transition t in depencies)
-            {
-                t.ReadyToDraw = false;
-                t.Enable = false;
-                CharacterGraph.AddInitiTransitionToRemove(t.ID);
-                if (t.StartNode is ConditionNode)
-                {
-                    ConditionNode c = t.StartNode as ConditionNode;
-                    c.TrueTransition = null;
-                    c.FalseTransition = null;
-                    c.T_drawed = false;
-                    c.F_drawed = false;
-                }
-                t.StartNode.depencies.Remove(t);
-            }
-
-            depencies.Clear();
-            transitions.Clear();
-            OnDestroy?.Invoke();
-            Enable = false;
-            if (this is ConditionNode && CharacterGraph.conds.Contains(this as ConditionNode))
-            {
-                CharacterGraph.conds.Remove(this as ConditionNode);
-            }
-            if (this is CommentNode && CharacterGraph.coms.Contains(this as CommentNode))
-            {
-                CharacterGraph.coms.Remove(this as CommentNode);
-            }
-            if (this is StateNode && CharacterGraph.states.Contains(this as StateNode))
-            {
-                CharacterGraph.states.Remove(this as StateNode);
-
-            }
-            CharacterGraph.removeNodesIDs.Add(ID);
-            
-            
-        }
-
-        /// <summary>
-        /// cant make transition from this node to unconectable nodes, but you can connect unconectable to this node 
-        /// </summary>
-        /// <param name="other"></param>
-        /// <returns></returns>
-        public bool CanBeConnectedTo(BaseNode other)
-        {
-            return !unconnectableTypes.Contains(other.GetType());
+            drawNode?.DrawCurve(this);
         }
     }
+    [Serializable]
+    public class StateNodeReferences
+    {
+        public State currentState;
+        [HideInInspector]
+        public State previousState;
+        public SerializedObject serializedState;
+        public ReorderableList onFixedList;
+        public ReorderableList onUpdateList;
+        public ReorderableList onEnterList;
+        public ReorderableList onExitList;
+
+    }
+    
 }
 
