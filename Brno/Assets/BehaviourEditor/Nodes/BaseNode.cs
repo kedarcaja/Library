@@ -22,7 +22,9 @@ namespace BehaviourTreeEditor
         public bool isAssigned;
         public bool isDuplicate = false;
         public bool previousCollapse;
+        [SerializeField]
         public List<Transition> transitions = new List<Transition>();
+        [SerializeField]
         public List<Transition> depencies = new List<Transition>();
         public List<string> transitionsIdsToRemove = new List<string>();
 

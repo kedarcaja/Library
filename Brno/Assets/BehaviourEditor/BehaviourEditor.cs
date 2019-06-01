@@ -13,18 +13,27 @@ namespace BehaviourTreeEditor
     public class BehaviourEditor : EditorWindow
     {
 
-        Vector2 scrollPos;
-        Vector2 scrollStartPos;
+
         Vector3 mousePosition;
         static bool clickedOnWindow;
         public static BaseNode selectedNode;
         public static BehaviourGraph currentGraph;
         public static bool isMakingTransition = false;
         public EditorSettings settings;
-        Rect all = new Rect(-5, -5, 10000, 10000); // window 
+        Rect all = new Rect(0, 0, 10000, 10000); // window 
         bool showSettings = false;
-        public GUIStyle style;
         static Transition selectedTransition;
+        #region Window Handle Variables
+        private const float kZoomMin = 0.3f;
+        private const float kZoomMax = 1f;
+        private readonly Rect _zoomArea = new Rect(0, 0, 10000, 10000);
+        private float _zoom = 1.0f;
+        private Vector2 _zoomCoordsOrigin = Vector2.zero;
+        Vector2 scrollPos;
+        Vector2 scrollStartPos;
+        public GUIStyle style;
+
+        #endregion
         public enum UserActions
         {
             deleteNode, commentNode, stateNode, makeTransition, conditionNode
@@ -41,6 +50,7 @@ namespace BehaviourTreeEditor
 
             Event e = Event.current;
             mousePosition = e.mousePosition;
+            HandleZoom(e);
             UserInput(e);
             DrawWindows();
             if (GUI.changed)
@@ -58,37 +68,42 @@ namespace BehaviourTreeEditor
         }
         private void OnEnable()
         {
-            ResetScroll();
             settings = Resources.Load("Editor/Settings", typeof(EditorSettings)) as EditorSettings;
             style = settings.skin.GetStyle("window");
             titleContent.text = "BehaviourEditor";
-
         }
-        void ResetScroll()
+
+
+
+        #region Window Handle Methods
+        private Vector2 ConvertScreenCoordsToZoomCoords(Vector2 screenCoords)
         {
-            for (int i = 0; i < currentGraph?.nodes.Count; i++)
+            return (screenCoords - _zoomArea.TopLeft()) / _zoom + _zoomCoordsOrigin;
+        }
+        private void HandleZoom(Event e)
+        {
+            // Allow adjusting the zoom with the mouse wheel as well. In this case, use the mouse coordinates
+            // as the zoom center instead of the top left corner of the zoom area. This is achieved by
+            // maintaining an origin that is used as offset when drawing any GUI elements in the zoom area.
+            if (e.type == EventType.ScrollWheel)
             {
-                BaseNode b = currentGraph.nodes[i];
-                b.WindowRect.x -= scrollPos.x;
-                b.WindowRect.y -= scrollPos.y;
+                Vector2 screenCoordsMousePos = mousePosition;
+                Vector2 delta = e.delta;
+                Vector2 zoomCoordsMousePos = ConvertScreenCoordsToZoomCoords(screenCoordsMousePos);
+                float zoomDelta = -delta.y / 150.0f;
+                float oldZoom = _zoom;
+                _zoom += zoomDelta;
+                _zoom = Mathf.Clamp(_zoom, kZoomMin, kZoomMax);
+                _zoomCoordsOrigin += (zoomCoordsMousePos - _zoomCoordsOrigin) - (oldZoom / _zoom) * (zoomCoordsMousePos - _zoomCoordsOrigin);
+
+                e.Use();
             }
 
-            scrollPos = Vector2.zero;
+            // Allow moving the zoom area's origin by dragging with the middle mouse button or dragging
+         
         }
-        void HandlePanning(Event e)
-        {
-            Vector2 diff = e.mousePosition - scrollStartPos;
-            diff *= .6f;
-            scrollStartPos = e.mousePosition;
-            scrollPos += diff;
+        #endregion
 
-            for (int i = 0; i < currentGraph.nodes.Count; i++)
-            {
-                BaseNode b = currentGraph.nodes[i];
-                b.WindowRect.x += diff.x;
-                b.WindowRect.y += diff.y;
-            }
-        }
         private void ModifyNode(Event e)
         {
             GenericMenu menu = new GenericMenu();
@@ -124,6 +139,15 @@ namespace BehaviourTreeEditor
                 }
             }
 
+            // with the left mouse button with Alt pressed.
+            if (e.type == EventType.MouseDrag && (e.button == 0 && e.modifiers == EventModifiers.Alt) || e.button == 2)
+            {
+                Vector2 delta = e.delta;
+                delta /= _zoom;
+                _zoomCoordsOrigin += delta;
+
+                e.Use();
+            }
 
             if (e.button == 1)
             {
@@ -139,55 +163,14 @@ namespace BehaviourTreeEditor
                     if (isMakingTransition)
                     {
                         BaseNode end = selectedNode;
-                        Transition t;
-                        if (start.drawNode is ConditionNode)
-                        {
-                            if (start.transitions.Count < 2)
-                            {
-                              
-
-                                ConditionNode c = start.drawNode as ConditionNode;
-                                GenericMenu menu = new GenericMenu();
-
-                                if (!start.transitions.Exists(x => (bool)x.Value == true))
-                                    menu.AddItem(new GUIContent("True"), false, delegate { t = new Transition(start, end, EWindowCurvePlacement.RightBottom, EWindowCurvePlacement.LeftCenter, Color.red, false); t.Value = true; });
-                                if (!start.transitions.Exists(x => (bool)x.Value == false))
-                                    menu.AddItem(new GUIContent("False"), false, delegate { t = new Transition(start, end, EWindowCurvePlacement.LeftBottom, EWindowCurvePlacement.LeftCenter, Color.blue, false); t.Value = false; });
-
-                                menu.ShowAsContext();
-                            }
-                        }
-                        else
-                        {
-                             t = new Transition(start, end, EWindowCurvePlacement.RightCenter, EWindowCurvePlacement.LeftCenter, Color.magenta, false);
-
-                        }
-                        isMakingTransition = false;
+                        MakeTransition(start, end);
                     }
                 }
-                if (e.type == EventType.MouseDrag)
-                {
 
-
-                }
-            }
-
-            if (e.button == 2 && !clickedOnWindow)
-            {
-                if (e.type == EventType.MouseDown)
-                {
-                    scrollStartPos = e.mousePosition;
-                }
-                else if (e.type == EventType.MouseDrag)
-                {
-                    HandlePanning(e);
-                    Repaint();
-                }
-                else if (e.type == EventType.MouseUp)
-                {
-                }
             }
         }
+
+
         private void RightClick(Event e)
         {
             if (currentGraph == null) return;
@@ -231,24 +214,21 @@ namespace BehaviourTreeEditor
         }
         public void DrawWindows()
         {
-
-
-            GUILayout.BeginArea(all, style);
-            BeginWindows();
-
             EditorGUI.LabelField(new Rect(10, 30, 200, 50), "Character: ");
             GUILayout.BeginArea(new Rect(10, 50, 200, 100));
             currentGraph = (BehaviourGraph)EditorGUILayout.ObjectField(currentGraph, typeof(BehaviourGraph), false, GUILayout.Width(200)); // field to choose graph
             GUILayout.EndArea();
-
             if (currentGraph == null)
             {
-
-
                 EditorGUI.LabelField(new Rect(10, 70, 200, 50), "No Character Assign!", GetTextStyleColor(Color.red));
                 goto end; // cannot be return because Windows and GL.Area must be closed
             }
-            else
+
+
+            EditorZoomArea.Begin(_zoom, _zoomArea);
+            GUILayout.BeginArea(all, style);
+            BeginWindows();
+            if (currentGraph != null)
             {
                 currentGraph?.RemoveNodeSelectedNodes();
 
@@ -264,7 +244,10 @@ namespace BehaviourTreeEditor
             end:
             EndWindows();
             GUILayout.EndArea();
+            EditorZoomArea.End();
+
             currentGraph?.RemoveTransitions();
+
 
         }
         void DrawNodeWindow(int id)
@@ -284,6 +267,29 @@ namespace BehaviourTreeEditor
 
             menu.ShowAsContext();
             e.Use();
+        }
+        public void MakeTransition(BaseNode start, BaseNode end)
+        {
+            Transition t;
+            if (start.drawNode is ConditionNode)
+            {
+                if (start.transitions.Count < 2)
+                {
+                    ConditionNode c = start.drawNode as ConditionNode;
+                    GenericMenu menu = new GenericMenu();
+
+                    if (!start.transitions.Exists(x => (bool)x.Value == true))
+                        menu.AddItem(new GUIContent("True"), false, delegate { t = new Transition(start, end, EWindowCurvePlacement.RightBottom, EWindowCurvePlacement.LeftCenter, Color.red, false); t.Value = true; });
+                    if (!start.transitions.Exists(x => (bool)x.Value == false))
+                        menu.AddItem(new GUIContent("False"), false, delegate { t = new Transition(start, end, EWindowCurvePlacement.LeftBottom, EWindowCurvePlacement.LeftCenter, Color.blue, false); t.Value = false; });
+                    menu.ShowAsContext();
+                }
+            }
+            else
+            {
+                t = new Transition(start, end, EWindowCurvePlacement.RightCenter, EWindowCurvePlacement.LeftCenter, Color.magenta, false);
+            }
+            isMakingTransition = false;
         }
         public static void DrawNodeCurve(Transition t, Rect start, Rect end, EWindowCurvePlacement start_, EWindowCurvePlacement end_, Color curveColor, bool disable)
         {
@@ -417,6 +423,75 @@ namespace BehaviourTreeEditor
             GUIStyle s = new GUIStyle();
             s.normal.textColor = color;
             return s;
+        }
+    }
+    public static class RectExtensions
+    {
+        public static Vector2 TopLeft(this Rect rect)
+        {
+            return new Vector2(rect.xMin, rect.yMin);
+        }
+        public static Rect ScaleSizeBy(this Rect rect, float scale)
+        {
+            return rect.ScaleSizeBy(scale, rect.center);
+        }
+        public static Rect ScaleSizeBy(this Rect rect, float scale, Vector2 pivotPoint)
+        {
+            Rect result = rect;
+            result.x -= pivotPoint.x;
+            result.y -= pivotPoint.y;
+            result.xMin *= scale;
+            result.xMax *= scale;
+            result.yMin *= scale;
+            result.yMax *= scale;
+            result.x += pivotPoint.x;
+            result.y += pivotPoint.y;
+            return result;
+        }
+        public static Rect ScaleSizeBy(this Rect rect, Vector2 scale)
+        {
+            return rect.ScaleSizeBy(scale, rect.center);
+        }
+        public static Rect ScaleSizeBy(this Rect rect, Vector2 scale, Vector2 pivotPoint)
+        {
+            Rect result = rect;
+            result.x -= pivotPoint.x;
+            result.y -= pivotPoint.y;
+            result.xMin *= scale.x;
+            result.xMax *= scale.x;
+            result.yMin *= scale.y;
+            result.yMax *= scale.y;
+            result.x += pivotPoint.x;
+            result.y += pivotPoint.y;
+            return result;
+        }
+    }
+    public class EditorZoomArea
+    {
+        private const float kEditorWindowTabHeight = 21.0f;
+        private static Matrix4x4 _prevGuiMatrix;
+
+        public static Rect Begin(float zoomScale, Rect screenCoordsArea)
+        {
+            GUI.EndGroup();        // End the group Unity begins automatically for an EditorWindow to clip out the window tab. This allows us to draw outside of the size of the EditorWindow.
+
+            Rect clippedArea = screenCoordsArea.ScaleSizeBy(1.0f / zoomScale, screenCoordsArea.TopLeft());
+            clippedArea.y += kEditorWindowTabHeight;
+            GUI.BeginGroup(clippedArea);
+
+            _prevGuiMatrix = GUI.matrix;
+            Matrix4x4 translation = Matrix4x4.TRS(clippedArea.TopLeft(), Quaternion.identity, Vector3.one);
+            Matrix4x4 scale = Matrix4x4.Scale(new Vector3(zoomScale, zoomScale, 1.0f));
+            GUI.matrix = translation * scale * translation.inverse * GUI.matrix;
+
+            return clippedArea;
+        }
+
+        public static void End()
+        {
+            GUI.matrix = _prevGuiMatrix;
+            GUI.EndGroup();
+            GUI.BeginGroup(new Rect(0.0f, kEditorWindowTabHeight, Screen.width, Screen.height));
         }
     }
 
