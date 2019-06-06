@@ -14,7 +14,7 @@ namespace BehaviourTreeEditor
     {
 
 
-        Vector3 mousePosition;
+         Vector3 mousePosition;
         static bool clickedOnWindow;
         public static BaseNode selectedNode;
         public static BehaviourGraph currentGraph;
@@ -32,10 +32,10 @@ namespace BehaviourTreeEditor
         Vector2 scrollPos;
         Vector2 scrollStartPos;
         public GUIStyle style;
-		private Vector2 offset;
-		private Vector2 drag;
-		#endregion
-		public enum UserActions
+        private Vector2 offset;
+        private Vector2 drag;
+        #endregion
+        public enum UserActions
         {
             deleteNode, commentNode, stateNode, makeTransition, conditionNode
         }
@@ -45,21 +45,36 @@ namespace BehaviourTreeEditor
             BehaviourEditor editor = EditorWindow.GetWindow<BehaviourEditor>();
             editor.minSize = new Vector2(800, 600);
 
+
+        }
+
+        #region Unity Methods
+        private void OnEnable()
+        {
+            settings = Resources.Load("Editor/Settings", typeof(EditorSettings)) as EditorSettings;
+            style = settings.skin.GetStyle("window");
+            titleContent.text = "BehaviourEditor";
         }
         private void OnGUI()
         {
-
-			DrawGrid(20, 0.1f, Color.gray);
-			//DrawGrid(100, 0.4f, Color.gray);
-
-			Event e = Event.current;
+            Event e = Event.current;
+            EditorGUI.DrawRect(all, new Color32(37, 37, 37, 255));
+            DrawGrid(_zoom * 10 + 10, 0.2f, Color.gray);
             mousePosition = e.mousePosition;
+
             HandleZoom(e);
-            UserInput(e);
+
+           UserInput(e);
             DrawWindows();
+
+            EditorGUI.DrawRect(new Rect(mousePosition.x, mousePosition.y, 2, 2), Color.red);
+
+            if (e.type == EventType.MouseDrag)
+            {
+                Repaint();
+            }
             if (GUI.changed)
             {
-
                 Repaint();
             }
 
@@ -70,28 +85,45 @@ namespace BehaviourTreeEditor
             }
 
         }
-        private void OnEnable()
-        {
-            settings = Resources.Load("Editor/Settings", typeof(EditorSettings)) as EditorSettings;
-            style = settings.skin.GetStyle("window");
-            titleContent.text = "BehaviourEditor";
-        }
-
-
-
+        
+        #endregion
         #region Window Handle Methods
+        void HandlePanning(Event e)
+        {
+            Vector2 diff = e.mousePosition - scrollStartPos;
+            diff *= .6f;
+            scrollStartPos = e.mousePosition;
+            scrollPos += diff;
+
+            for (int i = 0; i < currentGraph.nodes.Count; i++)
+            {
+                BaseNode b = currentGraph.nodes[i];
+                b.WindowRect.x += diff.x;
+                b.WindowRect.y += diff.y;
+            }
+            e.Use();
+        }
+        void ResetScroll()
+        {
+            for (int i = 0; i < currentGraph.nodes.Count; i++)
+            {
+                BaseNode b = currentGraph.nodes[i];
+                b.WindowRect.x -= scrollPos.x;
+                b.WindowRect.y -= scrollPos.y;
+            }
+
+            scrollPos = Vector2.zero;
+        }
         private Vector2 ConvertScreenCoordsToZoomCoords(Vector2 screenCoords)
         {
             return (screenCoords - _zoomArea.TopLeft()) / _zoom + _zoomCoordsOrigin;
         }
         private void HandleZoom(Event e)
         {
-            // Allow adjusting the zoom with the mouse wheel as well. In this case, use the mouse coordinates
-            // as the zoom center instead of the top left corner of the zoom area. This is achieved by
-            // maintaining an origin that is used as offset when drawing any GUI elements in the zoom area.
             if (e.type == EventType.ScrollWheel)
             {
-                Vector2 screenCoordsMousePos = mousePosition;
+                _zoomCoordsOrigin = e.mousePosition;
+                Vector2 screenCoordsMousePos = e.mousePosition;
                 Vector2 delta = e.delta;
                 Vector2 zoomCoordsMousePos = ConvertScreenCoordsToZoomCoords(screenCoordsMousePos);
                 float zoomDelta = -delta.y / 150.0f;
@@ -102,9 +134,6 @@ namespace BehaviourTreeEditor
 
                 e.Use();
             }
-
-            // Allow moving the zoom area's origin by dragging with the middle mouse button or dragging
-         
         }
         #endregion
 
@@ -117,31 +146,31 @@ namespace BehaviourTreeEditor
             menu.ShowAsContext();
             e.Use();
         }
-		private void DrawGrid(float gridSpacing, float gridOpacity, Color gridColor)
-		{
-			int widthDivs = Mathf.CeilToInt(position.width / gridSpacing);
-			int heightDivs = Mathf.CeilToInt(position.height / gridSpacing);
+        private void DrawGrid(float gridSpacing, float gridOpacity, Color gridColor)
+        {
+            int widthDivs = Mathf.CeilToInt(position.width / gridSpacing);
+            int heightDivs = Mathf.CeilToInt(position.height / gridSpacing);
 
-			Handles.BeginGUI();
-			Handles.color = new Color(gridColor.r, gridColor.g, gridColor.b, gridOpacity);
+            Handles.BeginGUI();
+            Handles.color = new Color(gridColor.r, gridColor.g, gridColor.b, gridOpacity);
 
-			offset += drag * 0.5f;
-			Vector3 newOffset = new Vector3(offset.x % gridSpacing, offset.y % gridSpacing, 0);
+            offset += drag * 0.5f;
+            Vector3 newOffset = new Vector3(offset.x % gridSpacing, offset.y % gridSpacing, 0);
 
-			for (int i = 0; i < widthDivs; i++)
-			{
-				Handles.DrawLine(new Vector3(gridSpacing * i, -gridSpacing, 0) + newOffset, new Vector3(gridSpacing * i, position.height, 0f) + newOffset);
-			}
+            for (int i = 0; i < widthDivs; i++)
+            {
+                Handles.DrawLine(new Vector3(gridSpacing * i, -gridSpacing, 0) + newOffset, new Vector3(gridSpacing * i, position.height, 0f) + newOffset);
+            }
 
-			for (int j = 0; j < heightDivs; j++)
-			{
-				Handles.DrawLine(new Vector3(-gridSpacing, gridSpacing * j, 0) + newOffset, new Vector3(position.width, gridSpacing * j, 0f) + newOffset);
-			}
+            for (int j = 0; j < heightDivs; j++)
+            {
+                Handles.DrawLine(new Vector3(-gridSpacing, gridSpacing * j, 0) + newOffset, new Vector3(position.width, gridSpacing * j, 0f) + newOffset);
+            }
 
-			Handles.color = Color.white;
-			Handles.EndGUI();
-		}
-		private void UserInput(Event e)
+            Handles.color = Color.white;
+            Handles.EndGUI();
+        }
+        private void UserInput(Event e)
         {
             if (currentGraph == null) return;
             clickedOnWindow = false;
@@ -167,15 +196,6 @@ namespace BehaviourTreeEditor
                 }
             }
 
-            // with the left mouse button with Alt pressed.
-            if (e.type == EventType.MouseDrag && (e.button == 0 && e.modifiers == EventModifiers.Alt) || e.button == 2)
-            {
-                Vector2 delta = e.delta;
-                delta /= _zoom;
-                _zoomCoordsOrigin += delta;
-
-                e.Use();
-            }
 
             if (e.button == 1)
             {
@@ -195,6 +215,18 @@ namespace BehaviourTreeEditor
                     }
                 }
 
+            }
+
+            if (e.button == 2)
+            {
+                if (e.type == EventType.MouseDown)
+                {
+                    scrollStartPos = e.mousePosition;
+                }
+                else if (e.type == EventType.MouseDrag)
+                {
+                    HandlePanning(e);
+                }
             }
         }
 
@@ -242,47 +274,51 @@ namespace BehaviourTreeEditor
         }
         public void DrawWindows()
         {
-            EditorGUI.LabelField(new Rect(10, 30, 200, 50), "Character: ");
 
-			GUILayout.BeginArea(new Rect(10, 50, 200, 100));
+
+
+
+            if (currentGraph != null)
+            {
+                EditorZoomArea.Begin(_zoom, all);
+
+                GUILayout.BeginArea(all, style);
+
+
+
+                BeginWindows();
+
+
+                if (currentGraph != null)
+                {
+                    currentGraph?.RemoveNodeSelectedNodes();
+
+                    foreach (BaseNode n in currentGraph.nodes)
+                    {
+                        n.DrawCurve(); // drawing transitions
+                    }
+                }
+                for (int i = 0; i < currentGraph.nodes.Count; i++)
+                {
+                    currentGraph.nodes[i].WindowRect = GUI.Window(i, currentGraph.nodes[i].WindowRect, DrawNodeWindow, currentGraph.nodes[i].WindowTitle); // setting up nodes as windows
+                }
+
+
+                EndWindows();
+                GUILayout.EndArea();
+                EditorZoomArea.End();
+            }
+
+
+            Rect zone = new Rect(0, 0, 200, 100);
+            EditorGUI.DrawRect(zone, new Color32(50, 50, 50, 255));
+            GUILayout.BeginArea(new Rect(zone.x, zone.y, zone.width - 2, zone.height + 2));
+            EditorGUILayout.LabelField("Character: ", GetTextStyleColor(Color.white));
             currentGraph = (BehaviourGraph)EditorGUILayout.ObjectField(currentGraph, typeof(BehaviourGraph), false, GUILayout.Width(200)); // field to choose graph
+            if (!currentGraph)
+                EditorGUILayout.LabelField("No Character Assign!", GetTextStyleColor(Color.red));
             GUILayout.EndArea();
 
-
-
-			if (currentGraph != null)
-			{
-				EditorZoomArea.Begin(_zoom, all);
-				GUILayout.BeginArea(all, style);
-				BeginWindows();
-
-
-				if (currentGraph != null)
-				{
-					currentGraph?.RemoveNodeSelectedNodes();
-
-					foreach (BaseNode n in currentGraph.nodes)
-					{
-						n.DrawCurve(); // drawing transitions
-					}
-				}
-				for (int i = 0; i < currentGraph.nodes.Count; i++)
-				{
-					currentGraph.nodes[i].WindowRect = GUI.Window(i, currentGraph.nodes[i].WindowRect, DrawNodeWindow, currentGraph.nodes[i].WindowTitle); // setting up nodes as windows
-				}
-
-
-				EndWindows();
-				GUILayout.EndArea();
-				EditorZoomArea.End();
-			}
-			else
-			{
-					EditorGUI.LabelField(new Rect(10, 70, 200, 50), "No Character Assign!", GetTextStyleColor(Color.red));
-			}
-		
-			
-			
             currentGraph?.RemoveTransitions();
 
 
@@ -502,11 +538,12 @@ namespace BehaviourTreeEditor
             result.y += pivotPoint.y;
             return result;
         }
+
     }
     public class EditorZoomArea
     {
         private const float kEditorWindowTabHeight = 21.0f;
-		private static Matrix4x4 _prevGuiMatrix;
+        private static Matrix4x4 _prevGuiMatrix;
 
         public static Rect Begin(float zoomScale, Rect screenCoordsArea)
         {
@@ -515,10 +552,10 @@ namespace BehaviourTreeEditor
             Rect clippedArea = screenCoordsArea.ScaleSizeBy(1.0f / zoomScale, screenCoordsArea.TopLeft());
             clippedArea.y += kEditorWindowTabHeight;
             GUI.BeginGroup(clippedArea);
-		
-			_prevGuiMatrix = GUI.matrix;
-			
-			Matrix4x4 translation = Matrix4x4.TRS(clippedArea.TopLeft(), Quaternion.identity, Vector3.one);
+
+            _prevGuiMatrix = GUI.matrix;
+
+            Matrix4x4 translation = Matrix4x4.TRS(clippedArea.TopLeft(), Quaternion.identity, Vector3.one);
             Matrix4x4 scale = Matrix4x4.Scale(new Vector3(zoomScale, zoomScale, 1.0f));
             GUI.matrix = translation * scale * translation.inverse * GUI.matrix;
 
@@ -528,7 +565,7 @@ namespace BehaviourTreeEditor
         public static void End()
         {
             GUI.matrix = _prevGuiMatrix;
-          GUI.EndGroup();
+            GUI.EndGroup();
             GUI.BeginGroup(new Rect(0.0f, kEditorWindowTabHeight, Screen.width, Screen.height));
         }
     }
