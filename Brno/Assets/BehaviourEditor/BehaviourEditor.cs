@@ -49,8 +49,8 @@ namespace BehaviourTreeEditor
         private void OnGUI()
         {
 
-			DrawGrid(20, 0.2f, Color.gray);
-			DrawGrid(100, 0.4f, Color.gray);
+			DrawGrid(20, 0.1f, Color.gray);
+			//DrawGrid(100, 0.4f, Color.gray);
 
 			Event e = Event.current;
             mousePosition = e.mousePosition;
@@ -243,37 +243,46 @@ namespace BehaviourTreeEditor
         public void DrawWindows()
         {
             EditorGUI.LabelField(new Rect(10, 30, 200, 50), "Character: ");
-            GUILayout.BeginArea(new Rect(10, 50, 200, 100));
+
+			GUILayout.BeginArea(new Rect(10, 50, 200, 100));
             currentGraph = (BehaviourGraph)EditorGUILayout.ObjectField(currentGraph, typeof(BehaviourGraph), false, GUILayout.Width(200)); // field to choose graph
             GUILayout.EndArea();
-            if (currentGraph == null)
-            {
-                EditorGUI.LabelField(new Rect(10, 70, 200, 50), "No Character Assign!", GetTextStyleColor(Color.red));
-                goto end; // cannot be return because Windows and GL.Area must be closed
-            }
 
 
-            EditorZoomArea.Begin(_zoom, _zoomArea);
-            GUILayout.BeginArea(all, style);
-            BeginWindows();
-            if (currentGraph != null)
-            {
-                currentGraph?.RemoveNodeSelectedNodes();
 
-                foreach (BaseNode n in currentGraph.nodes)
-                {
-                    n.DrawCurve(); // drawing transitions
-                }
-            }
-            for (int i = 0; i < currentGraph.nodes.Count; i++)
-            {
-                currentGraph.nodes[i].WindowRect = GUI.Window(i, currentGraph.nodes[i].WindowRect, DrawNodeWindow, currentGraph.nodes[i].WindowTitle); // setting up nodes as windows
-            }
-            end:
-            EndWindows();
-            GUILayout.EndArea();
-            EditorZoomArea.End();
+			if (currentGraph != null)
+			{
+				EditorZoomArea.Begin(_zoom, all);
+				GUILayout.BeginArea(all, style);
+				BeginWindows();
 
+
+				if (currentGraph != null)
+				{
+					currentGraph?.RemoveNodeSelectedNodes();
+
+					foreach (BaseNode n in currentGraph.nodes)
+					{
+						n.DrawCurve(); // drawing transitions
+					}
+				}
+				for (int i = 0; i < currentGraph.nodes.Count; i++)
+				{
+					currentGraph.nodes[i].WindowRect = GUI.Window(i, currentGraph.nodes[i].WindowRect, DrawNodeWindow, currentGraph.nodes[i].WindowTitle); // setting up nodes as windows
+				}
+
+
+				EndWindows();
+				GUILayout.EndArea();
+				EditorZoomArea.End();
+			}
+			else
+			{
+					EditorGUI.LabelField(new Rect(10, 70, 200, 50), "No Character Assign!", GetTextStyleColor(Color.red));
+			}
+		
+			
+			
             currentGraph?.RemoveTransitions();
 
 
@@ -497,7 +506,7 @@ namespace BehaviourTreeEditor
     public class EditorZoomArea
     {
         private const float kEditorWindowTabHeight = 21.0f;
-        private static Matrix4x4 _prevGuiMatrix;
+		private static Matrix4x4 _prevGuiMatrix;
 
         public static Rect Begin(float zoomScale, Rect screenCoordsArea)
         {
@@ -506,9 +515,10 @@ namespace BehaviourTreeEditor
             Rect clippedArea = screenCoordsArea.ScaleSizeBy(1.0f / zoomScale, screenCoordsArea.TopLeft());
             clippedArea.y += kEditorWindowTabHeight;
             GUI.BeginGroup(clippedArea);
-
-            _prevGuiMatrix = GUI.matrix;
-            Matrix4x4 translation = Matrix4x4.TRS(clippedArea.TopLeft(), Quaternion.identity, Vector3.one);
+		
+			_prevGuiMatrix = GUI.matrix;
+			
+			Matrix4x4 translation = Matrix4x4.TRS(clippedArea.TopLeft(), Quaternion.identity, Vector3.one);
             Matrix4x4 scale = Matrix4x4.Scale(new Vector3(zoomScale, zoomScale, 1.0f));
             GUI.matrix = translation * scale * translation.inverse * GUI.matrix;
 
@@ -518,7 +528,7 @@ namespace BehaviourTreeEditor
         public static void End()
         {
             GUI.matrix = _prevGuiMatrix;
-            GUI.EndGroup();
+          GUI.EndGroup();
             GUI.BeginGroup(new Rect(0.0f, kEditorWindowTabHeight, Screen.width, Screen.height));
         }
     }
