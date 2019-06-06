@@ -13,7 +13,7 @@ namespace BehaviourTreeEditor
     public class BehaviourEditor : EditorWindow
     {
         #region Variables
-
+        bool mouseDrag = false;
         Vector3 mousePosition;
         static bool clickedOnWindow;
         public static BaseNode selectedNode;
@@ -55,6 +55,7 @@ namespace BehaviourTreeEditor
             settings = Resources.Load("Editor/Settings", typeof(EditorSettings)) as EditorSettings;
             style = settings.skin.GetStyle("window");
             titleContent.text = "BehaviourEditor";
+
         }
         private void OnGUI()
         {
@@ -63,16 +64,21 @@ namespace BehaviourTreeEditor
             DrawGrid(_zoom * 10 + settings.gridSpacing, settings.gridOpacity, settings.gridColor);
             mousePosition = e.mousePosition;
 
-            HandleZoom(e);
 
             UserInput(e);
             DrawWindows();
+            if (mouseDrag)
+            {
+                EditorGUIUtility.AddCursorRect(all, MouseCursor.Pan);
 
-            EditorGUI.DrawRect(new Rect(mousePosition, Vector2.one), Color.red);
+            }
 
             if (e.type == EventType.MouseDrag)
             {
+
+
                 Repaint();
+
             }
             if (GUI.changed)
             {
@@ -85,6 +91,7 @@ namespace BehaviourTreeEditor
                 Repaint();
 
             }
+
 
         }
 
@@ -122,20 +129,19 @@ namespace BehaviourTreeEditor
         }
         private void HandleZoom(Event e)
         {
-            if (e.type == EventType.ScrollWheel)
-            {
-                _zoomCoordsOrigin = e.mousePosition;
-                Vector2 screenCoordsMousePos = e.mousePosition;
-                Vector2 delta = e.delta;
-                Vector2 zoomCoordsMousePos = ConvertScreenCoordsToZoomCoords(screenCoordsMousePos);
-                float zoomDelta = -delta.y / 150.0f;
-                float oldZoom = _zoom;
-                _zoom += zoomDelta;
-                _zoom = Mathf.Clamp(_zoom, kZoomMin, kZoomMax);
-                _zoomCoordsOrigin += (zoomCoordsMousePos - _zoomCoordsOrigin) - (oldZoom / _zoom) * (zoomCoordsMousePos - _zoomCoordsOrigin);
 
-                e.Use();
-            }
+            _zoomCoordsOrigin = e.mousePosition;
+            Vector2 screenCoordsMousePos = e.mousePosition;
+            Vector2 delta = e.delta;
+            Vector2 zoomCoordsMousePos = ConvertScreenCoordsToZoomCoords(screenCoordsMousePos);
+            float zoomDelta = -delta.y / 150.0f;
+            float oldZoom = _zoom;
+            _zoom += zoomDelta;
+            _zoom = Mathf.Clamp(_zoom, kZoomMin, kZoomMax);
+            _zoomCoordsOrigin += (zoomCoordsMousePos - _zoomCoordsOrigin) - (oldZoom / _zoom) * (zoomCoordsMousePos - _zoomCoordsOrigin);
+
+            e.Use();
+
         }
         #endregion
 
@@ -180,6 +186,7 @@ namespace BehaviourTreeEditor
 
             if ((e.button == 0 || e.button == 1) && e.type == EventType.MouseDown)
             {
+                mouseDrag = true;
                 if (selectedTransition != null && !new Rect(10, 150, 200, 300).Contains(mousePosition))
                 {
                     selectedTransition.clicked = false;
@@ -218,16 +225,22 @@ namespace BehaviourTreeEditor
                 }
 
             }
+            if (e.type == EventType.MouseUp)
+            {
+                mouseDrag = false;
 
+            }
             if (e.button == 2 || e.button == 0 && e.modifiers == EventModifiers.Alt)
             {
                 if (e.type == EventType.MouseDown)
                 {
                     scrollStartPos = e.mousePosition;
+                    mouseDrag = true;
                 }
                 else if (e.type == EventType.MouseDrag)
                 {
                     HandlePanning(e);
+
                 }
             }
             if (e.Equals(Event.KeyboardEvent("delete")) && selectedNode != null)
@@ -236,6 +249,11 @@ namespace BehaviourTreeEditor
                 currentGraph.removeNodesIDs.Add(selectedNode.ID);
                 Repaint();
             }
+            if (e.type == EventType.ScrollWheel)
+            {
+                HandleZoom(e);
+            }
+
         }
 
 
@@ -331,6 +349,7 @@ namespace BehaviourTreeEditor
 
             GUI.DragWindow();
 
+
         }
         void AddNewNode(Event e)
         {
@@ -344,7 +363,7 @@ namespace BehaviourTreeEditor
         }
         public void MakeTransition(BaseNode start, BaseNode end)
         {
-            if (start == end) { isMakingTransition = false;return; };
+            if (start == end) { isMakingTransition = false; return; };
             Transition t;
             if (start.drawNode is ConditionNode)
             {
