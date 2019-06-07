@@ -80,7 +80,7 @@ namespace BehaviourTreeEditor
         {
 
             EditorGUI.DrawRect(new Rect(0, 17, WindowRect.width, WindowRect.height - 17), nodeColor);
-            EditorGUILayout.LabelField("Node Color: ");
+            EditorGUILayout.LabelField("Node Color: ",GColor.White);
             nodeColor = EditorGUILayout.ColorField(nodeColor);
             collapse = EditorGUILayout.Toggle(collapse);
             if (collapse)
@@ -99,6 +99,7 @@ namespace BehaviourTreeEditor
         {
             drawNode?.DrawCurve(this);
         }
+		
     }
     [Serializable]
     public class StateNodeReferences

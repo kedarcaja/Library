@@ -13,7 +13,7 @@ namespace BehaviourTreeEditor
         {
             foreach (Transition t in b.transitions)
             {
-                if (t == null) continue;
+                if (t == null|| t.endNode == null|| t.startNode == null) continue;
                 BehaviourEditor.DrawNodeCurve(t, t.startNode.WindowRect, t.endNode.WindowRect, t.startPlacement, t.endPlacement, t.Color, t.disabled);
                 t.DrawConnection(t.startNode, t.endNode, t.startPlacement, t.endPlacement, t.Color, t.disabled);
             }
