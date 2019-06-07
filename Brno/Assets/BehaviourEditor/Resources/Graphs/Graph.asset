@@ -12,5 +12,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a3d501ae2aac5e4aac88fb12af507ac, type: 3}
   m_Name: Graph
   m_EditorClassIdentifier: 
-  nodes: []
+  nodes:
+  - ID: 9T0
+    WindowRect:
+      serializedVersion: 2
+      x: 419
+      y: 114
+      width: 200
+      height: 330
+    WindowTitle: State
+    nodeColor:
+      serializedVersion: 2
+      rgba: 4286545791
+    collapse: 0
+    normalHeight: 300
+    drawNode: {fileID: 11400000, guid: 62460f789d8b74b469856736624e652c, type: 2}
+    isAssigned: 1
+    isDuplicate: 0
+    previousCollapse: 0
+    transitions: []
+    depencies: []
+    transitionsIdsToRemove: []
+    comment: 
+    stateRef:
+      currentState: {fileID: 11400000, guid: 37db91f11bb404d4099b12c800469536, type: 2}
+      previousState: {fileID: 0}
+    showActions: 1
+    showEnterExit: 0
+    condition: {fileID: 0}
   removeNodesIDs: []

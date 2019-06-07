@@ -4,9 +4,8 @@ using UnityEngine;
 
 namespace BehaviourTreeEditor
 {
-    [CreateAssetMenu(menuName = "BehaviourEditor/StateAction")]
-    public class StateAction : ScriptableObject
+    public abstract class StateAction : ScriptableObject
     {
-
+            public abstract void Execute(CharacterScript states);
     }
 }

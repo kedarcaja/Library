@@ -35,6 +35,10 @@ namespace BehaviourTreeEditor
         private Vector2 offset;
         private Vector2 drag;
         #endregion
+
+
+        public static CharacterScript currentCharacter;
+        static State previousState;
         #endregion
         public enum UserActions
         {
@@ -64,9 +68,9 @@ namespace BehaviourTreeEditor
             DrawGrid(_zoom * 10 + settings.gridSpacing, settings.gridOpacity, settings.gridColor);
             mousePosition = e.mousePosition;
 
-
             UserInput(e);
             DrawWindows();
+
             if (mouseDrag)
             {
                 EditorGUIUtility.AddCursorRect(all, MouseCursor.Pan);
@@ -91,10 +95,17 @@ namespace BehaviourTreeEditor
                 Repaint();
 
             }
-
-
         }
 
+        private bool CharacterSelected()
+        {
+            CharacterScript s = Selection.activeTransform.GetComponent<CharacterScript>();
+            return ObjectSelected() && s != null && s.Graph != null && s.Graph;
+        }
+        private bool ObjectSelected()
+        {
+            return Selection.activeTransform != null;
+        }
         #endregion
         #region Window Handle Methods
         void HandlePanning(Event e)
@@ -143,17 +154,6 @@ namespace BehaviourTreeEditor
             e.Use();
 
         }
-        #endregion
-
-        private void ModifyNode(Event e)
-        {
-            GenericMenu menu = new GenericMenu();
-            menu.AddItem(new GUIContent("Delete"), false, ContextCallback, UserActions.deleteNode);
-            if (selectedNode.condition != null && (selectedNode.drawNode is ConditionNode) && selectedNode.transitions.Count < 2 || !(selectedNode.drawNode is ConditionNode))
-                menu.AddItem(new GUIContent("Make Transition"), false, ContextCallback, UserActions.makeTransition);
-            menu.ShowAsContext();
-            e.Use();
-        }
         private void DrawGrid(float gridSpacing, float gridOpacity, Color gridColor)
         {
             int widthDivs = Mathf.CeilToInt(position.width / gridSpacing);
@@ -178,33 +178,59 @@ namespace BehaviourTreeEditor
             Handles.color = Color.white;
             Handles.EndGUI();
         }
+        #endregion
+        #region Input Handle Methods
+        public void HandleHiearchySelection()
+        {
+            if (CharacterSelected())
+            {
+                currentCharacter = Selection.activeTransform.GetComponent<CharacterScript>();
+                currentGraph = currentCharacter.Graph;
+            }
+            else
+            {
+                currentGraph = null;
+            }
+            Repaint();
+        }
+        public void HandleGraphSelection(Event e)
+        {
+            mouseDrag = true;
+            if (selectedTransition != null && !new Rect(10, 150, 200, 300).Contains(mousePosition))
+            {
+                selectedTransition.clicked = false;
+                selectedTransition = null;
+                Repaint();
+
+            }
+            for (int i = 0; i < currentGraph.nodes.Count; i++)
+            {
+                if (currentGraph.nodes[i].WindowRect.Contains(e.mousePosition))
+                {
+                    clickedOnWindow = true;
+                    selectedNode = currentGraph.nodes[i];
+                    break;
+                }
+            }
+        }
         private void UserInput(Event e)
         {
+
+            if (ObjectSelected())
+            {
+
+                HandleHiearchySelection();
+
+            }
+
             if (currentGraph == null) return;
             clickedOnWindow = false;
             BaseNode start = selectedNode;
 
             if ((e.button == 0 || e.button == 1) && e.type == EventType.MouseDown)
             {
-                mouseDrag = true;
-                if (selectedTransition != null && !new Rect(10, 150, 200, 300).Contains(mousePosition))
-                {
-                    selectedTransition.clicked = false;
-                    selectedTransition = null;
-                    Repaint();
-
-                }
-                for (int i = 0; i < currentGraph.nodes.Count; i++)
-                {
-                    if (currentGraph.nodes[i].WindowRect.Contains(e.mousePosition))
-                    {
-                        clickedOnWindow = true;
-                        selectedNode = currentGraph.nodes[i];
-                        break;
-                    }
-                }
+                HandleGraphSelection(e);
             }
-
 
             if (e.button == 1)
             {
@@ -245,7 +271,7 @@ namespace BehaviourTreeEditor
             }
             if (e.Equals(Event.KeyboardEvent("delete")) && selectedNode != null)
             {
-                GUI.FocusControl(null);
+                GUI.FocusControl(null); // removes focus from graph gui
                 currentGraph.removeNodesIDs.Add(selectedNode.ID);
                 Repaint();
             }
@@ -255,8 +281,6 @@ namespace BehaviourTreeEditor
             }
 
         }
-
-
         private void RightClick(Event e)
         {
             if (currentGraph == null) return;
@@ -272,6 +296,91 @@ namespace BehaviourTreeEditor
             {
                 ModifyNode(e);
             }
+        }
+    
+        #endregion
+        #region Node Methods
+        public void DrawWindows()
+        {
+            if (currentGraph != null)
+            {
+                EditorZoomArea.Begin(_zoom, all);
+                GUILayout.BeginArea(all /*style*/);
+                BeginWindows();
+
+                currentGraph?.RemoveNodeSelectedNodes();
+
+                foreach (BaseNode n in currentGraph.nodes)
+                {
+                    n.DrawCurve(); // drawing transitions
+                }
+
+                for (int i = 0; i < currentGraph.nodes.Count; i++)
+                {
+                    currentGraph.nodes[i].WindowRect = GUI.Window(i, currentGraph.nodes[i].WindowRect, DrawNodeWindow, currentGraph.nodes[i].WindowTitle); // setting up nodes as windows
+                }
+
+
+                EndWindows();
+                GUILayout.EndArea();
+                EditorZoomArea.End();
+
+                foreach (BaseNode b in currentGraph.nodes)
+                {
+                    foreach (Transition t in b.transitions)
+                    {
+                        DrawTransitionSettings(t);
+                    }
+                }
+            }
+
+
+            //Rect zone = new Rect(0, 0, 200, 100);
+            //EditorGUI.DrawRect(zone, settings.otherGUIColor);
+            //GUILayout.BeginArea(new Rect(zone.x + 2, zone.y + 2, zone.width, zone.height));
+            //GetEGLLable("Character: ", GColor.White);
+            //currentGraph = (BehaviourGraph)EditorGUILayout.ObjectField(currentGraph, typeof(BehaviourGraph), false, GUILayout.Width(200)); // field to choose graph
+
+
+
+            //if (!currentGraph)
+            //{
+            //    GetEGLLable("No Character Assign!", GColor.Red);
+            //}
+
+            //GUILayout.EndArea();
+
+            currentGraph?.RemoveTransitions();
+
+
+        }
+        void DrawNodeWindow(int id)
+        {
+
+            currentGraph?.nodes[id].DrawWindow();
+
+            GUI.DragWindow();
+
+
+        }
+        void AddNewNode(Event e)
+        {
+            GenericMenu menu = new GenericMenu();
+            menu.AddItem(new GUIContent("Add Comment"), false, ContextCallback, UserActions.commentNode);
+            menu.AddItem(new GUIContent("Add State"), false, ContextCallback, UserActions.stateNode);
+            menu.AddItem(new GUIContent("Add Condition"), false, ContextCallback, UserActions.conditionNode);
+
+            menu.ShowAsContext();
+            e.Use();
+        }
+        private void ModifyNode(Event e)
+        {
+            GenericMenu menu = new GenericMenu();
+            menu.AddItem(new GUIContent("Delete"), false, ContextCallback, UserActions.deleteNode);
+            if (selectedNode.condition != null && (selectedNode.drawNode is ConditionNode) && selectedNode.transitions.Count < 2 || !(selectedNode.drawNode is ConditionNode))
+                menu.AddItem(new GUIContent("Make Transition"), false, ContextCallback, UserActions.makeTransition);
+            menu.ShowAsContext();
+            e.Use();
         }
         private void ContextCallback(object o)
         {
@@ -298,81 +407,51 @@ namespace BehaviourTreeEditor
             EditorUtility.SetDirty(currentGraph);
 
         }
-        public void DrawWindows()
+        #endregion
+        #region Transition Methods
+        public static void DrawTransitionClickPoint(Transition t, Vector3 start, Vector3 end)
         {
+            if (t == null) return;
+            Handles.color = t.Color;
 
-            if (currentGraph != null)
+            if (Handles.Button((start + end) * .5f, Quaternion.identity, 4, 8, Handles.DotHandleCap))
             {
-                EditorZoomArea.Begin(_zoom, all);
-                GUILayout.BeginArea(all /*style*/);
-                BeginWindows();
+                t.clicked = !t.clicked;
+            }
 
-
-             
-                    currentGraph?.RemoveNodeSelectedNodes();
-
-                    foreach (BaseNode n in currentGraph.nodes)
-                    {
-                        n.DrawCurve(); // drawing transitions
-                    }
-                
-                for (int i = 0; i < currentGraph.nodes.Count; i++)
+        }
+        public void DrawTransitionSettings(Transition t)
+        {
+            if (t.clicked)
+            {
+                if (selectedTransition != null && selectedTransition != t)
                 {
-                    currentGraph.nodes[i].WindowRect = GUI.Window(i, currentGraph.nodes[i].WindowRect, DrawNodeWindow, currentGraph.nodes[i].WindowTitle); // setting up nodes as windows
+                    selectedTransition.clicked = false;
+
                 }
+                selectedTransition = t;
 
+                EditorGUI.DrawRect(new Rect(10, 150, 200, 300), settings.otherGUIColor);
 
-                EndWindows();
+                GUILayout.BeginArea(new Rect(10, 150, 200, 300));
+                GUIStyle s = GColor.White;
+                GetEGLLable("Transition settings: ", s);
+                GetEGLLable("color: ", s);
+                t.Color = EditorGUILayout.ColorField(t.Color);
+
+                GetEGLLable("start position: ", s);
+                t.startPlacement = (EWindowCurvePlacement)EditorGUILayout.EnumPopup(t.startPlacement);
+
+                GetEGLLable("end position: ", s);
+                t.endPlacement = (EWindowCurvePlacement)EditorGUILayout.EnumPopup(t.endPlacement);
+
+                GetEGLLable("Value: " + t?.Value?.ToString(), s);
                 GUILayout.EndArea();
-                EditorZoomArea.End();
-
-				foreach (BaseNode b in currentGraph.nodes)
-				{
-					foreach (Transition t in b.transitions)
-					{
-						DrawTransitionSettings(t);
-					}
-				}
-			}
-
-
-            Rect zone = new Rect(0, 0, 200, 100);
-            EditorGUI.DrawRect(zone, settings.otherGUIColor);
-            GUILayout.BeginArea(new Rect(zone.x + 2, zone.y + 2, zone.width, zone.height));
-            GetEGLLable("Character: ", GColor.White);
-            currentGraph = (BehaviourGraph)EditorGUILayout.ObjectField(currentGraph, typeof(BehaviourGraph), false, GUILayout.Width(200)); // field to choose graph
-
-
-
-            if (!currentGraph)
-			{
-				GetEGLLable("No Character Assign!", GColor.Red);
-			}
-
-			GUILayout.EndArea();
-
-            currentGraph?.RemoveTransitions();
-
-
-        }
-        void DrawNodeWindow(int id)
-        {
-
-            currentGraph?.nodes[id].DrawWindow();
-
-            GUI.DragWindow();
-
-
-        }
-        void AddNewNode(Event e)
-        {
-            GenericMenu menu = new GenericMenu();
-            menu.AddItem(new GUIContent("Add Comment"), false, ContextCallback, UserActions.commentNode);
-            menu.AddItem(new GUIContent("Add State"), false, ContextCallback, UserActions.stateNode);
-            menu.AddItem(new GUIContent("Add Condition"), false, ContextCallback, UserActions.conditionNode);
-
-            menu.ShowAsContext();
-            e.Use();
+                if (GUI.Button(new Rect(10, 300, 80, 20), "Remove"))
+                {
+                    t.startNode.AddTransitionsToRemove(t.ID);
+                }
+            }
         }
         public void MakeTransition(BaseNode start, BaseNode end)
         {
@@ -483,57 +562,13 @@ namespace BehaviourTreeEditor
             Handles.DrawBezier(startPos, endPos, startTan, endTan, disable ? Color.black : curveColor, null, 3);
             DrawTransitionClickPoint(t, startPos, endPos);
         }
-        public static void DrawTransitionClickPoint(Transition t, Vector3 start, Vector3 end)
-        {
-            if (t == null) return;
-            Handles.color = t.Color;
-
-            if (Handles.Button((start + end) * .5f, Quaternion.identity, 4, 8, Handles.DotHandleCap))
-            {
-                t.clicked = !t.clicked;
-            }
-         
-        }
-		public void DrawTransitionSettings(Transition t)
-		{
-			if (t.clicked)
-			{
-				if (selectedTransition != null && selectedTransition != t)
-				{
-					selectedTransition.clicked = false;
-
-				}
-				selectedTransition = t;
-
-				EditorGUI.DrawRect(new Rect(10, 150, 200, 300), settings.otherGUIColor);
-
-				GUILayout.BeginArea(new Rect(10, 150, 200, 300));
-				GUIStyle s = GColor.White;
-				GetEGLLable("Transition settings: ", s);
-				GetEGLLable("color: ", s);
-				t.Color = EditorGUILayout.ColorField(t.Color);
-
-				GetEGLLable("start position: ", s);
-				t.startPlacement = (EWindowCurvePlacement)EditorGUILayout.EnumPopup(t.startPlacement);
-
-				GetEGLLable("end position: ", s);
-				t.endPlacement = (EWindowCurvePlacement)EditorGUILayout.EnumPopup(t.endPlacement);
-
-				GetEGLLable("Value: " + t?.Value?.ToString(), s);
-				GUILayout.EndArea();
-				if (GUI.Button(new Rect(10, 300, 80, 20), "Remove"))
-				{
-					t.startNode.AddTransitionsToRemove(t.ID);
-				}
-			}
-		}
-
+        #endregion
         public static void GetEGLLable(string text, GUIStyle style)
         {
             EditorGUILayout.LabelField(text, style);
         }
     }
-
+    #region Extending Classes
     public static class RectExtensions
     {
         public static Vector2 TopLeft(this Rect rect)
@@ -622,4 +657,5 @@ namespace BehaviourTreeEditor
             return s;
         }
     }
+    #endregion
 }
