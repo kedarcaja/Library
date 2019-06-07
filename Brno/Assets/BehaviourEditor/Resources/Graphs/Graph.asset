@@ -13,13 +13,13 @@ MonoBehaviour:
   m_Name: Graph
   m_EditorClassIdentifier: 
   nodes:
-  - ID: 9T0
+  - ID: 4H0
     WindowRect:
       serializedVersion: 2
-      x: 419
-      y: 114
+      x: 367.41476
+      y: 42.195236
       width: 200
-      height: 330
+      height: 300
     WindowTitle: State
     nodeColor:
       serializedVersion: 2
@@ -27,17 +27,56 @@ MonoBehaviour:
     collapse: 0
     normalHeight: 300
     drawNode: {fileID: 11400000, guid: 62460f789d8b74b469856736624e652c, type: 2}
-    isAssigned: 1
+    isAssigned: 0
     isDuplicate: 0
     previousCollapse: 0
     transitions: []
+    depencies:
+    - ID: T581S
+      Color: {r: 1, g: 0, b: 1, a: 1}
+      disabled: 0
+      startPlacement: 6
+      endPlacement: 7
+      clicked: 0
+    transitionsIdsToRemove: []
+    comment: 
+    stateRef:
+      currentState: {fileID: 0}
+      previousState: {fileID: 0}
+    showActions: 0
+    showEnterExit: 0
+    condition: {fileID: 0}
+  - ID: 54J1
+    WindowRect:
+      serializedVersion: 2
+      x: 865
+      y: 209
+      width: 200
+      height: 300
+    WindowTitle: State
+    nodeColor:
+      serializedVersion: 2
+      rgba: 4286545791
+    collapse: 0
+    normalHeight: 300
+    drawNode: {fileID: 11400000, guid: 62460f789d8b74b469856736624e652c, type: 2}
+    isAssigned: 0
+    isDuplicate: 0
+    previousCollapse: 0
+    transitions:
+    - ID: T581S
+      Color: {r: 1, g: 0, b: 1, a: 1}
+      disabled: 0
+      startPlacement: 6
+      endPlacement: 7
+      clicked: 0
     depencies: []
     transitionsIdsToRemove: []
     comment: 
     stateRef:
-      currentState: {fileID: 11400000, guid: 37db91f11bb404d4099b12c800469536, type: 2}
+      currentState: {fileID: 0}
       previousState: {fileID: 0}
-    showActions: 1
+    showActions: 0
     showEnterExit: 0
     condition: {fileID: 0}
   removeNodesIDs: []

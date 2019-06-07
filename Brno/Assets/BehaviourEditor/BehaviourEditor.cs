@@ -13,7 +13,6 @@ namespace BehaviourTreeEditor
     public class BehaviourEditor : EditorWindow
     {
         #region Variables
-        bool mouseDrag = false;
         Vector3 mousePosition;
         static bool clickedOnWindow;
         public static BaseNode selectedNode;
@@ -71,19 +70,7 @@ namespace BehaviourTreeEditor
             UserInput(e);
             DrawWindows();
 
-            if (mouseDrag)
-            {
-                EditorGUIUtility.AddCursorRect(all, MouseCursor.Pan);
-
-            }
-
-            if (e.type == EventType.MouseDrag)
-            {
-
-
-                Repaint();
-
-            }
+            EditorGUI.DrawRect(new Rect(mousePosition, Vector2.one), Color.red);
             if (GUI.changed)
             {
                 Repaint();
@@ -191,17 +178,14 @@ namespace BehaviourTreeEditor
             {
                 currentGraph = null;
             }
-            Repaint();
         }
         public void HandleGraphSelection(Event e)
         {
-            mouseDrag = true;
-            if (selectedTransition != null && !new Rect(10, 150, 200, 300).Contains(mousePosition))
+            clickedOnWindow = false;
+            if (selectedTransition != null && !new Rect(10, 150, 200, 300).Contains(e.mousePosition))
             {
                 selectedTransition.clicked = false;
                 selectedTransition = null;
-                Repaint();
-
             }
             for (int i = 0; i < currentGraph.nodes.Count; i++)
             {
@@ -209,33 +193,30 @@ namespace BehaviourTreeEditor
                 {
                     clickedOnWindow = true;
                     selectedNode = currentGraph.nodes[i];
+
                     break;
                 }
             }
+            
         }
         private void UserInput(Event e)
         {
 
             if (ObjectSelected())
             {
-
                 HandleHiearchySelection();
-
             }
 
             if (currentGraph == null) return;
-            clickedOnWindow = false;
+        
             BaseNode start = selectedNode;
-
-            if ((e.button == 0 || e.button == 1) && e.type == EventType.MouseDown)
-            {
-                HandleGraphSelection(e);
-            }
 
             if (e.button == 1)
             {
                 if (e.type == EventType.MouseDown)
                 {
+                    HandleGraphSelection(e);
+
                     RightClick(e);
                 }
             }
@@ -243,6 +224,8 @@ namespace BehaviourTreeEditor
             {
                 if (e.type == EventType.MouseDown)
                 {
+                    HandleGraphSelection(e);
+
                     if (isMakingTransition)
                     {
                         BaseNode end = selectedNode;
@@ -251,22 +234,16 @@ namespace BehaviourTreeEditor
                 }
 
             }
-            if (e.type == EventType.MouseUp)
-            {
-                mouseDrag = false;
 
-            }
             if (e.button == 2 || e.button == 0 && e.modifiers == EventModifiers.Alt)
             {
-                if (e.type == EventType.MouseDown)
+                if (e.type == EventType.MouseDown&& !clickedOnWindow)
                 {
                     scrollStartPos = e.mousePosition;
-                    mouseDrag = true;
                 }
-                else if (e.type == EventType.MouseDrag)
+                else if (e.type == EventType.MouseDrag&& !clickedOnWindow)
                 {
                     HandlePanning(e);
-
                 }
             }
             if (e.Equals(Event.KeyboardEvent("delete")) && selectedNode != null)
@@ -279,7 +256,6 @@ namespace BehaviourTreeEditor
             {
                 HandleZoom(e);
             }
-
         }
         private void RightClick(Event e)
         {
@@ -297,7 +273,7 @@ namespace BehaviourTreeEditor
                 ModifyNode(e);
             }
         }
-    
+
         #endregion
         #region Node Methods
         public void DrawWindows()
@@ -356,12 +332,8 @@ namespace BehaviourTreeEditor
         }
         void DrawNodeWindow(int id)
         {
-
             currentGraph?.nodes[id].DrawWindow();
-
             GUI.DragWindow();
-
-
         }
         void AddNewNode(Event e)
         {
