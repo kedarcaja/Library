@@ -16,7 +16,7 @@ namespace BehaviourTreeEditor
         Vector3 mousePosition;
         static bool clickedOnWindow;
         public static BaseNode selectedNode;
-        public static BehaviourGraph currentGraph,previousGraph;
+        public static BehaviourGraph currentGraph;
         public static bool isMakingTransition = false;
         public static EditorSettings settings;
         Rect all = new Rect(0, 0, 10000, 10000); // window 
@@ -58,7 +58,6 @@ namespace BehaviourTreeEditor
             settings = Resources.Load("Editor/Settings", typeof(EditorSettings)) as EditorSettings;
             style = settings.skin.GetStyle("window");
             titleContent.text = "BehaviourEditor";
-
         }
         private void OnGUI()
         {
@@ -71,7 +70,7 @@ namespace BehaviourTreeEditor
             DrawWindows();
 
             EditorGUI.DrawRect(new Rect(mousePosition, Vector2.one), Color.red);
-            if (GUI.changed|| currentGraph != previousGraph)
+            if (GUI.changed)
             {
                 Repaint();
             }
@@ -290,6 +289,14 @@ namespace BehaviourTreeEditor
                 foreach (BaseNode n in currentGraph.nodes)
                 {
                     n.DrawCurve(); // drawing transitions
+                    foreach (Transition t in n.transitions)
+                    {
+                        if (!currentGraph.nodes.Contains(t.endNode) )
+                        {
+                            n.AddTransitionsToRemove(t.ID);
+                            Repaint();
+                        }
+                    }
                 }
 
                 for (int i = 0; i < currentGraph.nodes.Count; i++)
@@ -556,6 +563,7 @@ namespace BehaviourTreeEditor
         {
             EditorGUILayout.LabelField(text, style);
         }
+       
     }
     #region Extending Classes
     public static class RectExtensions

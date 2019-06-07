@@ -97,6 +97,7 @@ namespace BehaviourTreeEditor
 
         public void DrawCurve()
         {
+           
             drawNode?.DrawCurve(this);
         }
 		

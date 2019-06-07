@@ -17,8 +17,14 @@ namespace BehaviourTreeEditor
 		public EWindowCurvePlacement startPlacement, endPlacement;
 		public bool clicked = false;
 		public object Value;
+
+
+       
 		public Transition(BaseNode start, BaseNode end, EWindowCurvePlacement sPos, EWindowCurvePlacement ePos, Color col, bool disable)
 		{
+            if (start.transitions.Exists(t => t.endNode == end)) return;
+
+
 			DrawConnection(start, end, sPos, ePos, col, disable);
 			start.transitions.Add(this);
 			end.depencies.Add(this);
@@ -32,7 +38,6 @@ namespace BehaviourTreeEditor
 			disabled = disable;
 			startPlacement = sPos;
 			endPlacement = ePos;
-
 		}
 
 
