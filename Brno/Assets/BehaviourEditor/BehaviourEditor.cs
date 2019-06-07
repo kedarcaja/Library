@@ -308,15 +308,14 @@ namespace BehaviourTreeEditor
                 BeginWindows();
 
 
-                if (currentGraph != null)
-                {
+             
                     currentGraph?.RemoveNodeSelectedNodes();
 
                     foreach (BaseNode n in currentGraph.nodes)
                     {
                         n.DrawCurve(); // drawing transitions
                     }
-                }
+                
                 for (int i = 0; i < currentGraph.nodes.Count; i++)
                 {
                     currentGraph.nodes[i].WindowRect = GUI.Window(i, currentGraph.nodes[i].WindowRect, DrawNodeWindow, currentGraph.nodes[i].WindowTitle); // setting up nodes as windows
@@ -326,7 +325,15 @@ namespace BehaviourTreeEditor
                 EndWindows();
                 GUILayout.EndArea();
                 EditorZoomArea.End();
-            }
+
+				foreach (BaseNode b in currentGraph.nodes)
+				{
+					foreach (Transition t in b.transitions)
+					{
+						DrawTransitionSettings(t);
+					}
+				}
+			}
 
 
             Rect zone = new Rect(0, 0, 200, 100);
@@ -334,9 +341,15 @@ namespace BehaviourTreeEditor
             GUILayout.BeginArea(new Rect(zone.x + 2, zone.y + 2, zone.width, zone.height));
             GetEGLLable("Character: ", GColor.White);
             currentGraph = (BehaviourGraph)EditorGUILayout.ObjectField(currentGraph, typeof(BehaviourGraph), false, GUILayout.Width(200)); // field to choose graph
+
+
+
             if (!currentGraph)
-                GetEGLLable("No Character Assign!", GColor.Red);
-            GUILayout.EndArea();
+			{
+				GetEGLLable("No Character Assign!", GColor.Red);
+			}
+
+			GUILayout.EndArea();
 
             currentGraph?.RemoveTransitions();
 
@@ -479,37 +492,41 @@ namespace BehaviourTreeEditor
             {
                 t.clicked = !t.clicked;
             }
-            if (t.clicked)
-            {
-                if (selectedTransition != null && selectedTransition != t)
-                {
-                    selectedTransition.clicked = false;
-
-                }
-                selectedTransition = t;
-
-                EditorGUI.DrawRect(new Rect(10, 150, 200, 300), settings.otherGUIColor);
-
-                GUILayout.BeginArea(new Rect(10, 150, 200, 300));
-                GUIStyle s = GColor.White;
-                GetEGLLable("Transition settings: ", s);
-                GetEGLLable("color: ", s);
-                t.Color = EditorGUILayout.ColorField(t.Color);
-
-                GetEGLLable("start position: ", s);
-                t.startPlacement = (EWindowCurvePlacement)EditorGUILayout.EnumPopup(t.startPlacement);
-
-                GetEGLLable("end position: ", s);
-                t.endPlacement = (EWindowCurvePlacement)EditorGUILayout.EnumPopup(t.endPlacement);
-
-                GetEGLLable("Value: " + t?.Value?.ToString(), s);
-                GUILayout.EndArea();
-                if (GUI.Button(new Rect(10, 300, 80, 20), "Remove"))
-                {
-                    t.startNode.AddTransitionsToRemove(t.ID);
-                }
-            }
+         
         }
+		public void DrawTransitionSettings(Transition t)
+		{
+			if (t.clicked)
+			{
+				if (selectedTransition != null && selectedTransition != t)
+				{
+					selectedTransition.clicked = false;
+
+				}
+				selectedTransition = t;
+
+				EditorGUI.DrawRect(new Rect(10, 150, 200, 300), settings.otherGUIColor);
+
+				GUILayout.BeginArea(new Rect(10, 150, 200, 300));
+				GUIStyle s = GColor.White;
+				GetEGLLable("Transition settings: ", s);
+				GetEGLLable("color: ", s);
+				t.Color = EditorGUILayout.ColorField(t.Color);
+
+				GetEGLLable("start position: ", s);
+				t.startPlacement = (EWindowCurvePlacement)EditorGUILayout.EnumPopup(t.startPlacement);
+
+				GetEGLLable("end position: ", s);
+				t.endPlacement = (EWindowCurvePlacement)EditorGUILayout.EnumPopup(t.endPlacement);
+
+				GetEGLLable("Value: " + t?.Value?.ToString(), s);
+				GUILayout.EndArea();
+				if (GUI.Button(new Rect(10, 300, 80, 20), "Remove"))
+				{
+					t.startNode.AddTransitionsToRemove(t.ID);
+				}
+			}
+		}
 
         public static void GetEGLLable(string text, GUIStyle style)
         {
