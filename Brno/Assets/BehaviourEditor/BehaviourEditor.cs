@@ -16,7 +16,7 @@ namespace BehaviourTreeEditor
         Vector3 mousePosition;
         static bool clickedOnWindow;
         public static BaseNode selectedNode;
-        public static BehaviourGraph currentGraph;
+        public static BehaviourGraph currentGraph,previousGraph;
         public static bool isMakingTransition = false;
         public static EditorSettings settings;
         Rect all = new Rect(0, 0, 10000, 10000); // window 
@@ -71,7 +71,7 @@ namespace BehaviourTreeEditor
             DrawWindows();
 
             EditorGUI.DrawRect(new Rect(mousePosition, Vector2.one), Color.red);
-            if (GUI.changed)
+            if (GUI.changed|| currentGraph != previousGraph)
             {
                 Repaint();
             }
@@ -178,6 +178,7 @@ namespace BehaviourTreeEditor
             {
                 currentGraph = null;
             }
+            Repaint();
         }
         public void HandleGraphSelection(Event e)
         {
