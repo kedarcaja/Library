@@ -16,12 +16,7 @@ namespace BehaviourTreeEditor
         public override void DrawCurve(BaseNode b)
         {
 
-            foreach (Transition t in b.transitions)
-            {
-                if (t == null) continue;
-                BehaviourEditor.DrawNodeCurve(t, t.startNode.WindowRect, t.endNode.WindowRect, t.startPlacement, t.endPlacement, t.Color, t.disabled);
-                t.DrawConnection(t.startNode, t.endNode, t.startPlacement, t.endPlacement, t.Color, t.disabled);
-            }
+           
         }
 
     }
