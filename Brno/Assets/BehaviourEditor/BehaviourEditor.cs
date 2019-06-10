@@ -76,30 +76,6 @@ namespace BehaviourTreeEditor
 			DrawSelectionZones();
 			DrawWindows();
 
-
-
-
-			if (e.type == EventType.MouseDrag && currentGraph != null)
-			{
-				selectionBoxCurrentPos = Event.current.mousePosition;
-				if (!creatingSelectionZone)
-				{
-					creatingSelectionZone = true;
-					selectionBoxStartPos = selectionBoxCurrentPos;
-				}
-
-			}
-
-			if (e.type == EventType.MouseUp)
-			{
-				if (creatingSelectionZone)
-				{
-					Rect r = new Rect(selectionBoxStartPos.x, selectionBoxStartPos.y, selectionBoxCurrentPos.x - selectionBoxStartPos.x, selectionBoxCurrentPos.y - selectionBoxStartPos.y);
-					currentGraph.selectionZones.Add(new SelectionZone(r, "Title", new Color32(80, 80, 80, 77)));
-					creatingSelectionZone = false;
-				}
-			}
-
 			if (creatingSelectionZone)
 				GUI.Box(new Rect(selectionBoxStartPos.x, selectionBoxStartPos.y, selectionBoxCurrentPos.x - selectionBoxStartPos.x, selectionBoxCurrentPos.y - selectionBoxStartPos.y), "Title");
 
@@ -239,6 +215,19 @@ namespace BehaviourTreeEditor
 			}
 
 		}
+		public bool MouseOnSelectionZone(out SelectionZone zone)
+		{
+			zone = null;
+			foreach (SelectionZone z in currentGraph.selectionZones)
+			{
+				if (z.Rect.Contains(mousePosition))
+				{
+					zone = z;
+					return true;
+				}
+			}
+			return false;
+		}
 		private void UserInput(Event e)
 		{
 
@@ -262,6 +251,35 @@ namespace BehaviourTreeEditor
 			}
 			if (e.button == 0)
 			{
+				if (e.type == EventType.MouseDrag)
+				{
+					SelectionZone z = null;
+					if (MouseOnSelectionZone(out z))
+					{
+						if (!clickedOnWindow)
+							z.Drag(e.delta);
+					}
+					selectionBoxCurrentPos = mousePosition;
+					if (!creatingSelectionZone && z == null && !clickedOnWindow)
+					{
+						creatingSelectionZone = true;
+						selectionBoxStartPos = selectionBoxCurrentPos;
+					}
+
+				}
+
+				if (e.type == EventType.MouseUp)
+				{
+					if (creatingSelectionZone)
+					{
+						Rect r = new Rect(selectionBoxStartPos.x, selectionBoxStartPos.y, selectionBoxCurrentPos.x - selectionBoxStartPos.x, selectionBoxCurrentPos.y - selectionBoxStartPos.y);
+						SelectionZone x = new SelectionZone(r, "Title", new Color32(80, 80, 80, 77));
+						currentGraph.selectionZones.Add(x);
+						creatingSelectionZone = false;
+					}
+				}
+
+
 				if (e.type == EventType.MouseDown)
 				{
 					HandleGraphSelection(e);
@@ -341,8 +359,8 @@ namespace BehaviourTreeEditor
 
 				for (int i = 0; i < currentGraph.nodes.Count; i++)
 				{
-					if(currentGraph.nodes[i].WindowRect.size != Vector2.zero) // if node is in zone and zone is not collapsed
-					currentGraph.nodes[i].WindowRect = GUI.Window(i, currentGraph.nodes[i].WindowRect, DrawNodeWindow, currentGraph.nodes[i].WindowTitle); // setting up nodes as windows
+					if (currentGraph.nodes[i].WindowRect.size != Vector2.zero) // if node is in zone and zone is not collapsed
+						currentGraph.nodes[i].WindowRect = GUI.Window(i, currentGraph.nodes[i].WindowRect, DrawNodeWindow, currentGraph.nodes[i].WindowTitle); // setting up nodes as windows
 				}
 
 
@@ -400,9 +418,14 @@ namespace BehaviourTreeEditor
 			currentGraph?.nodes[id].DrawWindow();
 			GUI.DragWindow();
 
-			foreach (SelectionZone s in currentGraph.selectionZones)
+			for (int i = 0; i < currentGraph.selectionZones.Count; i++)
 			{
+				SelectionZone s = currentGraph.selectionZones[i];
 				s.CheckSelectedNodes(currentGraph.nodes);
+				if (s.IsEmpty())
+				{
+					currentGraph.selectionZones.Remove(s);
+				}
 			}
 		}
 		void AddNewNode(Event e)
@@ -625,101 +648,106 @@ namespace BehaviourTreeEditor
 						z.selectedNodes.Remove(n);
 					}
 				}
+
+				if (z.IsEmpty())
+					currentGraph.selectionZones.Remove(z);
+				else
 				z.Draw();
 
+				
 			}
 		}
 	}
-		#region Extending Classes
-		public static class RectExtensions
+	#region Extending Classes
+	public static class RectExtensions
+	{
+		public static Vector2 TopLeft(this Rect rect)
 		{
-			public static Vector2 TopLeft(this Rect rect)
-			{
-				return new Vector2(rect.xMin, rect.yMin);
-			}
-			public static Rect ScaleSizeBy(this Rect rect, float scale)
-			{
-				return rect.ScaleSizeBy(scale, rect.center);
-			}
-			public static Rect ScaleSizeBy(this Rect rect, float scale, Vector2 pivotPoint)
-			{
-				Rect result = rect;
-				result.x -= pivotPoint.x;
-				result.y -= pivotPoint.y;
-				result.xMin *= scale;
-				result.xMax *= scale;
-				result.yMin *= scale;
-				result.yMax *= scale;
-				result.x += pivotPoint.x;
-				result.y += pivotPoint.y;
-				return result;
-			}
-			public static Rect ScaleSizeBy(this Rect rect, Vector2 scale)
-			{
-				return rect.ScaleSizeBy(scale, rect.center);
-			}
-			public static Rect ScaleSizeBy(this Rect rect, Vector2 scale, Vector2 pivotPoint)
-			{
-				Rect result = rect;
-				result.x -= pivotPoint.x;
-				result.y -= pivotPoint.y;
-				result.xMin *= scale.x;
-				result.xMax *= scale.x;
-				result.yMin *= scale.y;
-				result.yMax *= scale.y;
-				result.x += pivotPoint.x;
-				result.y += pivotPoint.y;
-				return result;
-			}
-
+			return new Vector2(rect.xMin, rect.yMin);
 		}
-		public class EditorZoomArea
+		public static Rect ScaleSizeBy(this Rect rect, float scale)
 		{
-			private const float kEditorWindowTabHeight = 21.0f;
-			private static Matrix4x4 _prevGuiMatrix;
-
-			public static Rect Begin(float zoomScale, Rect screenCoordsArea)
-			{
-				GUI.EndGroup();        // End the group Unity begins automatically for an EditorWindow to clip out the window tab. This allows us to draw outside of the size of the EditorWindow.
-
-				Rect clippedArea = screenCoordsArea.ScaleSizeBy(1.0f / zoomScale, screenCoordsArea.TopLeft());
-				clippedArea.y += kEditorWindowTabHeight;
-				GUI.BeginGroup(clippedArea);
-
-				_prevGuiMatrix = GUI.matrix;
-
-				Matrix4x4 translation = Matrix4x4.TRS(clippedArea.TopLeft(), Quaternion.identity, Vector3.one);
-				Matrix4x4 scale = Matrix4x4.Scale(new Vector3(zoomScale, zoomScale, 1.0f));
-				GUI.matrix = translation * scale * translation.inverse * GUI.matrix;
-
-				return clippedArea;
-			}
-
-			public static void End()
-			{
-				GUI.matrix = _prevGuiMatrix;
-				GUI.EndGroup();
-				GUI.BeginGroup(new Rect(0.0f, kEditorWindowTabHeight, Screen.width, Screen.height));
-			}
+			return rect.ScaleSizeBy(scale, rect.center);
 		}
-		public static class GColor
+		public static Rect ScaleSizeBy(this Rect rect, float scale, Vector2 pivotPoint)
 		{
-			public static GUIStyle Red { get => GetTextStyleColor(Color.red); }
-			public static GUIStyle Black { get => GetTextStyleColor(Color.black); }
-			public static GUIStyle Green { get => GetTextStyleColor(Color.green); }
-			public static GUIStyle Blue { get => GetTextStyleColor(Color.blue); }
-			public static GUIStyle Magenta { get => GetTextStyleColor(Color.magenta); }
-			public static GUIStyle Grey { get => GetTextStyleColor(Color.grey); }
-			public static GUIStyle White { get => GetTextStyleColor(Color.white); }
-			public static GUIStyle Yellow { get => GetTextStyleColor(Color.yellow); }
-			public static GUIStyle GuiSettings { get => GetTextStyleColor(BehaviourEditor.settings.otherGUIColor); }
-			private static GUIStyle GetTextStyleColor(Color color)
-			{
-				GUIStyle s = new GUIStyle();
-				s.normal.textColor = color;
-				return s;
-			}
-
+			Rect result = rect;
+			result.x -= pivotPoint.x;
+			result.y -= pivotPoint.y;
+			result.xMin *= scale;
+			result.xMax *= scale;
+			result.yMin *= scale;
+			result.yMax *= scale;
+			result.x += pivotPoint.x;
+			result.y += pivotPoint.y;
+			return result;
 		}
-		#endregion
+		public static Rect ScaleSizeBy(this Rect rect, Vector2 scale)
+		{
+			return rect.ScaleSizeBy(scale, rect.center);
+		}
+		public static Rect ScaleSizeBy(this Rect rect, Vector2 scale, Vector2 pivotPoint)
+		{
+			Rect result = rect;
+			result.x -= pivotPoint.x;
+			result.y -= pivotPoint.y;
+			result.xMin *= scale.x;
+			result.xMax *= scale.x;
+			result.yMin *= scale.y;
+			result.yMax *= scale.y;
+			result.x += pivotPoint.x;
+			result.y += pivotPoint.y;
+			return result;
+		}
+
 	}
+	public class EditorZoomArea
+	{
+		private const float kEditorWindowTabHeight = 21.0f;
+		private static Matrix4x4 _prevGuiMatrix;
+
+		public static Rect Begin(float zoomScale, Rect screenCoordsArea)
+		{
+			GUI.EndGroup();        // End the group Unity begins automatically for an EditorWindow to clip out the window tab. This allows us to draw outside of the size of the EditorWindow.
+
+			Rect clippedArea = screenCoordsArea.ScaleSizeBy(1.0f / zoomScale, screenCoordsArea.TopLeft());
+			clippedArea.y += kEditorWindowTabHeight;
+			GUI.BeginGroup(clippedArea);
+
+			_prevGuiMatrix = GUI.matrix;
+
+			Matrix4x4 translation = Matrix4x4.TRS(clippedArea.TopLeft(), Quaternion.identity, Vector3.one);
+			Matrix4x4 scale = Matrix4x4.Scale(new Vector3(zoomScale, zoomScale, 1.0f));
+			GUI.matrix = translation * scale * translation.inverse * GUI.matrix;
+
+			return clippedArea;
+		}
+
+		public static void End()
+		{
+			GUI.matrix = _prevGuiMatrix;
+			GUI.EndGroup();
+			GUI.BeginGroup(new Rect(0.0f, kEditorWindowTabHeight, Screen.width, Screen.height));
+		}
+	}
+	public static class GColor
+	{
+		public static GUIStyle Red { get => GetTextStyleColor(Color.red); }
+		public static GUIStyle Black { get => GetTextStyleColor(Color.black); }
+		public static GUIStyle Green { get => GetTextStyleColor(Color.green); }
+		public static GUIStyle Blue { get => GetTextStyleColor(Color.blue); }
+		public static GUIStyle Magenta { get => GetTextStyleColor(Color.magenta); }
+		public static GUIStyle Grey { get => GetTextStyleColor(Color.grey); }
+		public static GUIStyle White { get => GetTextStyleColor(Color.white); }
+		public static GUIStyle Yellow { get => GetTextStyleColor(Color.yellow); }
+		public static GUIStyle GuiSettings { get => GetTextStyleColor(BehaviourEditor.settings.otherGUIColor); }
+		private static GUIStyle GetTextStyleColor(Color color)
+		{
+			GUIStyle s = new GUIStyle();
+			s.normal.textColor = color;
+			return s;
+		}
+
+	}
+	#endregion
+}

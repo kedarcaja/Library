@@ -101,22 +101,35 @@ namespace BehaviourTreeEditor
 		public List<BaseNode> selectedNodes = new List<BaseNode>();
 		public bool restored = false, hidden = true;
 		public Color Color = Color.white;
+		public bool Ready = false;
 		public SelectionZone(Rect r, string title, Color color)
 		{
 			Rect = r;
 			this.title = title;
 			Color = color;
 		}
+		public void Drag(Vector2 delta)
+		{
+			Rect.position += delta;
+			foreach (BaseNode z in selectedNodes)
+			{
+				z.WindowRect.position += delta;
+			}
+		}
+		public bool IsEmpty()
+		{
+			return Ready && selectedNodes.Count == 0;
+		}
 		public void CheckSelectedNodes(List<BaseNode> l)
 		{
 			if (collapsed) return;
-
+			Ready = false;
 			if (l.All(a => a.WindowRect.size != Vector2.zero && restored))
 				selectedNodes.Clear();
 			for (int i = 0; i < l.Count; i++)
 			{
 				BaseNode b = l[i];
-				if ((Rect.Overlaps(b.WindowRect)  && !BehaviourEditor.currentGraph.selectionZones.Exists(z => z.selectedNodes.Contains(b))))
+				if ((Rect.Overlaps(b.WindowRect) && !BehaviourEditor.currentGraph.selectionZones.Exists(z => z.selectedNodes.Contains(b))))
 				{
 					selectedNodes.Add(b);
 					foreach (Transition t in b.transitions)
@@ -129,6 +142,7 @@ namespace BehaviourTreeEditor
 					}
 				}
 			}
+			Ready = true;
 		}
 		public void Draw()
 		{
@@ -136,6 +150,8 @@ namespace BehaviourTreeEditor
 			if (!collapsed)
 			{
 				EditorGUI.DrawRect(Rect, Color);
+				title = EditorGUI.TextArea(new Rect(Rect.center.x, Rect.yMin + 5, 80, 20), title, GColor.White);
+				Color = EditorGUI.ColorField(new Rect(Rect.xMin + 20, Rect.yMin + 25, 80, 20), Color);
 				if (!restored)
 				{
 					for (int i = 0; i < selectedNodes.Count; i++)
