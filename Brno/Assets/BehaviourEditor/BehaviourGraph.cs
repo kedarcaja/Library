@@ -166,8 +166,8 @@ namespace BehaviourTreeEditor
 			}
 			else
 			{
-				EditorGUI.DrawRect(new Rect(Rect.xMin, Rect.yMin, 100, 25), new Color(Color.r, Color.g, Color.b, 0.1f));
-				title = EditorGUI.TextArea(new Rect(Rect.xMin + 20, Rect.yMin + 5, 80, 25), title, GColor.White);
+				EditorGUI.DrawRect(new Rect(Rect.xMin, Rect.yMin, 100, 25), new Color(Color.r, Color.g, Color.b, 0.3f));
+				 EditorGUI.LabelField(new Rect(Rect.xMin + 20, Rect.yMin + 5, 80, 25), title);
 				if (!hidden)
 				{
 					for (int i = 0; i < selectedNodes.Count; i++)

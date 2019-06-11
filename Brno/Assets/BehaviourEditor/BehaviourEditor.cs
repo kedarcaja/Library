@@ -231,10 +231,10 @@ namespace BehaviourTreeEditor
 		private void UserInput(Event e)
 		{
 
-			if (ObjectSelected())
-			{
-				HandleHiearchySelection();
-			}
+			//if (ObjectSelected())
+			//{
+			//	HandleHiearchySelection();
+			//}
 
 			if (currentGraph == null) return;
 
@@ -378,34 +378,37 @@ namespace BehaviourTreeEditor
 			}
 
 
-			//Rect zone = new Rect(0, 0, 200, 100);
-			//EditorGUI.DrawRect(zone, settings.otherGUIColor);
-			//GUILayout.BeginArea(new Rect(zone.x + 2, zone.y + 2, zone.width, zone.height));
-			//GetEGLLable("Character: ", GColor.White);
-			//currentGraph = (BehaviourGraph)EditorGUILayout.ObjectField(currentGraph, typeof(BehaviourGraph), false, GUILayout.Width(200)); // field to choose graph
+			Rect zone = new Rect(0, 0, 200, 100);
+			EditorGUI.DrawRect(zone, settings.otherGUIColor);
+			GUILayout.BeginArea(new Rect(zone.x + 2, zone.y + 2, zone.width, zone.height));
+			GetEGLLable("Character: ", GColor.White);
+			currentGraph = (BehaviourGraph)EditorGUILayout.ObjectField(currentGraph, typeof(BehaviourGraph), false, GUILayout.Width(200)); // field to choose graph
+
+			GUILayout.EndArea();
 
 
-
-			if (!currentGraph)
+			if (currentGraph == null)
 			{
 
 				GUILayout.BeginArea(new Rect(150, 300, 1920, 200));
 				GUIStyle s = GColor.Red;
 				s.fontSize = 150;
 				GetEGLLable("No Character Assign!", s);
+				GUILayout.EndArea();
 
-				GUILayout.EndArea();
+
 			}
-			else
-			{
-				Rect zone = new Rect(0, 0, currentCharacter.name.Length * 40, 40);
-				EditorGUI.DrawRect(zone, settings.otherGUIColor);
-				GUILayout.BeginArea(new Rect(zone.x + 2, zone.y + 2, zone.width, zone.height));
-				GUIStyle s = GColor.Magenta;
-				s.fontSize = 20;
-				GetEGLLable("Character: " + currentCharacter.name, s);
-				GUILayout.EndArea();
-			}
+
+			//else
+			//{
+			//	Rect zon = new Rect(0, 0,  150, 40);
+			//	EditorGUI.DrawRect(zon, settings.otherGUIColor);
+			//	GUILayout.BeginArea(new Rect(zon.x + 2, zone.y + 2, zon.width, zon.height));
+			//	GUIStyle s = GColor.Magenta;
+			//	s.fontSize = 20;
+			//	GetEGLLable("Character: " + currentCharacter.name, s);
+			//	GUILayout.EndArea();
+			//}
 
 
 
