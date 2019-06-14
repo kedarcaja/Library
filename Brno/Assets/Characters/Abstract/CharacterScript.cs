@@ -6,6 +6,8 @@ using System.Linq;
 using UnityEngine.AI;
 using UnityEngine.Events;
 using BehaviourTreeEditor;
+using UnityEditor.Animations;
+
 public delegate void TimerEventHandler();
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(NavMeshAgent))]
@@ -13,37 +15,42 @@ public delegate void TimerEventHandler();
 public class CharacterScript : MonoBehaviour
 {
 
-	protected Animator anim;
-	public Animator Animator { get => anim; set => anim = value; }
-	protected NavMeshAgent agent;
-	protected Rigidbody rigid;
-	public BaseNode currentNode;
-	public BehaviourGraph Graph;
-	private void Awake()
-	{
+    protected Animator anim;
+    public Animator Animator { get => anim; }
+    public AnimatorController AnimatorController { get => (AnimatorController)anim.runtimeAnimatorController; set => anim.runtimeAnimatorController = value; }
+    protected NavMeshAgent agent;
+    protected Rigidbody rigid;
+    public BehaviourGraph Graph;
+    private void Awake()
+    {
+        if (Graph.LiveCycle == null)
+        {
+            Graph.LiveCycle = new LiveCycle();
+        }
+        Graph.LiveCycle.graph = Graph;
+        Graph.LiveCycle.Init();
+        Graph.character = this;
+        anim = GetComponent<Animator>();
+        agent = GetComponent<NavMeshAgent>();
+        rigid = GetComponent<Rigidbody>();
+    }
+    public void SetTarget(Transform target)
+    {
+        SetDestination(target.position);
+    }
+    public void SetDestination(Vector3 dest)
+    {
+        agent.SetDestination(dest);
+    }
 
-		anim = GetComponent<Animator>();
-		agent = GetComponent<NavMeshAgent>();
-		rigid = GetComponent<Rigidbody>();
+    private void Update()
+    {
+        anim.SetFloat("speed", agent.velocity.magnitude);
 
-		Graph.character = this;
-	}
-	public void SetTarget(Transform target)
-	{
-		SetDestination(target.position);
-	}
-	public void SetDestination(Vector3 dest)
-	{
-		agent.SetDestination(dest);
-	}
+        if (Graph != null)
+        {
+            Graph.LiveCycle.Tick();
+        }
 
-	private void Update()
-	{
-		anim.SetFloat("speed", agent.velocity.magnitude);
-
-		if (currentNode != null)
-		{
-			currentNode.Execute();
-		}
-	}
+    }
 }

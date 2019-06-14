@@ -13,13 +13,19 @@ namespace BehaviourTreeEditor
 		public List<string> removeNodesIDs = new List<string>();
 		public List<SelectionZone> selectionZones = new List<SelectionZone>();
 		public CharacterScript character;
-		public void RemoveTransitions()
+        public LiveCycle LiveCycle;
+
+
+        private BaseNode currentNode;
+
+        public void RemoveTransitions()
 		{
 			foreach (BaseNode b in nodes)
 			{
 				b?.RemoveTransitions();
 			}
 		}
+       
 		/// <summary>
 		/// Adds new node to graph
 		/// </summary>
@@ -40,6 +46,8 @@ namespace BehaviourTreeEditor
 		}
 		private void OnEnable()
 		{
+         
+
 			InitTransitions();
 		}
 		/// <summary>
@@ -73,26 +81,28 @@ namespace BehaviourTreeEditor
 			return DateTime.Now.Second.ToString() + a[r.Next(0, 7)] + nodes.Count.ToString();
 		}
 
-		/// <summary>
-		/// Initializes transitions end and start window after serialization
-		/// </summary>
-		public void InitTransitions()
-		{
+        /// <summary>
+        /// Initializes transitions end and start window after serialization
+        /// </summary>
+        public void InitTransitions()
+        {
 
-			foreach (BaseNode b in nodes)
-			{
-				if (b == null) continue;
-				foreach (Transition t in b.transitions)
-				{
-					if (t == null) continue;
-					BaseNode start = b;
-					BaseNode end = null;
-					nodes.ForEach(e => e.depencies.ForEach(d => { if (d.ID == t.ID) { end = e; }; }));
-					t.DrawConnection(start, end, t.startPlacement, t.endPlacement, t.Color, t.disabled);
-				}
-			}
-		}
-	}
+            foreach (BaseNode b in nodes)
+            {
+                if (b == null) continue;
+                foreach (Transition t in b.transitions)
+                {
+                    if (t == null) continue;
+                    BaseNode start = b;
+                    BaseNode end = null;
+                    nodes.ForEach(e => e.depencies.ForEach(d => { if (d.ID == t.ID) { end = e; }; }));
+                    t.DrawConnection(start, end, t.startPlacement, t.endPlacement, t.Color, t.disabled);
+                }
+            }
+        }
+
+
+    }
 	[Serializable]
 	public class SelectionZone
 	{

@@ -27,7 +27,7 @@ namespace BehaviourTreeEditor
 		public List<Transition> depencies = new List<Transition>();
 		public List<string> transitionsIdsToRemove = new List<string>();
 		public Rect savedWindowRect;
-
+        public bool nodeCompleted = false;
 		#endregion
 
 		#region Comment node Variables
@@ -121,7 +121,6 @@ namespace BehaviourTreeEditor
 			if (!(drawNode is ExecutableNode)) return;
 
 			(drawNode as ExecutableNode).Execute(this);
-			
 		}
 	}
 }

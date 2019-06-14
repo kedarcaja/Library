@@ -346,43 +346,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50b5dd8a61d671c4b8a9dc424c61b6a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentNode:
-    Graph: {fileID: 0}
-    ID: 
-    WindowRect:
-      serializedVersion: 2
-      x: 0
-      y: 0
-      width: 0
-      height: 0
-    WindowTitle: 
-    nodeColor:
-      serializedVersion: 2
-      rgba: 0
-    collapse: 0
-    normalHeight: 0
-    drawNode: {fileID: 0}
-    previousCollapse: 0
-    transitions: []
-    depencies: []
-    transitionsIdsToRemove: []
-    savedWindowRect:
-      serializedVersion: 2
-      x: 0
-      y: 0
-      width: 0
-      height: 0
-    comment: 
-    showActions: 0
-    showEnterExit: 0
-    condition: {fileID: 0}
-    Animator: {fileID: 0}
-    parameter: 
-    AnimatorActivatorType: 0
-    AnimatorActivatorBoolValue: 0
-    AnimatorActivatorIntValue: 0
-    AnimatorActivatorFloatValue: 0
-    destinationTarget: {fileID: 0}
   Graph: {fileID: 11400000, guid: 3580ec70a41e8cc46803fe1ec0a39f07, type: 2}
 --- !u!195 &389616017
 NavMeshAgent:
