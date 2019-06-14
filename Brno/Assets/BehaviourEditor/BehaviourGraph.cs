@@ -11,8 +11,8 @@ namespace BehaviourTreeEditor
 	{
 		public List<BaseNode> nodes = new List<BaseNode>();
 		public List<string> removeNodesIDs = new List<string>();
-
 		public List<SelectionZone> selectionZones = new List<SelectionZone>();
+		public CharacterScript character;
 		public void RemoveTransitions()
 		{
 			foreach (BaseNode b in nodes)
@@ -34,6 +34,7 @@ namespace BehaviourTreeEditor
 		{
 			BaseNode n = new BaseNode(drawNode, x, y, width, height, title, GenerateNodeId());
 			n.savedWindowRect = n.WindowRect;
+			n.Graph = this;
 			nodes.Add(n);
 			return n;
 		}

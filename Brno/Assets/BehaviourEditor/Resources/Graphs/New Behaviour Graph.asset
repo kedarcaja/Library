@@ -13,150 +13,102 @@ MonoBehaviour:
   m_Name: New Behaviour Graph
   m_EditorClassIdentifier: 
   nodes:
-  - ID: 7C0
+  - Graph: {fileID: 11400000}
+    ID: 39E1
     WindowRect:
       serializedVersion: 2
-      x: 713
-      y: 78
-      width: 0
-      height: 0
-    WindowTitle: State
+      x: 676
+      y: 60
+      width: 200
+      height: 120
+    WindowTitle: Set Destination
     nodeColor:
       serializedVersion: 2
       rgba: 4286545791
     collapse: 0
-    normalHeight: 300
-    drawNode: {fileID: 11400000, guid: 62460f789d8b74b469856736624e652c, type: 2}
+    normalHeight: 120
+    drawNode: {fileID: 11400000, guid: ef10c60c9fb367c4299587adddc3e56b, type: 2}
     previousCollapse: 0
-    transitions: []
-    depencies: []
+    transitions:
+    - ID: T551S
+      Color: {r: 1, g: 0, b: 1, a: 1}
+      disabled: 0
+      startPlacement: 6
+      endPlacement: 7
+      clicked: 0
+    depencies:
+    - ID: T591S
+      Color: {r: 1, g: 0, b: 1, a: 1}
+      disabled: 0
+      startPlacement: 6
+      endPlacement: 7
+      clicked: 0
     transitionsIdsToRemove: []
     savedWindowRect:
       serializedVersion: 2
-      x: 713
-      y: 78
+      x: 820
+      y: 261
       width: 200
-      height: 300
+      height: 120
     comment: 
-    stateRef:
-      currentState: {fileID: 0}
-      previousState: {fileID: 0}
     showActions: 0
     showEnterExit: 0
     condition: {fileID: 0}
-  - ID: 9H1
+    Animator: {fileID: 0}
+    parameter: 
+    AnimatorActivatorType: 0
+    AnimatorActivatorBoolValue: 0
+    AnimatorActivatorIntValue: 0
+    AnimatorActivatorFloatValue: 0
+    destinationTarget: {fileID: 0}
+  - Graph: {fileID: 11400000}
+    ID: 45G1
     WindowRect:
       serializedVersion: 2
-      x: 1516
-      y: 299
-      width: 0
-      height: 0
-    WindowTitle: Comment
+      x: 977
+      y: 181
+      width: 200
+      height: 100
+    WindowTitle: Set Destination
     nodeColor:
       serializedVersion: 2
       rgba: 4286545791
-    collapse: 0
-    normalHeight: 200
-    drawNode: {fileID: 11400000, guid: 4810b0d1e5d4688449b1f963aa8978f6, type: 2}
+    collapse: 1
+    normalHeight: 120
+    drawNode: {fileID: 11400000, guid: ef10c60c9fb367c4299587adddc3e56b, type: 2}
     previousCollapse: 0
-    transitions: []
-    depencies: []
+    transitions:
+    - ID: T591S
+      Color: {r: 1, g: 0, b: 1, a: 1}
+      disabled: 0
+      startPlacement: 6
+      endPlacement: 7
+      clicked: 0
+    depencies:
+    - ID: T551S
+      Color: {r: 1, g: 0, b: 1, a: 1}
+      disabled: 0
+      startPlacement: 6
+      endPlacement: 7
+      clicked: 0
     transitionsIdsToRemove: []
     savedWindowRect:
       serializedVersion: 2
-      x: 445
-      y: 186
+      x: 992
+      y: 123
       width: 200
-      height: 200
+      height: 120
     comment: 
-    stateRef:
-      currentState: {fileID: 0}
-      previousState: {fileID: 0}
     showActions: 0
     showEnterExit: 0
     condition: {fileID: 0}
+    Animator: {fileID: 0}
+    parameter: 
+    AnimatorActivatorType: 0
+    AnimatorActivatorBoolValue: 0
+    AnimatorActivatorIntValue: 0
+    AnimatorActivatorFloatValue: 0
+    destinationTarget: {fileID: 0}
   removeNodesIDs: []
-  selectionZones:
-  - Rect:
-      serializedVersion: 2
-      x: 1376
-      y: 240
-      width: 464
-      height: 340
-    title: Title
-    collapsed: 1
-    selectedNodes:
-    - ID: 9H1
-      WindowRect:
-        serializedVersion: 2
-        x: 1516
-        y: 299
-        width: 0
-        height: 0
-      WindowTitle: Comment
-      nodeColor:
-        serializedVersion: 2
-        rgba: 4286545791
-      collapse: 0
-      normalHeight: 200
-      drawNode: {fileID: 11400000, guid: 4810b0d1e5d4688449b1f963aa8978f6, type: 2}
-      previousCollapse: 0
-      transitions: []
-      depencies: []
-      transitionsIdsToRemove: []
-      savedWindowRect:
-        serializedVersion: 2
-        x: 445
-        y: 186
-        width: 200
-        height: 200
-      comment: 
-      stateRef:
-        currentState: {fileID: 0}
-        previousState: {fileID: 0}
-      showActions: 0
-      showEnterExit: 0
-      condition: {fileID: 0}
-    restored: 0
-    hidden: 1
-    Color: {r: 0.3137255, g: 0.3137255, b: 0.3137255, a: 0.3019608}
-    Ready: 1
-  - Rect:
-      serializedVersion: 2
-      x: 833
-      y: 137
-      width: -558
-      height: 346
-    title: Title
-    collapsed: 0
-    selectedNodes: []
-    restored: 1
-    hidden: 0
-    Color: {r: 0.3137255, g: 0.3137255, b: 0.3137255, a: 0.3019608}
-    Ready: 0
-  - Rect:
-      serializedVersion: 2
-      x: 139
-      y: 250
-      width: 390
-      height: 163
-    title: Title
-    collapsed: 0
-    selectedNodes: []
-    restored: 1
-    hidden: 0
-    Color: {r: 0.3137255, g: 0.3137255, b: 0.3137255, a: 0.3019608}
-    Ready: 0
-  - Rect:
-      serializedVersion: 2
-      x: 866
-      y: 560
-      width: -155
-      height: -276
-    title: Title
-    collapsed: 0
-    selectedNodes: []
-    restored: 1
-    hidden: 0
-    Color: {r: 0.3137255, g: 0.3137255, b: 0.3137255, a: 0.3019608}
-    Ready: 0
+  selectionZones: []
+  character: {fileID: 0}

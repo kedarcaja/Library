@@ -8,5 +8,7 @@ namespace BehaviourTreeEditor
     {
         public abstract void DrawWindow(BaseNode node);
         public abstract void DrawCurve(BaseNode node);
+
+		
     }
 }

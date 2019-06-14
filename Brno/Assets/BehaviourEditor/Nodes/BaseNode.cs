@@ -5,13 +5,14 @@ using UnityEditor;
 using UnityEditorInternal;
 using UnityEngine;
 
+public enum EAnimatorActivator {Trigger,Float,Bool,Int }
 namespace BehaviourTreeEditor
 {
 	[Serializable]
 	public class BaseNode
 	{
 		#region Variables
-
+		public BehaviourGraph Graph;
 		public string ID;
 		public Rect WindowRect;
 		public string WindowTitle;
@@ -33,14 +34,25 @@ namespace BehaviourTreeEditor
 		public string comment = "";
 		#endregion
 		#region State node Variables
-		[SerializeField]
-		public StateNodeReferences stateRef;
+		
 		public bool showActions = false;
 		public bool showEnterExit = false;
 		#endregion
 		#region Condition node Variables
 		public Condition condition;
 		#endregion
+		#region Animator nodes Variables
+		public Animator Animator;
+		public string parameter;
+		public EAnimatorActivator AnimatorActivatorType;
+		public bool AnimatorActivatorBoolValue;
+		public int AnimatorActivatorIntValue;
+		public float AnimatorActivatorFloatValue;
+		#endregion
+		#region SetDestination node Variables
+		public Transform destinationTarget;
+		#endregion
+
 		public string GetTransitionId(char end)
 		{
 			return "T" + DateTime.Now.Second.ToString() + transitions.Count.ToString() + end;
@@ -52,7 +64,7 @@ namespace BehaviourTreeEditor
 			WindowTitle = title;
 			normalHeight = height;
 			drawNode = draw;
-			stateRef = new StateNodeReferences();
+			
 		}
 
 		public void AddTransitionsToRemove(string id)
@@ -104,21 +116,13 @@ namespace BehaviourTreeEditor
 			}
 			drawNode?.DrawCurve(this);
 		}
+		public void Execute()
+		{
+			if (!(drawNode is ExecutableNode)) return;
 
+			(drawNode as ExecutableNode).Execute(this);
+			
+		}
 	}
-	[Serializable]
-	public class StateNodeReferences
-	{
-		public State currentState;
-		[HideInInspector]
-		public State previousState;
-		public SerializedObject serializedState;
-		public ReorderableList onFixedList;
-		public ReorderableList onUpdateList;
-		public ReorderableList onEnterList;
-		public ReorderableList onExitList;
-
-	}
-
 }
 

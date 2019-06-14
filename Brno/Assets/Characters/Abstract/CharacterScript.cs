@@ -13,36 +13,37 @@ public delegate void TimerEventHandler();
 public class CharacterScript : MonoBehaviour
 {
 
-    protected Animator anim;
-    protected NavMeshAgent agent;
-    protected Rigidbody rigid;
-    public State currentState;
-    public BehaviourGraph Graph;
-    private void Awake()
-    {
+	protected Animator anim;
+	public Animator Animator { get => anim; set => anim = value; }
+	protected NavMeshAgent agent;
+	protected Rigidbody rigid;
+	public BaseNode currentNode;
+	public BehaviourGraph Graph;
+	private void Awake()
+	{
 
-        anim = GetComponent<Animator>();
-        agent = GetComponent<NavMeshAgent>();
-        rigid = GetComponent<Rigidbody>();
-    }
-    public void SetTarget(Transform target)
-    {
-        SetDestination(target.position);
-    }
-    public void SetDestination(Vector3 dest)
-    {
-        agent.SetDestination(dest);
-    }
+		anim = GetComponent<Animator>();
+		agent = GetComponent<NavMeshAgent>();
+		rigid = GetComponent<Rigidbody>();
 
-    private void Update()
-    {
-        anim.SetFloat("speed", agent.velocity.magnitude);
+		Graph.character = this;
+	}
+	public void SetTarget(Transform target)
+	{
+		SetDestination(target.position);
+	}
+	public void SetDestination(Vector3 dest)
+	{
+		agent.SetDestination(dest);
+	}
 
+	private void Update()
+	{
+		anim.SetFloat("speed", agent.velocity.magnitude);
 
-
-        if (currentState != null)
-        {
-            currentState.Tick(this);
-        }
-    }
+		if (currentNode != null)
+		{
+			currentNode.Execute();
+		}
+	}
 }

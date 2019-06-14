@@ -43,11 +43,11 @@ namespace BehaviourTreeEditor
 		#endregion
 
 		public static CharacterScript currentCharacter;
-		static State previousState;
+		//static State previousState;
 		#endregion
 		public enum UserActions
 		{
-			deleteNode, commentNode, stateNode, makeTransition, conditionNode
+			deleteNode, commentNode, AnimatorHandleNode, makeTransition, conditionNode, AnimatorSwapNode, SetDestinationNode
 		}
 		[MenuItem("Behaviour Editor/Editor")]
 		static void ShowEditor()
@@ -59,6 +59,14 @@ namespace BehaviourTreeEditor
 		}
 
 		#region Unity Methods
+		private void Update()
+		{
+		//	if (selectedNode.Graph == null) selectedNode.Graph = currentGraph;
+			if (currentGraph && currentGraph.character)
+			{
+				currentGraph.character.currentNode = selectedNode;
+			}
+		}
 		private void OnEnable()
 		{
 			settings = Resources.Load("Editor/Settings", typeof(EditorSettings)) as EditorSettings;
@@ -260,7 +268,7 @@ namespace BehaviourTreeEditor
 							z.Drag(e.delta);
 					}
 					selectionBoxCurrentPos = mousePosition;
-					if (!creatingSelectionZone && z == null && !clickedOnWindow)
+					if (!creatingSelectionZone && z == null && !clickedOnWindow && e.modifiers == EventModifiers.Shift)
 					{
 						creatingSelectionZone = true;
 						selectionBoxStartPos = selectionBoxCurrentPos;
@@ -435,8 +443,10 @@ namespace BehaviourTreeEditor
 		{
 			GenericMenu menu = new GenericMenu();
 			menu.AddItem(new GUIContent("Add Comment"), false, ContextCallback, UserActions.commentNode);
-			menu.AddItem(new GUIContent("Add State"), false, ContextCallback, UserActions.stateNode);
+			menu.AddItem(new GUIContent("Add AnimatorHandler"), false, ContextCallback, UserActions.AnimatorHandleNode);
+			menu.AddItem(new GUIContent("Add AnimatorSwap"), false, ContextCallback, UserActions.AnimatorSwapNode);
 			menu.AddItem(new GUIContent("Add Condition"), false, ContextCallback, UserActions.conditionNode);
+			menu.AddItem(new GUIContent("Add SetDestination"), false, ContextCallback, UserActions.SetDestinationNode);
 
 			menu.ShowAsContext();
 			e.Use();
@@ -456,12 +466,6 @@ namespace BehaviourTreeEditor
 
 			switch (a)
 			{
-				case UserActions.commentNode:
-					currentGraph.AddNode(settings.CommentNode, mousePosition.x, mousePosition.y, 200, 200, "Comment");
-					break;
-				case UserActions.stateNode:
-					currentGraph.AddNode(settings.StateNode, mousePosition.x, mousePosition.y, 200, 300, "State");
-					break;
 				case UserActions.deleteNode:
 					currentGraph.removeNodesIDs.Add(selectedNode.ID);
 					break;
@@ -470,6 +474,19 @@ namespace BehaviourTreeEditor
 					break;
 				case UserActions.conditionNode:
 					currentGraph.AddNode(settings.ConditionNode, mousePosition.x, mousePosition.y, 200, 200, "Condition");
+					break;
+
+				case UserActions.SetDestinationNode:
+					currentGraph.AddNode(settings.SetDestinationNode, mousePosition.x, mousePosition.y, 200, 120, "Set Destination");
+					break;
+				case UserActions.AnimatorSwapNode:
+					currentGraph.AddNode(settings.AnimatorSwapNode, mousePosition.x, mousePosition.y, 200, 100, "Animator Swap");
+					break;
+				case UserActions.commentNode:
+					currentGraph.AddNode(settings.CommentNode, mousePosition.x, mousePosition.y, 200, 200, "Comment");
+					break;
+				case UserActions.AnimatorHandleNode:
+					currentGraph.AddNode(settings.AnimatorHandleNode, mousePosition.x, mousePosition.y, 200, 170, "Animator Handler");
 					break;
 			}
 			EditorUtility.SetDirty(currentGraph);
@@ -655,9 +672,9 @@ namespace BehaviourTreeEditor
 				if (z.IsEmpty())
 					currentGraph.selectionZones.Remove(z);
 				else
-				z.Draw();
+					z.Draw();
 
-				
+
 			}
 		}
 	}
