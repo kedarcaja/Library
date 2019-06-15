@@ -54,6 +54,9 @@ namespace BehaviourTreeEditor
         public _Timer timer;
         public float delay;
         #endregion
+        #region Random move nodes Variables
+        public string randomMoveArea;
+        #endregion
         #region Portal nodes Variables
         public string portalTargetNodeID;
         #endregion

@@ -23,7 +23,6 @@ public class CharacterScript : MonoBehaviour
     [SerializeField]
     private BehaviourGraph Graph;
 
-
     public Animator Animator { get => anim; }
     public AnimatorController AnimatorController { get => (AnimatorController)anim.runtimeAnimatorController; set => anim.runtimeAnimatorController = value; }
     private void Awake()
@@ -67,5 +66,16 @@ public class CharacterScript : MonoBehaviour
     {
         return delete > 0;
     }
-  
+    public void RandomMove(RandomMoveArea area)
+    {
+        if(AgentReachedTarget())
+        {
+            Vector3 randomDirection = UnityEngine.Random.insideUnitSphere * area.radius;
+            randomDirection += area.transform.position;
+            NavMeshHit hit;
+            NavMesh.SamplePosition(randomDirection, out hit, area.radius, 1);
+            Vector3 finalPosition = hit.position;
+            agent.destination = finalPosition;
+        }
+    }
 }

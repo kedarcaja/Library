@@ -18,6 +18,7 @@ namespace BehaviourTreeEditor
 
             EditorGUILayout.LabelField("delay:(float)/s-1");
             b.delay = EditorGUILayout.FloatField(b.delay);
+            if (b.delay < 1) b.delay = 1;
         }
 
         public override void Execute(BaseNode b)
