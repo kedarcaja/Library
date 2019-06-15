@@ -101,7 +101,7 @@ namespace BehaviourTreeEditor
             }
         }
 
-
+      
     }
 	[Serializable]
 	public class SelectionZone
@@ -195,5 +195,6 @@ namespace BehaviourTreeEditor
 			collapsed = GUI.Toggle(new Rect(Rect.xMin, Rect.yMin + 5, 100, 25), collapsed, "");
 
 		}
+      
 	}
 }

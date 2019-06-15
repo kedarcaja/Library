@@ -44,10 +44,37 @@ namespace BehaviourTreeEditor
         }
         public void DecideForNextNode(Transition t)
         {
-            if (currentNode.collapse)
+            if (currentNode.drawNode is ExecutableNode && currentNode.nodeCompleted)
             {
+
+                currentNode.nodeCompleted = false;
                 currentNode = t.endNode;
-               
+
+                return;
+            }
+            else if (currentNode.drawNode is ConditionNode)
+            {
+
+                if (currentNode.condition.IsChecked(graph.character))
+                {
+                    if(currentNode.transitions.Exists(x=>x.Value == "true"))
+                    {
+                       currentNode = currentNode.transitions.Find(x=>x.Value == "true").endNode;
+
+                    }
+                    return;
+
+                }
+                else
+                {
+                    if (currentNode.transitions.Exists(x => x.Value == "false"))
+                    {
+                        currentNode = currentNode.transitions.Find(x => x.Value == "false").endNode;
+
+                    }
+                }
+
+
             }
         }
     }

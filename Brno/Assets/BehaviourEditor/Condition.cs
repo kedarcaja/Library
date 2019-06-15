@@ -4,9 +4,8 @@ using UnityEngine;
 
 namespace BehaviourTreeEditor
 {
-    [CreateAssetMenu(menuName ="BehaviourEditor/Condition")]
-    public  class Condition : ScriptableObject
+    public  abstract class Condition : ScriptableObject
     {
-        public bool IsChecked() => true;
+        public abstract bool IsChecked(CharacterScript character);
     }
 }

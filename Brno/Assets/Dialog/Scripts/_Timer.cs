@@ -35,7 +35,7 @@ public class _Timer
         //Reset();
         this.updateValue = updateValue;
         this.delay = delay;
-        Debug.Log(delay);
+
         //IsRunning = false;
         //IsStopped = true;
         if (OnInit != null)

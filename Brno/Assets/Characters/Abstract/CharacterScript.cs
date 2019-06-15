@@ -15,12 +15,17 @@ public delegate void TimerEventHandler();
 public class CharacterScript : MonoBehaviour
 {
 
+    public float delete = 10;
+
     protected Animator anim;
-    public Animator Animator { get => anim; }
-    public AnimatorController AnimatorController { get => (AnimatorController)anim.runtimeAnimatorController; set => anim.runtimeAnimatorController = value; }
     protected NavMeshAgent agent;
     protected Rigidbody rigid;
-    public BehaviourGraph Graph;
+    [SerializeField]
+    private BehaviourGraph Graph;
+
+
+    public Animator Animator { get => anim; }
+    public AnimatorController AnimatorController { get => (AnimatorController)anim.runtimeAnimatorController; set => anim.runtimeAnimatorController = value; }
     private void Awake()
     {
         if (Graph.LiveCycle == null)
@@ -52,5 +57,14 @@ public class CharacterScript : MonoBehaviour
             Graph.LiveCycle.Tick();
         }
 
+    }
+    public bool AgentReachedTarget()
+    {
+        return !agent.pathPending && agent.remainingDistance <= agent.stoppingDistance && (!agent.hasPath || agent.velocity.sqrMagnitude == 0f);
+    }
+
+    public bool Delete()
+    {
+        return delete > 0;
     }
 }

@@ -48,9 +48,15 @@ namespace BehaviourTreeEditor
 		public bool AnimatorActivatorBoolValue;
 		public int AnimatorActivatorIntValue;
 		public float AnimatorActivatorFloatValue;
-		#endregion
-		#region SetDestination node Variables
-		public Transform destinationTarget;
+        #endregion
+        #region Timing nodes Variables
+        public _Timer timer;
+        public float delay;
+        #endregion
+
+        #region SetDestination node Variables
+        public Transform destinationTarget;
+        public string destinationTargetName;
 		#endregion
 
 		public string GetTransitionId(char end)
@@ -64,7 +70,6 @@ namespace BehaviourTreeEditor
 			WindowTitle = title;
 			normalHeight = height;
 			drawNode = draw;
-			
 		}
 
 		public void AddTransitionsToRemove(string id)
@@ -103,7 +108,6 @@ namespace BehaviourTreeEditor
 				WindowRect.height = normalHeight;
 			}
 			drawNode?.DrawWindow(this);
-
 		}
 
 		public void DrawCurve()

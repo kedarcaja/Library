@@ -47,7 +47,7 @@ namespace BehaviourTreeEditor
         #endregion
         public enum UserActions
         {
-            deleteNode, commentNode, AnimatorHandleNode, makeTransition, conditionNode, AnimatorSwapNode, SetDestinationNode
+            deleteNode, commentNode, AnimatorHandleNode, makeTransition, conditionNode, AnimatorSwapNode, SetDestinationNode,delayNode
         }
         [MenuItem("Behaviour Editor/Editor")]
         static void ShowEditor()
@@ -89,9 +89,7 @@ namespace BehaviourTreeEditor
                 Repaint();
             }
         }
-        private void Update()
-        {
-        }
+      
         private bool CharacterSelected()
         {
             CharacterScript s = Selection.activeTransform.GetComponent<CharacterScript>();
@@ -436,6 +434,7 @@ namespace BehaviourTreeEditor
             menu.AddItem(new GUIContent("Add AnimatorSwap"), false, ContextCallback, UserActions.AnimatorSwapNode);
             menu.AddItem(new GUIContent("Add Condition"), false, ContextCallback, UserActions.conditionNode);
             menu.AddItem(new GUIContent("Add SetDestination"), false, ContextCallback, UserActions.SetDestinationNode);
+            menu.AddItem(new GUIContent("Add Delay"), false, ContextCallback, UserActions.delayNode);
 
             menu.ShowAsContext();
             e.Use();
@@ -476,6 +475,10 @@ namespace BehaviourTreeEditor
                     break;
                 case UserActions.AnimatorHandleNode:
                     currentGraph.AddNode(settings.AnimatorHandleNode, mousePosition.x, mousePosition.y, 200, 170, "Animator Handler");
+                    break;
+
+                case UserActions.delayNode:
+                    currentGraph.AddNode(settings.DelayNode, mousePosition.x, mousePosition.y, 200, 150, "Delay");
                     break;
             }
             EditorUtility.SetDirty(currentGraph);
@@ -519,7 +522,7 @@ namespace BehaviourTreeEditor
                 GetEGLLable("end position: ", s);
                 t.endPlacement = (EWindowCurvePlacement)EditorGUILayout.EnumPopup(t.endPlacement);
 
-                GetEGLLable("Value: " + t?.Value?.ToString(), s);
+
                 GUILayout.EndArea();
                 if (GUI.Button(new Rect(10, 300, 80, 20), "Remove"))
                 {
@@ -538,16 +541,16 @@ namespace BehaviourTreeEditor
                     ConditionNode c = start.drawNode as ConditionNode;
                     GenericMenu menu = new GenericMenu();
 
-                    if (!start.transitions.Exists(x => (bool)x.Value == true))
-                        menu.AddItem(new GUIContent("True"), false, delegate { t = new Transition(start, end, EWindowCurvePlacement.RightBottom, EWindowCurvePlacement.LeftCenter, Color.red, false); t.Value = true; });
-                    if (!start.transitions.Exists(x => (bool)x.Value == false))
-                        menu.AddItem(new GUIContent("False"), false, delegate { t = new Transition(start, end, EWindowCurvePlacement.LeftBottom, EWindowCurvePlacement.LeftCenter, Color.blue, false); t.Value = false; });
+                    if (!start.transitions.Exists(x => x.Value == "true"))
+                        menu.AddItem(new GUIContent("True"), false, delegate { t = new Transition(start, end, EWindowCurvePlacement.RightBottom, EWindowCurvePlacement.LeftCenter, Color.red, false,"true"); });
+                    if (!start.transitions.Exists(x => x.Value == "false"))
+                        menu.AddItem(new GUIContent("False"), false, delegate { t = new Transition(start, end, EWindowCurvePlacement.LeftBottom, EWindowCurvePlacement.LeftCenter, Color.blue, false,"false"); });
                     menu.ShowAsContext();
                 }
             }
             else
             {
-                t = new Transition(start, end, EWindowCurvePlacement.RightCenter, EWindowCurvePlacement.LeftCenter, Color.magenta, false);
+                t = new Transition(start, end, EWindowCurvePlacement.RightCenter, EWindowCurvePlacement.LeftCenter, Color.magenta, false,null);
             }
             isMakingTransition = false;
         }
@@ -660,6 +663,21 @@ namespace BehaviourTreeEditor
                 else
                     z.Draw();
             }
+        }
+
+
+        public static Transform GetTransformFromName(string name)
+        {
+            foreach (GameObject g in GameObject.FindObjectsOfType(typeof(GameObject)))
+            {
+
+                if (g.name == name)
+                {
+
+                    return g.transform;
+                }
+            }
+            return null;
         }
     }
     #region Extending Classes
