@@ -23,6 +23,7 @@ namespace BehaviourTreeEditor
 
             if (currentNode != null)
             {
+                currentNode.nodeColor = Color.green;
                 currentNode.Execute();
             }
 
@@ -36,7 +37,7 @@ namespace BehaviourTreeEditor
                     currentNode.nodeCompleted = false;
                     currentNode = t.endNode;
                 }
-                
+
             }
 
         }
@@ -46,21 +47,24 @@ namespace BehaviourTreeEditor
         }
         public void DecideForNextNode()
         {
-           
 
-             if (currentNode.drawNode is ExecutableNode && currentNode.nodeCompleted)
+
+            if (currentNode.drawNode is ExecutableNode && currentNode.nodeCompleted)
             {
-                CheckTransitions();  
+                CheckTransitions();
+                ActiveNode(currentNode);
                 return;
             }
-             if (currentNode.drawNode is ConditionNode)
+            if (currentNode.drawNode is ConditionNode)
             {
 
                 if (currentNode.condition.IsChecked(graph.character))
                 {
                     if (currentNode.transitions.Exists(x => x.Value == "true"))
                     {
+
                         currentNode = currentNode.transitions.Find(x => x.Value == "true").endNode;
+
 
                     }
                 }
@@ -68,18 +72,26 @@ namespace BehaviourTreeEditor
                 {
                     if (currentNode.transitions.Exists(x => x.Value == "false"))
                     {
+
                         currentNode = currentNode.transitions.Find(x => x.Value == "false").endNode;
 
                     }
                 }
+                ActiveNode(currentNode);
+
                 return;
             }
             if (currentNode.drawNode is PortalNode)
             {
                 BaseNode b = graph.nodes.Find(n => n.ID == currentNode.portalTargetNodeID);
                 currentNode = b != null ? b : currentNode;
+                ActiveNode(currentNode);
             }
 
+        }
+        public void ActiveNode(BaseNode n)
+        {
+            n.savedNodeColor = n.nodeColor;
         }
     }
 }

@@ -354,10 +354,13 @@ namespace BehaviourTreeEditor
                     if (n.WindowRect.size != Vector2.zero) // if node is in zone and zone is not collapsed
                     {
                        n.WindowRect = GUI.Window(i, n.WindowRect, DrawNodeWindow, n.WindowTitle+" id: "+n.ID); // setting up nodes as windows
-                        if (n == currentGraph.LiveCycle.CurrentNode)
+                        if (n == currentGraph.LiveCycle.currentNode)
+                        {
                             n.nodeColor = Color.green;
-
-
+                        }
+                        else
+                            n.nodeColor = n.savedNodeColor;
+                        Repaint();
                     }
 
                 }
@@ -397,6 +400,7 @@ namespace BehaviourTreeEditor
 
 
             }
+            
 
             //else
             //{
@@ -415,6 +419,7 @@ namespace BehaviourTreeEditor
 
 
         }
+     
         void DrawNodeWindow(int id)
         {
             currentGraph?.nodes[id].DrawWindow();
