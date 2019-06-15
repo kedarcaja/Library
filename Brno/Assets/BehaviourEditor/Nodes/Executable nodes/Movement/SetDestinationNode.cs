@@ -27,10 +27,17 @@ namespace BehaviourTreeEditor
         {
             if (b.destinationTarget == null)
             {
-#if UNITY_EDITOR
 
-                b.destinationTarget = BehaviourEditor.GetTransformFromName(b.destinationTargetName);
-#endif
+                foreach (GameObject g in GameObject.FindObjectsOfType(typeof(GameObject)))
+                {
+
+                    if (g.name == b.destinationTargetName)
+                    {
+                        b.destinationTarget = g.transform;
+
+                    }
+                }
+
             }
             else
             {

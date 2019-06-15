@@ -6,9 +6,7 @@ using System.Linq;
 using UnityEngine.AI;
 using UnityEngine.Events;
 using BehaviourTreeEditor;
-#if UNITY_EDITOR
-using UnityEditor.Animations;
-#endif
+
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(NavMeshAgent))]
 [RequireComponent(typeof(Animator))]
@@ -24,10 +22,7 @@ public class CharacterScript : MonoBehaviour
     private BehaviourGraph Graph;
 
     public Animator Animator { get => anim; }
-#if UNITY_EDITOR
 
-    public AnimatorController AnimatorController { get => (AnimatorController)anim.runtimeAnimatorController; set => anim.runtimeAnimatorController = value; }
-#endif
     private void Awake()
     {
         if (Graph.LiveCycle == null)

@@ -24,8 +24,16 @@ namespace BehaviourTreeEditor
         public override void Execute(BaseNode b)
         {
 
-#if UNITY_EDITOR
-            Transform t = BehaviourEditor.GetTransformFromName(b.randomMoveArea);
+
+            Transform t = null;
+            foreach (GameObject g in GameObject.FindObjectsOfType(typeof(GameObject)))
+            {
+
+                if (g.name == b.randomMoveArea)
+                {
+                    t = g.transform;
+                }
+            }
             if (t != null && t.GetComponent<RandomMoveArea>() != null&& !b.randomSet)
             {
                 b.Graph.character.RandomMove(t.GetComponent<RandomMoveArea>());
@@ -37,7 +45,6 @@ namespace BehaviourTreeEditor
                 b.randomSet = false;
 
             }
-#endif
 
         }
     }

@@ -1,16 +1,16 @@
-﻿#if UNITY_EDITOR
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using UnityEditor;
-using UnityEditor.SceneManagement;
+
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace BehaviourTreeEditor
 {
+#if UNITY_EDITOR
     public class BehaviourEditor : EditorWindow
     {
 #region Variables
@@ -685,19 +685,7 @@ namespace BehaviourTreeEditor
             }
         }
 
-        public static Transform GetTransformFromName(string name)
-        {
-            foreach (GameObject g in GameObject.FindObjectsOfType(typeof(GameObject)))
-            {
-
-                if (g.name == name)
-                {
-
-                    return g.transform;
-                }
-            }
-            return null;
-        }
+     
     }
 #region Extending Classes
     public static class RectExtensions
@@ -783,6 +771,6 @@ namespace BehaviourTreeEditor
             return s;
         }
     }
-#endregion
-}
+    #endregion
 #endif
+}
