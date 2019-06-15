@@ -28,14 +28,11 @@ namespace BehaviourTreeEditor
 
                 b.timer.OnUpdate += () =>
                 {
-                    Debug.Log("Time: " + b.timer.ElapsedTimeF);
-
                     if (b.timer.ElapsedTimeF == b.delay)
                     {
                         b.nodeCompleted = true;
                         b.timer.Stop();
                         b.timer = null;
-
 
                     }
 

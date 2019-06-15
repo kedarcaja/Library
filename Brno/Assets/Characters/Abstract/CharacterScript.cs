@@ -67,4 +67,5 @@ public class CharacterScript : MonoBehaviour
     {
         return delete > 0;
     }
+  
 }

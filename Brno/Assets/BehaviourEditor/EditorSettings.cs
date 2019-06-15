@@ -18,6 +18,7 @@ namespace BehaviourTreeEditor
 		public AnimatorControllerSwapNode AnimatorSwapNode;
 		public SetDestinationNode SetDestinationNode;
 		public DelayNode DelayNode;
+        public PortalNode PortalNode;
 
-	}
+    }
 }

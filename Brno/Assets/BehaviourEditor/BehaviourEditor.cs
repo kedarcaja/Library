@@ -47,7 +47,7 @@ namespace BehaviourTreeEditor
         #endregion
         public enum UserActions
         {
-            deleteNode, commentNode, AnimatorHandleNode, makeTransition, conditionNode, AnimatorSwapNode, SetDestinationNode,delayNode
+            deleteNode, commentNode, AnimatorHandleNode, makeTransition, conditionNode, AnimatorSwapNode, SetDestinationNode,delayNode, portalNode
         }
         [MenuItem("Behaviour Editor/Editor")]
         static void ShowEditor()
@@ -353,7 +353,11 @@ namespace BehaviourTreeEditor
                     BaseNode n = currentGraph.nodes[i];
                     if (n.WindowRect.size != Vector2.zero) // if node is in zone and zone is not collapsed
                     {
-                       n.WindowRect = GUI.Window(i, n.WindowRect, DrawNodeWindow, n.WindowTitle); // setting up nodes as windows
+                       n.WindowRect = GUI.Window(i, n.WindowRect, DrawNodeWindow, n.WindowTitle+" id: "+n.ID); // setting up nodes as windows
+                        if (n == currentGraph.LiveCycle.CurrentNode)
+                            n.nodeColor = Color.green;
+
+
                     }
 
                 }
@@ -429,15 +433,21 @@ namespace BehaviourTreeEditor
         void AddNewNode(Event e)
         {
             GenericMenu menu = new GenericMenu();
-            menu.AddItem(new GUIContent("Add Comment"), false, ContextCallback, UserActions.commentNode);
-            menu.AddItem(new GUIContent("Add AnimatorHandler"), false, ContextCallback, UserActions.AnimatorHandleNode);
-            menu.AddItem(new GUIContent("Add AnimatorSwap"), false, ContextCallback, UserActions.AnimatorSwapNode);
-            menu.AddItem(new GUIContent("Add Condition"), false, ContextCallback, UserActions.conditionNode);
-            menu.AddItem(new GUIContent("Add SetDestination"), false, ContextCallback, UserActions.SetDestinationNode);
-            menu.AddItem(new GUIContent("Add Delay"), false, ContextCallback, UserActions.delayNode);
+            AddNewItemToMenu(menu, "Add Comment", UserActions.commentNode);
+            AddNewItemToMenu(menu, "Add AnimatorHandler", UserActions.AnimatorHandleNode);
+            AddNewItemToMenu(menu, "Add Animator Swap", UserActions.AnimatorSwapNode);
+            AddNewItemToMenu(menu, "Add Condition", UserActions.conditionNode);
+            AddNewItemToMenu(menu, "Add Set Destination", UserActions.SetDestinationNode);
+            AddNewItemToMenu(menu, "Add Delay", UserActions.delayNode);
+            AddNewItemToMenu(menu, "Add Portal", UserActions.portalNode);
 
             menu.ShowAsContext();
             e.Use();
+        }
+        public void AddNewItemToMenu(GenericMenu menu,string title,UserActions a)
+        {
+            menu.AddItem(new GUIContent(title), false, ContextCallback, a);
+
         }
         private void ModifyNode(Event e)
         {
@@ -479,6 +489,10 @@ namespace BehaviourTreeEditor
 
                 case UserActions.delayNode:
                     currentGraph.AddNode(settings.DelayNode, mousePosition.x, mousePosition.y, 200, 150, "Delay");
+                    break;
+
+                case UserActions.portalNode:
+                    currentGraph.AddNode(settings.PortalNode, mousePosition.x, mousePosition.y, 200, 150, "Portal");
                     break;
             }
             EditorUtility.SetDirty(currentGraph);

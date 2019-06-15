@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nodes:
   - Graph: {fileID: 11400000}
-    ID: 31G0
+    ID: 8J0
     WindowRect:
       serializedVersion: 2
-      x: 317
-      y: 121
+      x: 130
+      y: 175
       width: 200
       height: 120
     WindowTitle: Set Destination
@@ -30,26 +30,20 @@ MonoBehaviour:
     drawNode: {fileID: 11400000, guid: ef10c60c9fb367c4299587adddc3e56b, type: 2}
     previousCollapse: 0
     transitions:
-    - ID: T481D
+    - ID: T441S
       Color: {r: 1, g: 0, b: 1, a: 1}
       disabled: 0
       startPlacement: 6
       endPlacement: 7
       clicked: 0
       Value: 
-    depencies:
-    - ID: T461S
-      Color: {r: 1, g: 0, b: 1, a: 1}
-      disabled: 0
-      startPlacement: 6
-      endPlacement: 7
-      clicked: 0
-      Value: 
-    transitionsIdsToRemove: []
+    depencies: []
+    transitionsIdsToRemove:
+    - T91P
     savedWindowRect:
       serializedVersion: 2
-      x: 317
-      y: 121
+      x: 168
+      y: 210
       width: 200
       height: 120
     nodeCompleted: 0
@@ -64,79 +58,27 @@ MonoBehaviour:
     AnimatorActivatorIntValue: 0
     AnimatorActivatorFloatValue: 0
     delay: 0
-    destinationTarget: {fileID: 0}
-    destinationTargetName: TargetPoint (3)
-  - Graph: {fileID: 11400000}
-    ID: 33H1
-    WindowRect:
-      serializedVersion: 2
-      x: 890
-      y: 178
-      width: 200
-      height: 120
-    WindowTitle: Set Destination
-    nodeColor:
-      serializedVersion: 2
-      rgba: 4286545791
-    collapse: 0
-    normalHeight: 120
-    drawNode: {fileID: 11400000, guid: ef10c60c9fb367c4299587adddc3e56b, type: 2}
-    previousCollapse: 0
-    transitions:
-    - ID: T431D
-      Color: {r: 1, g: 0, b: 1, a: 1}
-      disabled: 0
-      startPlacement: 6
-      endPlacement: 7
-      clicked: 0
-      Value: 
-    depencies:
-    - ID: T531S
-      Color: {r: 1, g: 0, b: 1, a: 1}
-      disabled: 0
-      startPlacement: 6
-      endPlacement: 7
-      clicked: 0
-      Value: 
-    transitionsIdsToRemove: []
-    savedWindowRect:
-      serializedVersion: 2
-      x: 890
-      y: 178
-      width: 200
-      height: 120
-    nodeCompleted: 0
-    comment: 
-    showActions: 0
-    showEnterExit: 0
-    condition: {fileID: 0}
-    Animator: {fileID: 0}
-    parameter: 
-    AnimatorActivatorType: 0
-    AnimatorActivatorBoolValue: 0
-    AnimatorActivatorIntValue: 0
-    AnimatorActivatorFloatValue: 0
-    delay: 0
+    portalTargetNodeID: 
     destinationTarget: {fileID: 0}
     destinationTargetName: TargetPoint (2)
   - Graph: {fileID: 11400000}
-    ID: 34H2
+    ID: 26J2
     WindowRect:
       serializedVersion: 2
-      x: 739
-      y: 442
+      x: 802
+      y: 171
       width: 200
-      height: 150
-    WindowTitle: Delay
+      height: 120
+    WindowTitle: Set Destination
     nodeColor:
       serializedVersion: 2
-      rgba: 4286545791
+      rgba: 4278255360
     collapse: 0
-    normalHeight: 150
-    drawNode: {fileID: 11400000, guid: cc7cd4f73d06ed2499c9639d1e439af3, type: 2}
+    normalHeight: 120
+    drawNode: {fileID: 11400000, guid: ef10c60c9fb367c4299587adddc3e56b, type: 2}
     previousCollapse: 0
     transitions:
-    - ID: T461S
+    - ID: T451P
       Color: {r: 1, g: 0, b: 1, a: 1}
       disabled: 0
       startPlacement: 6
@@ -144,7 +86,7 @@ MonoBehaviour:
       clicked: 0
       Value: 
     depencies:
-    - ID: T431D
+    - ID: T441S
       Color: {r: 1, g: 0, b: 1, a: 1}
       disabled: 0
       startPlacement: 6
@@ -154,10 +96,10 @@ MonoBehaviour:
     transitionsIdsToRemove: []
     savedWindowRect:
       serializedVersion: 2
-      x: 915
-      y: 349
+      x: 1159
+      y: 207
       width: 200
-      height: 150
+      height: 120
     nodeCompleted: 0
     comment: 
     showActions: 0
@@ -169,35 +111,29 @@ MonoBehaviour:
     AnimatorActivatorBoolValue: 0
     AnimatorActivatorIntValue: 0
     AnimatorActivatorFloatValue: 0
-    delay: 5
+    delay: 0
+    portalTargetNodeID: 
     destinationTarget: {fileID: 0}
-    destinationTargetName: 
+    destinationTargetName: TargetPoint (1)
   - Graph: {fileID: 11400000}
-    ID: 40C3
+    ID: 40J3
     WindowRect:
       serializedVersion: 2
-      x: 359
-      y: 447
+      x: 1007
+      y: 426
       width: 200
       height: 150
-    WindowTitle: Delay
+    WindowTitle: Portal
     nodeColor:
       serializedVersion: 2
       rgba: 4286545791
     collapse: 0
     normalHeight: 150
-    drawNode: {fileID: 11400000, guid: cc7cd4f73d06ed2499c9639d1e439af3, type: 2}
+    drawNode: {fileID: 11400000, guid: 884e6fb9c46eac74daeac798dbb89321, type: 2}
     previousCollapse: 0
-    transitions:
-    - ID: T531S
-      Color: {r: 1, g: 0, b: 1, a: 1}
-      disabled: 0
-      startPlacement: 6
-      endPlacement: 7
-      clicked: 0
-      Value: 
+    transitions: []
     depencies:
-    - ID: T481D
+    - ID: T451P
       Color: {r: 1, g: 0, b: 1, a: 1}
       disabled: 0
       startPlacement: 6
@@ -207,8 +143,8 @@ MonoBehaviour:
     transitionsIdsToRemove: []
     savedWindowRect:
       serializedVersion: 2
-      x: 352
-      y: 447
+      x: 1456
+      y: 307
       width: 200
       height: 150
     nodeCompleted: 0
@@ -222,7 +158,8 @@ MonoBehaviour:
     AnimatorActivatorBoolValue: 0
     AnimatorActivatorIntValue: 0
     AnimatorActivatorFloatValue: 0
-    delay: 5
+    delay: 0
+    portalTargetNodeID: 8J0
     destinationTarget: {fileID: 0}
     destinationTargetName: 
   removeNodesIDs: []
@@ -231,23 +168,23 @@ MonoBehaviour:
   LiveCycle:
     currentNode:
       Graph: {fileID: 11400000}
-      ID: 33H1
+      ID: 26J2
       WindowRect:
         serializedVersion: 2
-        x: 890
-        y: 178
+        x: 802
+        y: 171
         width: 200
         height: 120
       WindowTitle: Set Destination
       nodeColor:
         serializedVersion: 2
-        rgba: 4286545791
+        rgba: 4278255360
       collapse: 0
       normalHeight: 120
       drawNode: {fileID: 11400000, guid: ef10c60c9fb367c4299587adddc3e56b, type: 2}
       previousCollapse: 0
       transitions:
-      - ID: T431D
+      - ID: T451P
         Color: {r: 1, g: 0, b: 1, a: 1}
         disabled: 0
         startPlacement: 6
@@ -255,7 +192,7 @@ MonoBehaviour:
         clicked: 0
         Value: 
       depencies:
-      - ID: T531S
+      - ID: T441S
         Color: {r: 1, g: 0, b: 1, a: 1}
         disabled: 0
         startPlacement: 6
@@ -265,8 +202,8 @@ MonoBehaviour:
       transitionsIdsToRemove: []
       savedWindowRect:
         serializedVersion: 2
-        x: 890
-        y: 178
+        x: 1159
+        y: 207
         width: 200
         height: 120
       nodeCompleted: 0
@@ -281,5 +218,6 @@ MonoBehaviour:
       AnimatorActivatorIntValue: 0
       AnimatorActivatorFloatValue: 0
       delay: 0
+      portalTargetNodeID: 
       destinationTarget: {fileID: 0}
-      destinationTargetName: TargetPoint (2)
+      destinationTargetName: TargetPoint (1)

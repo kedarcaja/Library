@@ -18,10 +18,10 @@ namespace BehaviourTreeEditor
         public BaseNode CurrentNode { get => currentNode; }
         public void Tick()
         {
-            CheckTransitions();
+            DecideForNextNode();
+
 
             if (currentNode != null)
-
             {
                 currentNode.Execute();
             }
@@ -33,8 +33,10 @@ namespace BehaviourTreeEditor
             {
                 foreach (Transition t in currentNode.transitions)
                 {
-                    DecideForNextNode(t);
+                    currentNode.nodeCompleted = false;
+                    currentNode = t.endNode;
                 }
+                
             }
 
         }
@@ -42,28 +44,25 @@ namespace BehaviourTreeEditor
         {
             currentNode = graph.nodes[0];
         }
-        public void DecideForNextNode(Transition t)
+        public void DecideForNextNode()
         {
-            if (currentNode.drawNode is ExecutableNode && currentNode.nodeCompleted)
+           
+
+             if (currentNode.drawNode is ExecutableNode && currentNode.nodeCompleted)
             {
-
-                currentNode.nodeCompleted = false;
-                currentNode = t.endNode;
-
+                CheckTransitions();  
                 return;
             }
-            else if (currentNode.drawNode is ConditionNode)
+             if (currentNode.drawNode is ConditionNode)
             {
 
                 if (currentNode.condition.IsChecked(graph.character))
                 {
-                    if(currentNode.transitions.Exists(x=>x.Value == "true"))
+                    if (currentNode.transitions.Exists(x => x.Value == "true"))
                     {
-                       currentNode = currentNode.transitions.Find(x=>x.Value == "true").endNode;
+                        currentNode = currentNode.transitions.Find(x => x.Value == "true").endNode;
 
                     }
-                    return;
-
                 }
                 else
                 {
@@ -73,9 +72,14 @@ namespace BehaviourTreeEditor
 
                     }
                 }
-
-
+                return;
             }
+            if (currentNode.drawNode is PortalNode)
+            {
+                BaseNode b = graph.nodes.Find(n => n.ID == currentNode.portalTargetNodeID);
+                currentNode = b != null ? b : currentNode;
+            }
+
         }
     }
 }

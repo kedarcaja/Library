@@ -53,6 +53,9 @@ namespace BehaviourTreeEditor
         public _Timer timer;
         public float delay;
         #endregion
+        #region Portal nodes Variables
+        public string portalTargetNodeID;
+        #endregion
 
         #region SetDestination node Variables
         public Transform destinationTarget;
