@@ -14,14 +14,25 @@ namespace BehaviourTreeEditor
 
         public override void DrawWindow(BaseNode b)
         {
-            BehaviourEditor.GetEGLLable("area: ",GUIStyle.none);
+            BehaviourEditor.GetEGLLable("area: ", GUIStyle.none);
             b.randomMoveArea = EditorGUILayout.TextField(b.randomMoveArea);
+
         }
 
         public override void Execute(BaseNode b)
         {
-            if(BehaviourEditor.GetTransformFromName(b.randomMoveArea) !=null && BehaviourEditor.GetTransformFromName(b.randomMoveArea).GetComponent<RandomMoveArea>() != null)
-                b.Graph.character.RandomMove(BehaviourEditor.GetTransformFromName(b.randomMoveArea).GetComponent<RandomMoveArea>());
+            Transform t = BehaviourEditor.GetTransformFromName(b.randomMoveArea);
+            if (t != null && t.GetComponent<RandomMoveArea>() != null&& !b.randomSet)
+            {
+                b.Graph.character.RandomMove(t.GetComponent<RandomMoveArea>());
+                b.randomSet = true;
+            }
+            if(b.randomSet&& b.Graph.character.AgentReachedTarget())
+            {
+                b.nodeCompleted = true;
+                b.randomSet = false;
+
+            }
         }
     }
 }

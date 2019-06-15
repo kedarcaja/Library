@@ -59,14 +59,14 @@ public class CharacterScript : MonoBehaviour
     }
     public bool AgentReachedTarget()
     {
-        return !agent.pathPending && agent.remainingDistance <= agent.stoppingDistance && (!agent.hasPath || agent.velocity.sqrMagnitude == 0f);
+        return /*!agent.pathPending &&*/ agent.remainingDistance <= agent.stoppingDistance/* && (!agent.hasPath || agent.velocity.sqrMagnitude == 0f)*/;
     }
 
     public bool Delete()
     {
         return delete > 0;
     }
-    public void RandomMove(RandomMoveArea area)
+    public Vector3 GetRandomMoveArea(RandomMoveArea area)
     {
         if(AgentReachedTarget())
         {
@@ -75,7 +75,12 @@ public class CharacterScript : MonoBehaviour
             NavMeshHit hit;
             NavMesh.SamplePosition(randomDirection, out hit, area.radius, 1);
             Vector3 finalPosition = hit.position;
-            agent.destination = finalPosition;
+            return finalPosition;
         }
+        return agent.destination;
+    }
+    public void RandomMove(RandomMoveArea area)
+    {
+        SetDestination(GetRandomMoveArea(area));
     }
 }

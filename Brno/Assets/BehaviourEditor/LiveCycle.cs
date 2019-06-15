@@ -52,7 +52,7 @@ namespace BehaviourTreeEditor
             if (currentNode.drawNode is ExecutableNode && currentNode.nodeCompleted)
             {
                 CheckTransitions();
-                ActiveNode(currentNode);
+              
                 return;
             }
             if (currentNode.drawNode is ConditionNode)
@@ -77,7 +77,7 @@ namespace BehaviourTreeEditor
 
                     }
                 }
-                ActiveNode(currentNode);
+            
 
                 return;
             }
@@ -85,13 +85,10 @@ namespace BehaviourTreeEditor
             {
                 BaseNode b = graph.nodes.Find(n => n.ID == currentNode.portalTargetNodeID);
                 currentNode = b != null ? b : currentNode;
-                ActiveNode(currentNode);
+               
             }
 
         }
-        public void ActiveNode(BaseNode n)
-        {
-            n.savedNodeColor = n.nodeColor;
-        }
+     
     }
 }

@@ -56,6 +56,7 @@ namespace BehaviourTreeEditor
         #endregion
         #region Random move nodes Variables
         public string randomMoveArea;
+        public bool randomSet = false;
         #endregion
         #region Portal nodes Variables
         public string portalTargetNodeID;
@@ -104,7 +105,15 @@ namespace BehaviourTreeEditor
 
             EditorGUI.DrawRect(new Rect(0, 17, WindowRect.width, WindowRect.height - 17), nodeColor);
             EditorGUILayout.LabelField("Node Color: ", GColor.White);
-             nodeColor = EditorGUILayout.ColorField(nodeColor);
+         if( this == BehaviourEditor.currentGraph.LiveCycle.currentNode)
+            {
+                savedNodeColor  = EditorGUILayout.ColorField(nodeColor);
+            }
+            else
+            {
+                nodeColor = EditorGUILayout.ColorField(nodeColor);
+            }
+
             collapse = EditorGUILayout.Toggle(collapse);
             if (collapse)
             {
