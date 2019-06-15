@@ -14,7 +14,12 @@ namespace BehaviourTreeEditor
 
 		public override void DrawWindow(BaseNode b)
 		{
-			b.AnimatorActivatorType = (EAnimatorActivator)EditorGUILayout.EnumPopup(b.AnimatorActivatorType);
+#if UNITY_EDITOR
+
+            BehaviourEditor.GetEGLLable("Layer: ", GUIStyle.none);
+            b.animationLayer = EditorGUILayout.IntField(b.animationLayer);
+
+            b.AnimatorActivatorType = (EAnimatorActivator)EditorGUILayout.EnumPopup(b.AnimatorActivatorType);
 
 			BehaviourEditor.GetEGLLable("parameter: ", GUIStyle.none);
 			b.parameter = EditorGUILayout.TextField(b.parameter);
@@ -36,8 +41,8 @@ namespace BehaviourTreeEditor
 					break;
 
 			}
-
-		}
+#endif
+        }
 
 		public override void Execute(BaseNode b)
 		{
@@ -58,6 +63,7 @@ namespace BehaviourTreeEditor
 					b.Graph.character.Animator.SetInteger(b.parameter,b.AnimatorActivatorIntValue);
 					break;
 			}
+            b.nodeCompleted = true;
 		}
 	}
 }

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+public enum EWindowCurvePlacement { LeftTop, LeftBottom, CenterBottom, CenterTop, RightTop, RightBottom, RightCenter, LeftCenter, Center }
 
 namespace BehaviourTreeEditor
 {

@@ -14,13 +14,17 @@ namespace BehaviourTreeEditor
 
         public override void DrawWindow(BaseNode b)
         {
+#if UNITY_EDITOR
+
             BehaviourEditor.GetEGLLable("area: ", GUIStyle.none);
             b.randomMoveArea = EditorGUILayout.TextField(b.randomMoveArea);
-
+#endif
         }
 
         public override void Execute(BaseNode b)
         {
+
+#if UNITY_EDITOR
             Transform t = BehaviourEditor.GetTransformFromName(b.randomMoveArea);
             if (t != null && t.GetComponent<RandomMoveArea>() != null&& !b.randomSet)
             {
@@ -33,6 +37,9 @@ namespace BehaviourTreeEditor
                 b.randomSet = false;
 
             }
+#endif
+
         }
     }
+
 }

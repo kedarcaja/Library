@@ -6,9 +6,9 @@ using System.Linq;
 using UnityEngine.AI;
 using UnityEngine.Events;
 using BehaviourTreeEditor;
+#if UNITY_EDITOR
 using UnityEditor.Animations;
-
-public delegate void TimerEventHandler();
+#endif
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(NavMeshAgent))]
 [RequireComponent(typeof(Animator))]
@@ -24,7 +24,10 @@ public class CharacterScript : MonoBehaviour
     private BehaviourGraph Graph;
 
     public Animator Animator { get => anim; }
+#if UNITY_EDITOR
+
     public AnimatorController AnimatorController { get => (AnimatorController)anim.runtimeAnimatorController; set => anim.runtimeAnimatorController = value; }
+#endif
     private void Awake()
     {
         if (Graph.LiveCycle == null)
@@ -49,7 +52,7 @@ public class CharacterScript : MonoBehaviour
 
     private void Update()
     {
-        anim.SetFloat("speed", agent.velocity.magnitude);
+      //  anim.SetFloat("speed", agent.velocity.magnitude);
 
         if (Graph != null)
         {
@@ -59,7 +62,7 @@ public class CharacterScript : MonoBehaviour
     }
     public bool AgentReachedTarget()
     {
-        return /*!agent.pathPending &&*/ agent.remainingDistance <= agent.stoppingDistance/* && (!agent.hasPath || agent.velocity.sqrMagnitude == 0f)*/;
+        return !agent.pathPending && agent.remainingDistance <= agent.stoppingDistance && (!agent.hasPath || agent.velocity.sqrMagnitude == 0f);
     }
 
     public bool Delete()

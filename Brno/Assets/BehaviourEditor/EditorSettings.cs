@@ -15,7 +15,6 @@ namespace BehaviourTreeEditor
      //   public StateNode StateNode;
         public ConditionNode ConditionNode;
 		public AnimatorHandleNode AnimatorHandleNode;
-		public AnimatorControllerSwapNode AnimatorSwapNode;
 		public SetDestinationNode SetDestinationNode;
 		public RandomMoveNode RandomMoveNode;
 		public DelayNode DelayNode;

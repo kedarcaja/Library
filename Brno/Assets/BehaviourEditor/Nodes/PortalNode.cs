@@ -14,9 +14,12 @@ namespace BehaviourTreeEditor
 
         public override void DrawWindow(BaseNode b)
         {
+#if UNITY_EDITOR
 
             EditorGUILayout.LabelField("Target node id: ");
             b.portalTargetNodeID = EditorGUILayout.TextField(b.portalTargetNodeID);
+#endif
+
         }
     }
 }

@@ -15,11 +15,14 @@ namespace BehaviourTreeEditor
 
         public override void DrawWindow(BaseNode b)
         {
+#if UNITY_EDITOR
+
             b.condition = EditorGUILayout.ObjectField(b.condition, typeof(Condition), false) as Condition;
             if(b.condition == null)
             {
                 EditorGUILayout.LabelField("No Condition!");
             }
+#endif
         }
     }
 }

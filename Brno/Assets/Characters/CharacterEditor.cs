@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+#if UNITY_EDITOR
+
 [ItemCustomEditorAtributte(typeof(Character),true), CanEditMultipleObjects]
 public class CharacterEditor : Editor
 {
@@ -101,3 +103,4 @@ public class CharacterEditor : Editor
 
     }
 }
+#endif

@@ -2,9 +2,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
-using UnityEditorInternal;
-using UnityEngine;
+#if UNITY_EDITOR
 
+using UnityEditorInternal;
+#endif
+using UnityEngine;
 public enum EAnimatorActivator { Trigger, Float, Bool, Int }
 namespace BehaviourTreeEditor
 {
@@ -34,21 +36,18 @@ namespace BehaviourTreeEditor
         #region Comment node Variables
         public string comment = "";
         #endregion
-        #region State node Variables
-
-        public bool showActions = false;
-        public bool showEnterExit = false;
-        #endregion
+       
         #region Condition node Variables
         public Condition condition;
         #endregion
         #region Animator nodes Variables
-        public Animator Animator;
+
         public string parameter;
         public EAnimatorActivator AnimatorActivatorType;
         public bool AnimatorActivatorBoolValue;
         public int AnimatorActivatorIntValue;
         public float AnimatorActivatorFloatValue;
+        public int animationLayer = 0;
         #endregion
         #region Timing nodes Variables
         public _Timer timer;
@@ -102,6 +101,7 @@ namespace BehaviourTreeEditor
         }
         public void DrawWindow()
         {
+#if UNITY_EDITOR
 
             EditorGUI.DrawRect(new Rect(0, 17, WindowRect.width, WindowRect.height - 17), nodeColor);
             EditorGUILayout.LabelField("Node Color: ", GColor.White);
@@ -124,6 +124,7 @@ namespace BehaviourTreeEditor
                 WindowRect.height = normalHeight;
             }
             drawNode?.DrawWindow(this);
+#endif
         }
 
         public void DrawCurve()
@@ -131,7 +132,10 @@ namespace BehaviourTreeEditor
             foreach (Transition t in transitions)
             {
                 if (t == null || t.endNode == null || t.startNode == null || WindowRect.size == Vector2.zero) continue;
+#if UNITY_EDITOR
+
                 BehaviourEditor.DrawNodeCurve(t, t.startNode.WindowRect, t.endNode.WindowRect, t.startPlacement, t.endPlacement, t.Color, t.disabled);
+#endif
                 t.DrawConnection(t.startNode, t.endNode, t.startPlacement, t.endPlacement, t.Color, t.disabled);
             }
             drawNode?.DrawCurve(this);

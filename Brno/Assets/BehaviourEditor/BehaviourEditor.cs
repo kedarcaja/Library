@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if UNITY_EDITOR
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -10,10 +11,9 @@ using UnityEngine.UI;
 
 namespace BehaviourTreeEditor
 {
-    public enum EWindowCurvePlacement { LeftTop, LeftBottom, CenterBottom, CenterTop, RightTop, RightBottom, RightCenter, LeftCenter, Center }
     public class BehaviourEditor : EditorWindow
     {
-        #region Variables
+#region Variables
         Vector3 mousePosition;
         static bool clickedOnWindow;
         public static BaseNode selectedNode;
@@ -23,7 +23,7 @@ namespace BehaviourTreeEditor
         Rect all = new Rect(0, 0, 10000, 10000); // window 
         bool showSettings = false;
         static Transition selectedTransition;
-        #region Window Handle Variables
+#region Window Handle Variables
         private const float kZoomMin = 0.3f;
         private const float kZoomMax = 1f;
         private readonly Rect _zoomArea = new Rect(0, 0, 10000, 10000);
@@ -34,20 +34,20 @@ namespace BehaviourTreeEditor
         public static GUIStyle style;
         private Vector2 offset;
         private Vector2 drag;
-        #endregion
+#endregion
 
-        #region SelectionZone
+#region SelectionZone
         bool creatingSelectionZone = false;
         Vector2 selectionBoxStartPos;
         Vector2 selectionBoxCurrentPos;
-        #endregion
+#endregion
 
         public static CharacterScript currentCharacter;
         //static State previousState;
-        #endregion
+#endregion
         public enum UserActions
         {
-            deleteNode, commentNode, AnimatorHandleNode, makeTransition, conditionNode, AnimatorSwapNode, SetDestinationNode, delayNode, portalNode, randomMoveNode
+            deleteNode, commentNode, AnimatorHandleNode, makeTransition, conditionNode, SetDestinationNode, delayNode, portalNode, randomMoveNode
         }
         [MenuItem("Behaviour Editor/Editor")]
         static void ShowEditor()
@@ -56,7 +56,7 @@ namespace BehaviourTreeEditor
             editor.minSize = new Vector2(800, 600);
         }
 
-        #region Unity Methods
+#region Unity Methods
         private void OnEnable()
         {
             settings = Resources.Load("Editor/Settings", typeof(EditorSettings)) as EditorSettings;
@@ -99,8 +99,8 @@ namespace BehaviourTreeEditor
         {
             return Selection.activeTransform != null;
         }
-        #endregion
-        #region Window Handle Methods
+#endregion
+#region Window Handle Methods
         void HandlePanning(Event e)
         {
             Vector2 diff = e.mousePosition - scrollStartPos;
@@ -171,8 +171,8 @@ namespace BehaviourTreeEditor
             Handles.color = Color.white;
             Handles.EndGUI();
         }
-        #endregion
-        #region Input Handle Methods
+#endregion
+#region Input Handle Methods
         public void HandleHiearchySelection()
         {
             if (CharacterSelected())
@@ -323,8 +323,8 @@ namespace BehaviourTreeEditor
             }
         }
 
-        #endregion
-        #region Node Methods
+#endregion
+#region Node Methods
         public void DrawWindows()
         {
             if (currentGraph != null)
@@ -439,7 +439,6 @@ namespace BehaviourTreeEditor
             GenericMenu menu = new GenericMenu();
             AddNewItemToMenu(menu, "Add Comment", UserActions.commentNode);
             AddNewItemToMenu(menu, "Add AnimatorHandler", UserActions.AnimatorHandleNode);
-            AddNewItemToMenu(menu, "Add Animator Swap", UserActions.AnimatorSwapNode);
             AddNewItemToMenu(menu, "Add Condition", UserActions.conditionNode);
             AddNewItemToMenu(menu, "Add Set Destination", UserActions.SetDestinationNode);
             AddNewItemToMenu(menu, "Add Delay", UserActions.delayNode);
@@ -482,14 +481,12 @@ namespace BehaviourTreeEditor
                 case UserActions.SetDestinationNode:
                     currentGraph.AddNode(settings.SetDestinationNode, mousePosition.x, mousePosition.y, 200, 120, "Set Destination");
                     break;
-                case UserActions.AnimatorSwapNode:
-                    currentGraph.AddNode(settings.AnimatorSwapNode, mousePosition.x, mousePosition.y, 200, 100, "Animator Swap");
-                    break;
+               
                 case UserActions.commentNode:
                     currentGraph.AddNode(settings.CommentNode, mousePosition.x, mousePosition.y, 200, 200, "Comment");
                     break;
                 case UserActions.AnimatorHandleNode:
-                    currentGraph.AddNode(settings.AnimatorHandleNode, mousePosition.x, mousePosition.y, 200, 170, "Animator Handler");
+                    currentGraph.AddNode(settings.AnimatorHandleNode, mousePosition.x, mousePosition.y, 200, 200, "Animator Handler");
                     break;
 
                 case UserActions.delayNode:
@@ -507,8 +504,8 @@ namespace BehaviourTreeEditor
             EditorUtility.SetDirty(currentGraph);
 
         }
-        #endregion
-        #region Transition Methods
+#endregion
+#region Transition Methods
         public static void DrawTransitionClickPoint(Transition t, Vector3 start, Vector3 end)
         {
             if (t == null) return;
@@ -662,7 +659,7 @@ namespace BehaviourTreeEditor
             Handles.DrawBezier(startPos, endPos, startTan, endTan, disable ? Color.black : curveColor, null, 3);
             DrawTransitionClickPoint(t, startPos, endPos);
         }
-        #endregion
+#endregion
         public static void GetEGLLable(string text, GUIStyle style)
         {
             EditorGUILayout.LabelField(text, style);
@@ -702,7 +699,7 @@ namespace BehaviourTreeEditor
             return null;
         }
     }
-    #region Extending Classes
+#region Extending Classes
     public static class RectExtensions
     {
         public static Vector2 TopLeft(this Rect rect)
@@ -786,5 +783,6 @@ namespace BehaviourTreeEditor
             return s;
         }
     }
-    #endregion
+#endregion
 }
+#endif

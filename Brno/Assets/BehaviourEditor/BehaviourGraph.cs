@@ -140,9 +140,12 @@ namespace BehaviourTreeEditor
 			for (int i = 0; i < l.Count; i++)
 			{
 				BaseNode b = l[i];
-				if ((Rect.Overlaps(b.WindowRect) && !BehaviourEditor.currentGraph.selectionZones.Exists(z => z.selectedNodes.Contains(b))))
+#if UNITY_EDITOR
+
+                if ((Rect.Overlaps(b.WindowRect) && !BehaviourEditor.currentGraph.selectionZones.Exists(z => z.selectedNodes.Contains(b))))
 				{
-					selectedNodes.Add(b);
+
+                    selectedNodes.Add(b);
 					foreach (Transition t in b.transitions)
 					{
 						selectedNodes.Add(t.endNode);
@@ -152,18 +155,24 @@ namespace BehaviourTreeEditor
 						selectedNodes.Add(t.startNode);
 					}
 				}
-			}
-			Ready = true;
+#endif
+
+            }
+            Ready = true;
 		}
-		public void Draw()
+
+        public void Draw()
 		{
 
 			if (!collapsed)
 			{
-				EditorGUI.DrawRect(Rect, Color);
+#if UNITY_EDITOR
+
+                EditorGUI.DrawRect(Rect, Color);
 				title = EditorGUI.TextArea(new Rect(Rect.center.x, Rect.yMin + 5, 80, 20), title, GColor.White);
 				Color = EditorGUI.ColorField(new Rect(Rect.xMin + 20, Rect.yMin + 25, 80, 20), Color);
-				if (!restored)
+#endif
+                if (!restored)
 				{
 					for (int i = 0; i < selectedNodes.Count; i++)
 					{
@@ -177,9 +186,12 @@ namespace BehaviourTreeEditor
 			}
 			else
 			{
-				EditorGUI.DrawRect(new Rect(Rect.xMin, Rect.yMin, 100, 25), new Color(Color.r, Color.g, Color.b, 0.3f));
+#if UNITY_EDITOR
+
+                EditorGUI.DrawRect(new Rect(Rect.xMin, Rect.yMin, 100, 25), new Color(Color.r, Color.g, Color.b, 0.3f));
 				 EditorGUI.LabelField(new Rect(Rect.xMin + 20, Rect.yMin + 5, 80, 25), title);
-				if (!hidden)
+#endif
+                if (!hidden)
 				{
 					for (int i = 0; i < selectedNodes.Count; i++)
 					{

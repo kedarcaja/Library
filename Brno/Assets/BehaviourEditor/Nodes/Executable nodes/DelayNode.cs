@@ -14,11 +14,13 @@ namespace BehaviourTreeEditor
 
         public override void DrawWindow(BaseNode b)
         {
+#if UNITY_EDITOR
 
 
             EditorGUILayout.LabelField("delay:(float)/s-1");
             b.delay = EditorGUILayout.FloatField(b.delay);
             if (b.delay < 1) b.delay = 1;
+#endif
         }
 
         public override void Execute(BaseNode b)

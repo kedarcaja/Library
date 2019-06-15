@@ -14,145 +14,34 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nodes:
   - Graph: {fileID: 11400000}
-    ID: 34A0
+    ID: 26E0
     WindowRect:
       serializedVersion: 2
-      x: 393
-      y: 235
-      width: 200
-      height: 150
-    WindowTitle: Random Move
-    nodeColor:
-      serializedVersion: 2
-      rgba: 4278255360
-    savedNodeColor:
-      serializedVersion: 2
-      rgba: 4286545791
-    collapse: 0
-    normalHeight: 150
-    drawNode: {fileID: 11400000, guid: 242641f3f5b3bac47a08b143745984e2, type: 2}
-    previousCollapse: 0
-    transitions:
-    - ID: T591C
-      Color: {r: 1, g: 0, b: 1, a: 1}
-      disabled: 0
-      startPlacement: 6
-      endPlacement: 7
-      clicked: 0
-      Value: 
-    depencies: []
-    transitionsIdsToRemove: []
-    savedWindowRect:
-      serializedVersion: 2
-      x: 393
-      y: 235
-      width: 200
-      height: 150
-    nodeCompleted: 0
-    comment: 
-    showActions: 0
-    showEnterExit: 0
-    condition: {fileID: 0}
-    Animator: {fileID: 0}
-    parameter: 
-    AnimatorActivatorType: 0
-    AnimatorActivatorBoolValue: 0
-    AnimatorActivatorIntValue: 0
-    AnimatorActivatorFloatValue: 0
-    delay: 0
-    randomMoveArea: r0
-    randomSet: 0
-    portalTargetNodeID: 
-    destinationTarget: {fileID: 0}
-    destinationTargetName: 
-  - Graph: {fileID: 11400000}
-    ID: 36E1
-    WindowRect:
-      serializedVersion: 2
-      x: 1435
-      y: 382
-      width: 200
-      height: 150
-    WindowTitle: Portal
-    nodeColor:
-      serializedVersion: 2
-      rgba: 4278255360
-    savedNodeColor:
-      serializedVersion: 2
-      rgba: 4286545791
-    collapse: 0
-    normalHeight: 150
-    drawNode: {fileID: 11400000, guid: 884e6fb9c46eac74daeac798dbb89321, type: 2}
-    previousCollapse: 0
-    transitions: []
-    depencies:
-    - ID: T471P
-      Color: {r: 1, g: 0, b: 0, a: 1}
-      disabled: 0
-      startPlacement: 5
-      endPlacement: 7
-      clicked: 0
-      Value: true
-    transitionsIdsToRemove: []
-    savedWindowRect:
-      serializedVersion: 2
-      x: 784
-      y: 221
-      width: 200
-      height: 150
-    nodeCompleted: 0
-    comment: 
-    showActions: 0
-    showEnterExit: 0
-    condition: {fileID: 0}
-    Animator: {fileID: 0}
-    parameter: 
-    AnimatorActivatorType: 0
-    AnimatorActivatorBoolValue: 0
-    AnimatorActivatorIntValue: 0
-    AnimatorActivatorFloatValue: 0
-    delay: 0
-    randomMoveArea: 
-    randomSet: 0
-    portalTargetNodeID: 34A0
-    destinationTarget: {fileID: 0}
-    destinationTargetName: 
-  - Graph: {fileID: 11400000}
-    ID: 38C2
-    WindowRect:
-      serializedVersion: 2
-      x: 803
-      y: 221
+      x: 271
+      y: 153
       width: 200
       height: 200
-    WindowTitle: Condition
+    WindowTitle: Animator Handler
     nodeColor:
       serializedVersion: 2
       rgba: 4278255360
     savedNodeColor:
       serializedVersion: 2
-      rgba: 4286545791
+      rgba: 4278255360
     collapse: 0
     normalHeight: 200
-    drawNode: {fileID: 11400000, guid: ff66ae395c499994fa8a190326c5f331, type: 2}
+    drawNode: {fileID: 11400000, guid: f088124990a2e4d43aef7d00f588636d, type: 2}
     previousCollapse: 0
     transitions:
-    - ID: T471P
-      Color: {r: 1, g: 0, b: 0, a: 1}
+    - ID: T561S
+      Color: {r: 1, g: 0, b: 1, a: 1}
       disabled: 0
-      startPlacement: 5
+      startPlacement: 6
       endPlacement: 7
       clicked: 0
-      Value: true
-    - ID: T562S
-      Color: {r: 0, g: 0, b: 1, a: 1}
-      disabled: 0
-      startPlacement: 1
-      endPlacement: 7
-      clicked: 0
-      Value: false
+      Value: 
     depencies:
-    - ID: T591C
+    - ID: T111A
       Color: {r: 1, g: 0, b: 1, a: 1}
       disabled: 0
       startPlacement: 6
@@ -162,21 +51,20 @@ MonoBehaviour:
     transitionsIdsToRemove: []
     savedWindowRect:
       serializedVersion: 2
-      x: 1191
-      y: 266
+      x: 852
+      y: 167
       width: 200
       height: 200
     nodeCompleted: 0
     comment: 
-    showActions: 0
-    showEnterExit: 0
-    condition: {fileID: 11400000, guid: 363e1e484834c024697d5f331e4360f2, type: 2}
+    condition: {fileID: 0}
     Animator: {fileID: 0}
-    parameter: 
-    AnimatorActivatorType: 0
+    parameter: speed
+    AnimatorActivatorType: 1
     AnimatorActivatorBoolValue: 0
     AnimatorActivatorIntValue: 0
-    AnimatorActivatorFloatValue: 0
+    AnimatorActivatorFloatValue: 1
+    animationLayer: 0
     delay: 0
     randomMoveArea: 
     randomSet: 0
@@ -184,11 +72,11 @@ MonoBehaviour:
     destinationTarget: {fileID: 0}
     destinationTargetName: 
   - Graph: {fileID: 11400000}
-    ID: 50T3
+    ID: 47T1
     WindowRect:
       serializedVersion: 2
-      x: 1253
-      y: 190
+      x: 698
+      y: 156
       width: 200
       height: 120
     WindowTitle: Set Destination
@@ -197,31 +85,36 @@ MonoBehaviour:
       rgba: 4278255360
     savedNodeColor:
       serializedVersion: 2
-      rgba: 4286545791
+      rgba: 4278255360
     collapse: 0
     normalHeight: 120
     drawNode: {fileID: 11400000, guid: ef10c60c9fb367c4299587adddc3e56b, type: 2}
     previousCollapse: 0
-    transitions: []
-    depencies:
-    - ID: T562S
-      Color: {r: 0, g: 0, b: 1, a: 1}
+    transitions:
+    - ID: T151A
+      Color: {r: 1, g: 0, b: 1, a: 1}
       disabled: 0
-      startPlacement: 1
+      startPlacement: 6
       endPlacement: 7
       clicked: 0
-      Value: false
+      Value: 
+    depencies:
+    - ID: T561S
+      Color: {r: 1, g: 0, b: 1, a: 1}
+      disabled: 0
+      startPlacement: 6
+      endPlacement: 7
+      clicked: 0
+      Value: 
     transitionsIdsToRemove: []
     savedWindowRect:
       serializedVersion: 2
-      x: 1253
-      y: 190
+      x: 659
+      y: 198
       width: 200
       height: 120
-    nodeCompleted: 1
+    nodeCompleted: 0
     comment: 
-    showActions: 0
-    showEnterExit: 0
     condition: {fileID: 0}
     Animator: {fileID: 0}
     parameter: 
@@ -229,23 +122,314 @@ MonoBehaviour:
     AnimatorActivatorBoolValue: 0
     AnimatorActivatorIntValue: 0
     AnimatorActivatorFloatValue: 0
+    animationLayer: 0
     delay: 0
     randomMoveArea: 
     randomSet: 0
     portalTargetNodeID: 
     destinationTarget: {fileID: 0}
     destinationTargetName: p0
+  - Graph: {fileID: 11400000}
+    ID: 2J2
+    WindowRect:
+      serializedVersion: 2
+      x: 1188
+      y: 163
+      width: 200
+      height: 200
+    WindowTitle: Animator Handler
+    nodeColor:
+      serializedVersion: 2
+      rgba: 4278255360
+    savedNodeColor:
+      serializedVersion: 2
+      rgba: 4278255360
+    collapse: 0
+    normalHeight: 200
+    drawNode: {fileID: 11400000, guid: f088124990a2e4d43aef7d00f588636d, type: 2}
+    previousCollapse: 0
+    transitions:
+    - ID: T391D
+      Color: {r: 1, g: 0, b: 1, a: 1}
+      disabled: 0
+      startPlacement: 6
+      endPlacement: 7
+      clicked: 0
+      Value: 
+    depencies:
+    - ID: T151A
+      Color: {r: 1, g: 0, b: 1, a: 1}
+      disabled: 0
+      startPlacement: 6
+      endPlacement: 7
+      clicked: 0
+      Value: 
+    transitionsIdsToRemove: []
+    savedWindowRect:
+      serializedVersion: 2
+      x: 1069
+      y: 202
+      width: 200
+      height: 200
+    nodeCompleted: 0
+    comment: 
+    condition: {fileID: 0}
+    Animator: {fileID: 0}
+    parameter: speed
+    AnimatorActivatorType: 1
+    AnimatorActivatorBoolValue: 0
+    AnimatorActivatorIntValue: 0
+    AnimatorActivatorFloatValue: 0
+    animationLayer: 0
+    delay: 0
+    randomMoveArea: 
+    randomSet: 0
+    portalTargetNodeID: 
+    destinationTarget: {fileID: 0}
+    destinationTargetName: 
+  - Graph: {fileID: 11400000}
+    ID: 35H3
+    WindowRect:
+      serializedVersion: 2
+      x: 1255
+      y: 487
+      width: 200
+      height: 150
+    WindowTitle: Delay
+    nodeColor:
+      serializedVersion: 2
+      rgba: 4278255360
+    savedNodeColor:
+      serializedVersion: 2
+      rgba: 4278255360
+    collapse: 0
+    normalHeight: 150
+    drawNode: {fileID: 11400000, guid: cc7cd4f73d06ed2499c9639d1e439af3, type: 2}
+    previousCollapse: 0
+    transitions:
+    - ID: T261A
+      Color: {r: 1, g: 0, b: 1, a: 1}
+      disabled: 0
+      startPlacement: 6
+      endPlacement: 7
+      clicked: 0
+      Value: 
+    depencies:
+    - ID: T391D
+      Color: {r: 1, g: 0, b: 1, a: 1}
+      disabled: 0
+      startPlacement: 6
+      endPlacement: 7
+      clicked: 0
+      Value: 
+    transitionsIdsToRemove: []
+    savedWindowRect:
+      serializedVersion: 2
+      x: 898
+      y: 418
+      width: 200
+      height: 150
+    nodeCompleted: 0
+    comment: 
+    condition: {fileID: 0}
+    Animator: {fileID: 0}
+    parameter: 
+    AnimatorActivatorType: 0
+    AnimatorActivatorBoolValue: 0
+    AnimatorActivatorIntValue: 0
+    AnimatorActivatorFloatValue: 0
+    animationLayer: 0
+    delay: 5
+    randomMoveArea: 
+    randomSet: 0
+    portalTargetNodeID: 
+    destinationTarget: {fileID: 0}
+    destinationTargetName: 
+  - Graph: {fileID: 11400000}
+    ID: 3T4
+    WindowRect:
+      serializedVersion: 2
+      x: 843
+      y: 531
+      width: 200
+      height: 200
+    WindowTitle: Animator Handler
+    nodeColor:
+      serializedVersion: 2
+      rgba: 4278255360
+    savedNodeColor:
+      serializedVersion: 2
+      rgba: 4278255360
+    collapse: 0
+    normalHeight: 200
+    drawNode: {fileID: 11400000, guid: f088124990a2e4d43aef7d00f588636d, type: 2}
+    previousCollapse: 0
+    transitions:
+    - ID: T471S
+      Color: {r: 1, g: 0, b: 1, a: 1}
+      disabled: 0
+      startPlacement: 6
+      endPlacement: 7
+      clicked: 0
+      Value: 
+    depencies:
+    - ID: T261A
+      Color: {r: 1, g: 0, b: 1, a: 1}
+      disabled: 0
+      startPlacement: 6
+      endPlacement: 7
+      clicked: 0
+      Value: 
+    transitionsIdsToRemove: []
+    savedWindowRect:
+      serializedVersion: 2
+      x: 733
+      y: 667
+      width: 200
+      height: 200
+    nodeCompleted: 0
+    comment: 
+    condition: {fileID: 0}
+    Animator: {fileID: 0}
+    parameter: speed
+    AnimatorActivatorType: 1
+    AnimatorActivatorBoolValue: 0
+    AnimatorActivatorIntValue: 0
+    AnimatorActivatorFloatValue: 1
+    animationLayer: 0
+    delay: 0
+    randomMoveArea: 
+    randomSet: 0
+    portalTargetNodeID: 
+    destinationTarget: {fileID: 0}
+    destinationTargetName: 
+  - Graph: {fileID: 11400000}
+    ID: 40C5
+    WindowRect:
+      serializedVersion: 2
+      x: 384
+      y: 663
+      width: 200
+      height: 120
+    WindowTitle: Set Destination
+    nodeColor:
+      serializedVersion: 2
+      rgba: 4278255360
+    savedNodeColor:
+      serializedVersion: 2
+      rgba: 4278255360
+    collapse: 0
+    normalHeight: 120
+    drawNode: {fileID: 11400000, guid: ef10c60c9fb367c4299587adddc3e56b, type: 2}
+    previousCollapse: 0
+    transitions:
+    - ID: T81D
+      Color: {r: 1, g: 0, b: 1, a: 1}
+      disabled: 0
+      startPlacement: 6
+      endPlacement: 7
+      clicked: 0
+      Value: 
+    depencies:
+    - ID: T471S
+      Color: {r: 1, g: 0, b: 1, a: 1}
+      disabled: 0
+      startPlacement: 6
+      endPlacement: 7
+      clicked: 0
+      Value: 
+    transitionsIdsToRemove: []
+    savedWindowRect:
+      serializedVersion: 2
+      x: 464
+      y: 573
+      width: 200
+      height: 120
+    nodeCompleted: 0
+    comment: 
+    condition: {fileID: 0}
+    Animator: {fileID: 0}
+    parameter: 
+    AnimatorActivatorType: 0
+    AnimatorActivatorBoolValue: 0
+    AnimatorActivatorIntValue: 0
+    AnimatorActivatorFloatValue: 0
+    animationLayer: 0
+    delay: 0
+    randomMoveArea: 
+    randomSet: 0
+    portalTargetNodeID: 
+    destinationTarget: {fileID: 0}
+    destinationTargetName: r0
+  - Graph: {fileID: 11400000}
+    ID: 3H6
+    WindowRect:
+      serializedVersion: 2
+      x: 222
+      y: 440
+      width: 200
+      height: 150
+    WindowTitle: Delay
+    nodeColor:
+      serializedVersion: 2
+      rgba: 4278255360
+    savedNodeColor:
+      serializedVersion: 2
+      rgba: 4278255360
+    collapse: 0
+    normalHeight: 150
+    drawNode: {fileID: 11400000, guid: cc7cd4f73d06ed2499c9639d1e439af3, type: 2}
+    previousCollapse: 0
+    transitions:
+    - ID: T111A
+      Color: {r: 1, g: 0, b: 1, a: 1}
+      disabled: 0
+      startPlacement: 6
+      endPlacement: 7
+      clicked: 0
+      Value: 
+    depencies:
+    - ID: T81D
+      Color: {r: 1, g: 0, b: 1, a: 1}
+      disabled: 0
+      startPlacement: 6
+      endPlacement: 7
+      clicked: 0
+      Value: 
+    transitionsIdsToRemove: []
+    savedWindowRect:
+      serializedVersion: 2
+      x: 366
+      y: 447
+      width: 200
+      height: 150
+    nodeCompleted: 0
+    comment: 
+    condition: {fileID: 0}
+    Animator: {fileID: 0}
+    parameter: 
+    AnimatorActivatorType: 0
+    AnimatorActivatorBoolValue: 0
+    AnimatorActivatorIntValue: 0
+    AnimatorActivatorFloatValue: 0
+    animationLayer: 0
+    delay: 3
+    randomMoveArea: 
+    randomSet: 0
+    portalTargetNodeID: 
+    destinationTarget: {fileID: 0}
+    destinationTargetName: 
   removeNodesIDs: []
   selectionZones: []
   character: {fileID: 0}
   LiveCycle:
     currentNode:
       Graph: {fileID: 11400000}
-      ID: 50T3
+      ID: 40C5
       WindowRect:
         serializedVersion: 2
-        x: 1253
-        y: 190
+        x: 384
+        y: 663
         width: 200
         height: 120
       WindowTitle: Set Destination
@@ -254,31 +438,36 @@ MonoBehaviour:
         rgba: 4278255360
       savedNodeColor:
         serializedVersion: 2
-        rgba: 4286545791
+        rgba: 4278255360
       collapse: 0
       normalHeight: 120
       drawNode: {fileID: 11400000, guid: ef10c60c9fb367c4299587adddc3e56b, type: 2}
       previousCollapse: 0
-      transitions: []
-      depencies:
-      - ID: T562S
-        Color: {r: 0, g: 0, b: 1, a: 1}
+      transitions:
+      - ID: T81D
+        Color: {r: 1, g: 0, b: 1, a: 1}
         disabled: 0
-        startPlacement: 1
+        startPlacement: 6
         endPlacement: 7
         clicked: 0
-        Value: false
+        Value: 
+      depencies:
+      - ID: T471S
+        Color: {r: 1, g: 0, b: 1, a: 1}
+        disabled: 0
+        startPlacement: 6
+        endPlacement: 7
+        clicked: 0
+        Value: 
       transitionsIdsToRemove: []
       savedWindowRect:
         serializedVersion: 2
-        x: 1253
-        y: 190
+        x: 464
+        y: 573
         width: 200
         height: 120
-      nodeCompleted: 1
+      nodeCompleted: 0
       comment: 
-      showActions: 0
-      showEnterExit: 0
       condition: {fileID: 0}
       Animator: {fileID: 0}
       parameter: 
@@ -286,9 +475,10 @@ MonoBehaviour:
       AnimatorActivatorBoolValue: 0
       AnimatorActivatorIntValue: 0
       AnimatorActivatorFloatValue: 0
+      animationLayer: 0
       delay: 0
       randomMoveArea: 
       randomSet: 0
       portalTargetNodeID: 
       destinationTarget: {fileID: 0}
-      destinationTargetName: p0
+      destinationTargetName: r0
