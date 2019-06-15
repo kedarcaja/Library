@@ -63,6 +63,7 @@ namespace BehaviourTreeEditor
 					b.Graph.character.Animator.SetInteger(b.parameter,b.AnimatorActivatorIntValue);
 					break;
 			}
+            b.Graph.character.Animator.SetLayerWeight(b.animationLayer, 1);
             b.nodeCompleted = true;
 		}
 	}
