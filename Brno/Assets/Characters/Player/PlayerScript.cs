@@ -12,6 +12,12 @@ public class PlayerScript : CharacterScript
         agent.SetDestination(moveTarget.position);
         base.Update();
 
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            agent.speed = 5;
+        }
+        else
+            agent.speed = 2.2f;
     }
     
  
