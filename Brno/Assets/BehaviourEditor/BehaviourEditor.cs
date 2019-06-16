@@ -47,7 +47,7 @@ namespace BehaviourTreeEditor
 #endregion
         public enum UserActions
         {
-            deleteNode, commentNode, AnimatorHandleNode, makeTransition, conditionNode, SetDestinationNode, delayNode, portalNode, randomMoveNode
+            deleteNode, commentNode, AnimatorHandleNode, makeTransition, conditionNode, SetDestinationNode, delayNode, portalNode, randomMoveNode,animatorSwapNode
         }
         [MenuItem("Behaviour Editor/Editor")]
         static void ShowEditor()
@@ -438,7 +438,8 @@ namespace BehaviourTreeEditor
         {
             GenericMenu menu = new GenericMenu();
             AddNewItemToMenu(menu, "Add Comment", UserActions.commentNode);
-            AddNewItemToMenu(menu, "Add AnimatorHandler", UserActions.AnimatorHandleNode);
+            AddNewItemToMenu(menu, "Animator/Add AnimatorHandler", UserActions.AnimatorHandleNode);
+            AddNewItemToMenu(menu, "Animator/Add Animator Swap", UserActions.animatorSwapNode);
             AddNewItemToMenu(menu, "Add Condition", UserActions.conditionNode);
             AddNewItemToMenu(menu, "Add Set Destination", UserActions.SetDestinationNode);
             AddNewItemToMenu(menu, "Add Delay", UserActions.delayNode);
@@ -499,6 +500,9 @@ namespace BehaviourTreeEditor
 
                 case UserActions.randomMoveNode:
                     currentGraph.AddNode(settings.RandomMoveNode, mousePosition.x, mousePosition.y, 200, 150, "Random Move");
+                    break;
+                case UserActions.animatorSwapNode:
+                    currentGraph.AddNode(settings.AnimatorSwapNode, mousePosition.x, mousePosition.y, 200, 150, "Animator Swap");
                     break;
             }
             EditorUtility.SetDirty(currentGraph);

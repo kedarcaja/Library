@@ -15,45 +15,25 @@ public class CharacterScript : MonoBehaviour
 
     public float delete = 10;
 
-    protected Animator anim;
     protected NavMeshAgent agent;
+    public NavMeshAgent Agent { get => agent; }
     protected Rigidbody rigid;
-    [SerializeField]
-    private BehaviourGraph Graph;
+
+    protected Animator anim;
 
     public Animator Animator { get => anim; }
 
-    private void Awake()
+    protected virtual void Awake()
     {
-        if (Graph.LiveCycle == null)
-        {
-            Graph.LiveCycle = new LiveCycle();
-        }
-        Graph.LiveCycle.graph = Graph;
-        Graph.LiveCycle.Init();
-        Graph.character = this;
         anim = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
         rigid = GetComponent<Rigidbody>();
     }
-    public void SetTarget(Transform target)
-    {
-        SetDestination(target.position);
-    }
-    public void SetDestination(Vector3 dest)
-    {
-        agent.SetDestination(dest);
-    }
 
-    private void Update()
+
+    protected virtual void Update()
     {
-      //  anim.SetFloat("speed", agent.velocity.magnitude);
-
-        if (Graph != null)
-        {
-            Graph.LiveCycle.Tick();
-        }
-
+        anim.SetFloat("speed", agent.velocity.magnitude);
     }
     public bool AgentReachedTarget()
     {
@@ -64,21 +44,5 @@ public class CharacterScript : MonoBehaviour
     {
         return delete > 0;
     }
-    public Vector3 GetRandomMoveArea(RandomMoveArea area)
-    {
-        if(AgentReachedTarget())
-        {
-            Vector3 randomDirection = UnityEngine.Random.insideUnitSphere * area.radius;
-            randomDirection += area.transform.position;
-            NavMeshHit hit;
-            NavMesh.SamplePosition(randomDirection, out hit, area.radius, 1);
-            Vector3 finalPosition = hit.position;
-            return finalPosition;
-        }
-        return agent.destination;
-    }
-    public void RandomMove(RandomMoveArea area)
-    {
-        SetDestination(GetRandomMoveArea(area));
-    }
+
 }

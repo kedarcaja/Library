@@ -19,6 +19,7 @@ namespace BehaviourTreeEditor
 		public RandomMoveNode RandomMoveNode;
 		public DelayNode DelayNode;
         public PortalNode PortalNode;
+        public AnimatorSwapNode AnimatorSwapNode;
 
     }
 }

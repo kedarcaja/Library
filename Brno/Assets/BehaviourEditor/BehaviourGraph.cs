@@ -12,7 +12,7 @@ namespace BehaviourTreeEditor
         public List<BaseNode> nodes = new List<BaseNode>();
         public List<string> removeNodesIDs = new List<string>();
         public List<SelectionZone> selectionZones = new List<SelectionZone>();
-        public CharacterScript character;
+        public EntityScript character;
         public LiveCycle LiveCycle;
 
 

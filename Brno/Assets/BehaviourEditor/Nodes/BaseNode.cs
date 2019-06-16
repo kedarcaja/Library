@@ -36,7 +36,7 @@ namespace BehaviourTreeEditor
         #region Comment node Variables
         public string comment = "";
         #endregion
-       
+
         #region Condition node Variables
         public Condition condition;
         #endregion
@@ -48,6 +48,10 @@ namespace BehaviourTreeEditor
         public int AnimatorActivatorIntValue;
         public float AnimatorActivatorFloatValue;
         public int animationLayer = 0;
+
+        #region Animator swap nodes Variables
+        public RuntimeAnimatorController animatorController;
+        #endregion
         #endregion
         #region Timing nodes Variables
         public _Timer timer;
@@ -105,9 +109,11 @@ namespace BehaviourTreeEditor
 
             EditorGUI.DrawRect(new Rect(0, 17, WindowRect.width, WindowRect.height - 17), nodeColor);
             EditorGUILayout.LabelField("Node Color: ", GColor.White);
-         if( this == BehaviourEditor.currentGraph.LiveCycle.currentNode)
+            if (this == BehaviourEditor.currentGraph.LiveCycle.currentNode)
             {
-                savedNodeColor  = EditorGUILayout.ColorField(nodeColor);
+                savedNodeColor = EditorGUILayout.ColorField(nodeColor);
+
+
             }
             else
             {
