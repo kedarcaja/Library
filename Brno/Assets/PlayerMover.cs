@@ -4,35 +4,25 @@ using UnityEngine;
 
 public class PlayerMover : MonoBehaviour
 {
-    [SerializeField]
-    private float distanceFromPlayer;
-    private Rigidbody rb;
-    Vector3 dir = Vector3.zero;
+	public float turningSpeed = 60;
+	private float distanceFromPlayer = 2;
 
+	
+	private void Update()
+	{
+		if(PlayerInRange())
+		Move();	
+	}
+	private void Move()
+	{
+		float horizontal = Input.GetAxis("Horizontal") * turningSpeed * Time.deltaTime;
+		transform.Rotate(0, horizontal, 0);
+		float vertical = Input.GetAxis("Vertical") * FindObjectOfType<PlayerScript>().Agent.speed * Time.deltaTime;
+		transform.Translate(0, 0, vertical);
+	}
 
-    private void Awake()
-    {
-        rb = GetComponent<Rigidbody>();
-    }
-    public void Move()
-    {
-        rb.velocity = dir * FindObjectOfType<PlayerScript>().Agent.speed;
-    }
-    public void GetInput()
-    {
-        dir = Vector3.zero;
-        if (Input.GetKey(KeyCode.W)) { dir = Vector3.forward; }
-        if (Input.GetKey(KeyCode.S)) { dir = -Vector3.forward; }
-        if (Input.GetKey(KeyCode.A)) { dir = Vector3.left; }
-        if (Input.GetKey(KeyCode.D)) { dir = Vector3.right; }
-    }
-    private void Update()
-    {
-        GetInput();
-    }
-    private void FixedUpdate()
-    {
-        if(distanceFromPlayer>Vector3.Distance(transform.position,FindObjectOfType<PlayerScript>().transform.position))
-        Move();
-    }
+	private bool PlayerInRange()
+	{
+		return distanceFromPlayer > Vector3.Distance(transform.position, PlayerScript.Instance.transform.position);
+	}
 }

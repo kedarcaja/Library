@@ -7,7 +7,13 @@ public class PlayerScript : CharacterScript
 {
     [SerializeField]
     private Transform moveTarget;
-    protected override void Update()
+	public static PlayerScript Instance;
+	protected override void Awake()
+	{
+		Instance = FindObjectOfType<PlayerScript>();
+			base.Awake();
+	}
+	protected override void Update()
     {
         agent.SetDestination(moveTarget.position);
         base.Update();
