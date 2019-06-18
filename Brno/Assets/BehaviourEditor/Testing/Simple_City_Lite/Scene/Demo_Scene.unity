@@ -365,6 +365,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   delete: 10
   curSpeed: 0
+  rotateSpeed: 0
 --- !u!54 &389616018
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2738,6 +2739,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   delete: 10
   curSpeed: 0
+  rotateSpeed: 0.09
 --- !u!195 &1603182171
 NavMeshAgent:
   m_ObjectHideFlags: 0
