@@ -6,17 +6,13 @@ using UnityEngine.AI;
 
 public class PlayerScript : CharacterScript
 {
-	private Vector3 previousPosition, moveVector;
-	public float curSpeed;
 	public float rotateSpeed;
 	private float magnditude = 0;
 	private const float maxMagnitude = 1;
 
 	Vector3 desiredDirection;
 
-	private void Start()
-	{
-	}
+	
 	protected override void Update()
 	{
 
@@ -36,8 +32,8 @@ public class PlayerScript : CharacterScript
 
 
 
-		moveVector.x = Input.GetAxis("Horizontal");
-		moveVector.z = Input.GetAxis("Vertical");
+		float inputX = Input.GetAxis("Horizontal");
+		float inputZ = Input.GetAxis("Vertical");
 
 		Vector3 forward = Camera.main.transform.forward;
 		Vector3 right = Camera.main.transform.right;
@@ -45,15 +41,16 @@ public class PlayerScript : CharacterScript
 		right.y = 0;
 		forward.Normalize();
 		right.Normalize();
+		Vector3 v = new Vector3(inputX, inputZ);
 
-		magnditude = moveVector.sqrMagnitude < maxMagnitude ? moveVector.sqrMagnitude : maxMagnitude;
+		magnditude = v.sqrMagnitude < maxMagnitude ? v.sqrMagnitude : maxMagnitude;
 
-		desiredDirection = moveVector.z * forward + moveVector.x * right;
+		desiredDirection = inputZ * forward + inputX * right;
 
-
+		if(magnditude > 0.3f)
 		agent.Move(desiredDirection*agent.speed * Time.deltaTime);
 
-		if (moveVector != Vector3.zero)
+		if (v != Vector3.zero)
 		{
 			transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(desiredDirection), rotateSpeed);
 
