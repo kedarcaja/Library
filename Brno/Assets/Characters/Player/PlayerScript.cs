@@ -47,7 +47,7 @@ public class PlayerScript : CharacterScript
 
 		desiredDirection = inputZ * forward + inputX * right;
 
-		if(magnditude > 0.3f)
+		if(magnditude > 0.1f)
 		agent.Move(desiredDirection*agent.speed * Time.deltaTime);
 
 		if (v != Vector3.zero)

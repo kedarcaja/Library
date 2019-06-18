@@ -887,9 +887,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cameraMoveSpeed: 120
   target: {fileID: 1615515487}
-  clampAngel: 60
-  InputSensitivityX: 150
-  InputSensitivityY: 150
+  clampAngel: 40
+  InputSensitivityX: 100
+  InputSensitivityY: 100
 --- !u!4 &803907192
 Transform:
   m_ObjectHideFlags: 0
