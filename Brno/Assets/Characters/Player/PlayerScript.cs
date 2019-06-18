@@ -5,28 +5,34 @@ using UnityEngine.AI;
 
 public class PlayerScript : CharacterScript
 {
-    [SerializeField]
-    private Transform moveTarget;
-	public static PlayerScript Instance;
-	protected override void Awake()
-	{
-		Instance = FindObjectOfType<PlayerScript>();
-			base.Awake();
-	}
+	private Vector3 previousPosition;
+	public float curSpeed;
+	
+
 	protected override void Update()
-    {
-        agent.SetDestination(moveTarget.position);
-        base.Update();
+	{
 
-        if (Input.GetKey(KeyCode.LeftShift))
-        {
-            agent.speed = 5;
-        }
-        else
-            agent.speed = 2.2f;
-    }
-    
- 
+		anim.SetFloat("speed",GetAgentVelocityManditude());
 
+
+		if (Input.GetKey(KeyCode.LeftShift))
+		{
+			agent.speed = 5;
+		}
+		else
+		{
+			agent.speed = 2.25f;
+		}
+	}
+
+
+
+	private float GetAgentVelocityManditude()
+	{
+		Vector3 curMove = transform.position - previousPosition;
+		curSpeed = curMove.magnitude / Time.deltaTime;
+		previousPosition = transform.position;
+		return curSpeed;
+	}
 }
 

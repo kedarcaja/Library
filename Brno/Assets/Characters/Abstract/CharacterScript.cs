@@ -8,7 +8,6 @@ using UnityEngine.Events;
 using BehaviourTreeEditor;
 
 [RequireComponent(typeof(Rigidbody))]
-[RequireComponent(typeof(NavMeshAgent))]
 [RequireComponent(typeof(Animator))]
 public class CharacterScript : MonoBehaviour
 {
@@ -33,7 +32,7 @@ public class CharacterScript : MonoBehaviour
 
     protected virtual void Update()
     {
-        anim.SetFloat("speed", agent.velocity.magnitude);
+      //  anim.SetFloat("speed", agent.velocity.magnitude);
     }
     public bool AgentReachedTarget()
     {
