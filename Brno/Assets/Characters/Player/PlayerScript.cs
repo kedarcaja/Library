@@ -7,27 +7,29 @@ using UnityEngine.AI;
 public class PlayerScript : CharacterScript
 {
 	public float rotateSpeed;
-	private float magnditude = 0;
-	private const float maxMagnitude = 1;
 
 	Vector3 desiredDirection;
 
-	
+	private float maxSpeed = 5;
+	private float minSpeed = 2.5f;
 	protected override void Update()
 	{
 
+		anim.SetFloat("magnitudeSpeed", agent.velocity.magnitude, 0.0f, Time.deltaTime);
 
 		if (Input.GetKey(KeyCode.LeftShift))
 		{
-			agent.speed = 5f;
-			anim.SetFloat("magnitudeSpeed", magnditude, 0.0f, Time.deltaTime);
+			agent.speed = Mathf.Lerp(agent.speed, maxSpeed, Time.deltaTime);
 
 
 		}
 		else
 		{
-			agent.speed = 2.5f;
-			anim.SetFloat("magnitudeSpeed", magnditude / 2, 0.0f, Time.deltaTime);
+			if (agent.speed > minSpeed && agent.velocity != Vector3.zero)
+			{
+			agent.speed = 	Mathf.Lerp(agent.speed, minSpeed, Time.deltaTime);
+			}
+
 		}
 
 
@@ -43,12 +45,10 @@ public class PlayerScript : CharacterScript
 		right.Normalize();
 		Vector3 v = new Vector3(inputX, inputZ);
 
-		magnditude = v.sqrMagnitude < maxMagnitude ? v.sqrMagnitude : maxMagnitude;
 
 		desiredDirection = inputZ * forward + inputX * right;
 
-		if(magnditude > 0.1f)
-		agent.Move(desiredDirection*agent.speed * Time.deltaTime);
+		agent.velocity = desiredDirection * agent.speed; ;
 
 		if (v != Vector3.zero)
 		{
