@@ -12,16 +12,14 @@ using BehaviourTreeEditor;
 public class CharacterScript : MonoBehaviour
 {
 
-    public float delete = 10;
 
     protected NavMeshAgent agent;
     public NavMeshAgent Agent { get => agent; }
     protected Rigidbody rigid;
 
     protected Animator anim;
-
     public Animator Animator { get => anim; }
-
+	public bool IsRunning = false;
     protected virtual void Awake()
     {
         anim = GetComponent<Animator>();
@@ -32,16 +30,14 @@ public class CharacterScript : MonoBehaviour
 
     protected virtual void Update()
     {
-      //  anim.SetFloat("speed", agent.velocity.magnitude);
+        anim.SetFloat("magnitudeSpeed", agent.velocity.magnitude);
+
     }
     public bool AgentReachedTarget()
     {
         return !agent.pathPending && agent.remainingDistance <= agent.stoppingDistance && (!agent.hasPath || agent.velocity.sqrMagnitude == 0f);
     }
 
-    public bool Delete()
-    {
-        return delete > 0;
-    }
+   
 
 }

@@ -363,8 +363,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5eaa9da34e8ceb4f9333dc52f8c686c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  delete: 10
+  IsRunning: 0
   rotateSpeed: 0
+  maxSpeed: 5
+  minSpeed: 2.5
+  animationCrossSpeed: 1
 --- !u!54 &389616018
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2736,8 +2739,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5eaa9da34e8ceb4f9333dc52f8c686c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  delete: 10
+  IsRunning: 0
   rotateSpeed: 0.06
+  maxSpeed: 5
+  minSpeed: 2.5
+  animationCrossSpeed: 2
 --- !u!195 &1603182171
 NavMeshAgent:
   m_ObjectHideFlags: 0
