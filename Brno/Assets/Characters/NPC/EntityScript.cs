@@ -8,6 +8,31 @@ public class EntityScript : CharacterScript
 {
     [SerializeField]
     protected BehaviourGraph Graph;
+ 
+    protected override void Awake()
+    {
+        if (Graph)
+        {
+            if (Graph.LiveCycle == null)
+            {
+                Graph.LiveCycle = new LiveCycle();
+            }
+            Graph.LiveCycle.graph = Graph;
+            Graph.LiveCycle.Init();
+            Graph.character = this;
+        }
+        base.Awake();
+
+    }
+    protected override void Update()
+    {
+        base.Update();
+        if (Graph != null)
+        {
+            Graph.LiveCycle.Tick();
+        }
+    }
+
     public Vector3 GetRandomMoveArea(RandomMoveArea area)
     {
         if (AgentReachedTarget())
@@ -25,34 +50,10 @@ public class EntityScript : CharacterScript
     {
         SetDestination(GetRandomMoveArea(area));
     }
-    public void SetTarget(Transform target)
+    
+    public bool PlayerIsClose(float closeRadius)
     {
-        SetDestination(target.position);
+        return ObjectIsClose(PlayerScript.Instance.transform, closeRadius);
     }
-    public void SetDestination(Vector3 dest)
-    {
-        agent.SetDestination(dest);
-    }
-    protected override void Awake()
-    {
-        if (Graph)
-        {
-            if (Graph.LiveCycle == null)
-            {
-                Graph.LiveCycle = new LiveCycle();
-            }
-            Graph.LiveCycle.graph = Graph;
-            Graph.LiveCycle.Init();
-            Graph.character = this;
-        }
-        base.Awake();
-    }
-    protected override void Update()
-    {
-        base.Update();
-        if (Graph != null)
-        {
-            Graph.LiveCycle.Tick();
-        }
-    }
+
 }

@@ -2,10 +2,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-public enum ECharacterClass {Warior,Archer }
-public enum EWork {Lamberjack,Miner,Baker,InnKeeper }
-public enum EMood {Angry,Scared,Sad,Happy }
-public  class Character : ScriptableObject
+public enum ECharacterClass { Warior, Archer }
+public enum EWork { Lamberjack, Miner, Baker, InnKeeper }
+public enum EMood { Angry, Scared, Sad, Happy }
+public class Character : ScriptableObject
 {
     [HideInInspector]
     public ECharacterClass CharacterClass;
@@ -18,10 +18,6 @@ public  class Character : ScriptableObject
     [HideInInspector]
     public Color Color;
     public int Level;
-    /// <summary>
-    /// returns colored name
-    /// </summary>
-    /// <returns></returns>
     public override string ToString()
     {
         return string.Format("<color=#" + ColorUtility.ToHtmlStringRGBA(Color) + ">" + name + "</color>");
@@ -30,21 +26,84 @@ public  class Character : ScriptableObject
 
 
     #region Stats
+    [Tooltip("CombatRadius")]
+    [SerializeField]
+    protected float combatRadius;
+    [Tooltip("")]
+    [SerializeField]
+    protected float interactionRadius;
+
     [SerializeField]
     protected float health, maxHealth, stamina, maxStamina, minDamage, maxDamage;
 
     protected float damage;
-   
+
+    [Tooltip("FireResistance")]
     [SerializeField]
     [Range(0, 100)]
     [Header("Staty [%]")]
-    protected float fireResistance, waterResistance, coldResistance, lightResistance, poisonResistance, magicResistance, influence, talking, luck;
+    protected float fireResistance;
+    [SerializeField]
+    [Range(0, 100)]
+    [Header("Staty [%]")]
+    [Tooltip("WaterResistance")]
+    protected float waterResistance;
+    [SerializeField]
+    [Range(0, 100)]
+    [Header("Staty [%]")]
+    [Tooltip("ColdResistance")]
+    protected float coldResistance;
+    [SerializeField]
+    [Range(0, 100)]
+    [Header("Staty [%]")]
+    [Tooltip("LightResistance")]
+    protected float lightResistance;
+    [SerializeField]
+    [Range(0, 100)]
+    [Header("Staty [%]")]
+    [Tooltip("PoisonResistance")]
+    protected float poisonResistance;
+    [SerializeField]
+    [Range(0, 100)]
+    [Header("Staty [%]")]
+    [Tooltip("MagicResistance")]
+    protected float magicResistance;
+    [SerializeField]
+    [Range(0, 100)]
+    [Header("Staty [%]")]
+    [Tooltip("Influence")]
+    protected float influence;
+    [SerializeField]
+    [Range(0, 100)]
+    [Header("Staty [%]")]
+    [Tooltip("Talking")]
+    protected float talking;
+    [SerializeField]
+    [Range(0, 100)]
+    [Header("Staty [%]")]
+    [Tooltip("Luck")]
+    protected float luck;
+
 
     [SerializeField]
-    protected int strength, agility, intellect, charisma, runSpeed;
-    //public TargetVector TargetVector = new TargetVector();
-    public List<CharacterScript> Followers = new List<CharacterScript>();
+    [Tooltip("Strength")]
+    protected int strength;
+    [SerializeField]
+    [Tooltip("Agility")]
+    protected int agility;
+    [SerializeField]
+    [Tooltip("Intellect")]
+    protected int intellect;
+    [SerializeField]
+    [Tooltip("Charisma")]
+    protected int charisma;
+    [SerializeField]
+    [Tooltip("RunSpeed")]
+    protected int runSpeed;
+
+    //  public List<CharacterScript> Followers = new List<CharacterScript>();
     public const int KEDAR = 5;
+    [Tooltip("WalkSpeed")]
     [SerializeField]
     protected int walkSpeed;
     public int WalkSpeed { get { return walkSpeed; } }
@@ -152,10 +211,13 @@ public  class Character : ScriptableObject
         get { return charisma; }
         set { charisma = value > 0 ? value : 0; }
     }
-   
+
     public int RunSpeed { get { return runSpeed; } set { runSpeed = value; } }
 
     public bool IsAlive { get { return health > 0; } }
+
+    public float CombatRadius { get => combatRadius > 0 ? combatRadius : 0; set => combatRadius = value; }
+    public float InteractionRadius { get => interactionRadius > 0 ? interactionRadius : 0; set => interactionRadius = value; }
     #endregion
 
 }

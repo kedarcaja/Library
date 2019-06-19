@@ -15,7 +15,16 @@ public class PlayerScript : CharacterScript
 	public float minSpeed = 2.5f;
 	[SerializeField]
 	private float animationCrossSpeed = 1;
-	protected override void Update()
+
+    public static PlayerScript Instance { get; private set; }
+
+    protected override void Awake()
+    {
+        base.Awake();
+        Instance = FindObjectOfType<PlayerScript>();
+
+    }
+    protected override void Update()
 	{
 
 

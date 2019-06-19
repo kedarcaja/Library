@@ -2,27 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-[CreateAssetMenu(menuName ="CharacterData/NPC",fileName ="NewNPCDATA")]
-public class NPC : Character
+[CreateAssetMenu(menuName = "CharacterData/NPC", fileName = "NewNPCDATA")]
+public class NPC : Character, IEnemyNPC
 {
 
-
-    #region Stats
+    [Tooltip("HearRadius")]
     [SerializeField]
-    private bool randomMove;
+    private float hearRadius;
+    [Tooltip("CanSwim")]
+    [SerializeField]
+    private bool canSwim;
+    [Tooltip("CanDive")]
+    [SerializeField]
+    private bool canDive;
 
-    public bool RandomMove
-    {
-        get
-        {
-            return randomMove;
-        }
-
-        set
-        {
-            randomMove = value;
-        }
-    }
-    #endregion
-
+    public float HearRadius { get => hearRadius > 0 ? hearRadius: 0; set => hearRadius = value; }
+    public bool CanSwim { get => canSwim; }
+    public bool CanDive { get => canDive; }
 }

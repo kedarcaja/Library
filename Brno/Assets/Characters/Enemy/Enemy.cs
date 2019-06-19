@@ -5,23 +5,20 @@ using System;
 using System.Linq;
 using UnityEngine.AI;
 using UnityEngine.Events;
-[CreateAssetMenu(menuName ="CharacterData/Enemy")]
-public class Enemy : Entity
+[CreateAssetMenu(menuName = "CharacterData/Enemy")]
+public class Enemy : Entity, IEnemyNPC
 {
+    [Tooltip("HearRadius")]
     [SerializeField]
-    private bool randomMove = false;
+    private float hearRadius;
+    [Tooltip("CanSwim")]
+    [SerializeField]
+    private bool canSwim;
+    [Tooltip("CanDive")]
+    [SerializeField]
+    private bool canDive;
 
-
-    public bool RandomMove
-    {
-        get
-        {
-            return randomMove;
-        }
-
-        set
-        {
-            randomMove = value;
-        }
-    }
+    public float HearRadius { get => hearRadius > 0 ? hearRadius : 0; set => hearRadius = value; }
+    public bool CanSwim { get => canSwim; }
+    public bool CanDive { get => canDive; }
 }
