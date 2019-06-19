@@ -8,5 +8,6 @@ public class EntityOpossum : MonoBehaviour
     public static void GetInfo(CharacterScript requierer)
     {
         
+
     }
 }

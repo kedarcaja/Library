@@ -2,181 +2,173 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 public enum EDays { Monday, Tuesday, Wednesday, Thurstday, Friday, Saturday, Sunday }
 public class WorldTime : MonoBehaviour
 {
-	private int minutes, seconds, hours;
-	private EDays days = EDays.Monday;
-	public event Action OnTimerStart, OnTimerEnd, OnTimerUpdate, OnDayChange, OnTimeSkip;
-	private const float delay = 1.5f;
-	public bool IsRunning = true;
-	public int Seconds { get; private set; }
-	public int Minutes { get; private set; }
-	public int Hours { get; private set; }
-	public EDays Day { get; private set; }
-	public TimeSpan GetTimeAsTimeSpan { get { return new TimeSpan(Hours, Minutes, Seconds); } }
-	public static WorldTime Instance;
-	private void Awake()
-	{
-		Instance = FindObjectOfType<WorldTime>();
-	}
-	private void Start()
-	{
-
-		Begin();
-
-	}
-	private void Update()
-	{
-	//	Debug.Log("Day: " + Day.ToString() + " Hours: " + Hours + " Minutes: " + Minutes + " Seconds: " + Seconds);
-		if (Input.GetKeyDown(KeyCode.T))
-		{
-			Skip(3600);
-		}
-		if (Input.GetKeyDown(KeyCode.P))
-		{
-			Stop();
-		}
-		if (Input.GetKeyDown(KeyCode.O))
-		{
-			Begin();
-		}
-	}
-
-	public void Begin()
-	{
-		IsRunning = true;
-		if (OnTimerStart != null)
-		{
-			OnTimerStart();
-		}
-
-		StartCoroutine("UpdateTime");
-
-	}
-
-	private IEnumerator UpdateTime()
-	{
-
-		while (IsRunning)
-		{
-			yield return new WaitForSecondsRealtime(delay);
-
-			seconds++;
-
-			if (OnTimerUpdate != null)
-			{
-				OnTimerUpdate();
-			}
-			if (seconds >= 60)
-			{
-
-				minutes += ((seconds - (seconds % 60)) / 60);
-
-				seconds = seconds % 60;
+    private int minutes, seconds, hours;
+    private EDays days = EDays.Monday;
+    public event Action OnTimerStart, OnTimerEnd, OnTimerUpdate, OnDayChange, OnTimeSkip;
+    private const float delay = 1.5f;
+    public bool IsRunning = true;
+    public int Seconds { get; private set; }
+    public int Minutes { get; private set; }
+    public int Hours { get; private set; }
+    public EDays Day { get; private set; }
+    public TimeSpan GetTimeAsTimeSpan { get { return new TimeSpan(Hours, Minutes, Seconds); } }
+    public static WorldTime Instance;
 
 
-			}
-			if (minutes >= 60)
-			{
-				hours += ((minutes - (minutes % 60)) / 60);
+    private void Awake()
+    {
+        Instance = FindObjectOfType<WorldTime>();
 
-				minutes = minutes % 60;
+    }
+    private void Start()
+    {
 
+        Begin();
 
-			}
-			if (hours == 24)
-			{
-				if ((int)days == 7)
-				{
-					days = 0;
-				}
-				else
-				{
-					days++;
-				}
-				hours = 0;
-				if (OnDayChange != null)
-				{
-					OnDayChange();
-				}
-			}
-			Seconds = seconds;
-			Minutes = minutes;
-			Hours = hours;
-			Day = days;
-			Restart();
-		}
-	}
-	public void Stop()
-	{
-		if (IsRunning)
-		{
-			if (OnTimerEnd != null)
-			{
-				OnTimerEnd();
-			}
-			IsRunning = false;
+    }
+    private void Update()
+    {
+        //Debug.Log("Day: " + Day.ToString() + " Hours: " + Hours + " Minutes: " + Minutes + " Seconds: " + Seconds);
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            SkipMinute();
+        }
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            Stop();
+        }
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+            Begin();
+        }
 
-			StopAllCoroutines();
+        if (minutes % 2 == 0 && minutes > 0)
+        {
 
-		}
-	}
-	private void Restart()
-	{
-		Stop();
-		Begin();
-	}
-	public void Skip(int seconds)
-	{
-		Stop();
+            FindObjectsOfType<Biom>().ToList().ForEach(f => { if (((minutes != f.lastCheck.Minutes) || (f.lastCheck.Minutes == minutes && hours != f.lastCheck.Hours))/*&&()*/) f.CheckWeather(); });
 
-		this.seconds += seconds;
-		if (OnTimeSkip != null)
-		{
-			OnTimeSkip();
-		}
-		Begin();
-	}
+            // tady pokračovat řešení kdy se má přepnout počasí
 
+        }
 
-}
-[Serializable]
-public struct GlobalTimeSpan
-{
-	[SerializeField]
-	private int seconds, minutes, hours;
+        Debug.Log("min: " + minutes);
 
-	public int Seconds
-	{
-		get
-		{
-			return seconds;
-		}
+    }
 
+    public void Begin()
+    {
+        IsRunning = true;
+        if (OnTimerStart != null)
+        {
+            OnTimerStart();
+        }
 
-	}
+        StartCoroutine("UpdateTime");
 
-	public int Minutes
-	{
-		get
-		{
-			return minutes;
-		}
+    }
+
+    private IEnumerator UpdateTime()
+    {
+
+        while (IsRunning)
+        {
+            yield return new WaitForSecondsRealtime(delay);
+
+            seconds++;
+
+            if (OnTimerUpdate != null)
+            {
+                OnTimerUpdate();
+            }
+            CheckConversion();
+            Seconds = seconds;
+            Minutes = minutes;
+            Hours = hours;
+            Day = days;
+            Restart();
+        }
+    }
+    public void CheckConversion()
+    {
+        if (seconds >= 60)
+        {
+
+            minutes += ((seconds - (seconds % 60)) / 60);
+
+            seconds = seconds % 60;
 
 
-	}
+        }
+        if (minutes >= 60)
+        {
+            hours += ((minutes - (minutes % 60)) / 60);
 
-	public int Hours
-	{
-		get
-		{
-			return hours;
-		}
+            minutes = minutes % 60;
 
 
-	}
-	public TimeSpan TimeSpan { get { return new TimeSpan(Hours, Minutes, Seconds); } }
+        }
+        if (hours == 24)
+        {
+            if ((int)days == 7)
+            {
+                days = 0;
+            }
+            else
+            {
+                days++;
+            }
+            hours = 0;
+            if (OnDayChange != null)
+            {
+                OnDayChange();
+            }
+        }
+    }
+    public void Stop()
+    {
+        if (IsRunning)
+        {
+            if (OnTimerEnd != null)
+            {
+                OnTimerEnd();
+            }
+            IsRunning = false;
+
+            StopAllCoroutines();
+
+        }
+    }
+    private void Restart()
+    {
+        Stop();
+        Begin();
+    }
+    public void SkipMinute()
+    {
+        Skip(60);
+    }
+    public void SkipHour()
+    {
+        Skip(3600);
+    }
+    public void Skip(int seconds)
+    {
+        Stop();
+
+        this.seconds += seconds;
+        CheckConversion();
+        if (OnTimeSkip != null)
+        {
+            OnTimeSkip();
+        }
+        Begin();
+    }
+
+
 }
 
 

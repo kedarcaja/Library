@@ -22,7 +22,6 @@ public class EntityScript : CharacterScript
             Graph.character = this;
         }
         base.Awake();
-
     }
     protected override void Update()
     {
@@ -51,9 +50,9 @@ public class EntityScript : CharacterScript
         SetDestination(GetRandomMoveArea(area));
     }
     
-    public bool PlayerIsClose(float closeRadius)
+    public bool PlayerIsClose()
     {
-        return ObjectIsClose(PlayerScript.Instance.transform, closeRadius);
+        return ObjectIsClose(PlayerScript.Instance.transform, characterData.InteractionRadius);
     }
 
 }
