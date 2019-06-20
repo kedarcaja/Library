@@ -21,7 +21,7 @@ namespace BehaviourTreeEditor
        
 		public Transition(BaseNode start, BaseNode end, EWindowCurvePlacement sPos, EWindowCurvePlacement ePos, Color col, bool disable,string val)
 		{
-            if (start.transitions.Exists(t => t.endNode == end)) return;
+            if (start.transitions.Exists(t => t.endNode == end)||start.drawNode.UnconectableNodes.Contains(end.drawNode)) return; // A cannot be connected ti B but B can be connected to A
 
 
 			DrawConnection(start, end, sPos, ePos, col, disable);

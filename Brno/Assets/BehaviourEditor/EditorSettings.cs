@@ -14,13 +14,14 @@ namespace BehaviourTreeEditor
         public CommentNode CommentNode;
      //   public StateNode StateNode;
         public ConditionNode ConditionNode;
+        public CheckAlwaysNode CheckAlwaysNode;
 		public AnimatorHandleNode AnimatorHandleNode;
 		public SetDestinationNode SetDestinationNode;
 		public RandomMoveNode RandomMoveNode;
 		public DelayNode DelayNode;
         public PortalNode PortalNode;
         public AnimatorSwapNode AnimatorSwapNode;
+        public StopNode StopNode;
 
-    
     }
 }

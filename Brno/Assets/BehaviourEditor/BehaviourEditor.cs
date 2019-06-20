@@ -47,7 +47,7 @@ namespace BehaviourTreeEditor
         #endregion
         public enum UserActions
         {
-            deleteNode, commentNode, AnimatorHandleNode, makeTransition, conditionNode, SetDestinationNode, delayNode, portalNode, randomMoveNode, animatorSwapNode
+            deleteNode, commentNode, AnimatorHandleNode, makeTransition, conditionNode, SetDestinationNode, delayNode, portalNode, randomMoveNode, animatorSwapNode, checkAlwaysNode,stopNode
         }
         [MenuItem("Behaviour Editor/Editor")]
         static void ShowEditor()
@@ -444,10 +444,12 @@ namespace BehaviourTreeEditor
             AddNewItemToMenu(menu, "Animator/Add AnimatorHandler", UserActions.AnimatorHandleNode);
             AddNewItemToMenu(menu, "Animator/Add Animator Swap", UserActions.animatorSwapNode);
             AddNewItemToMenu(menu, "Add Condition", UserActions.conditionNode);
+            AddNewItemToMenu(menu, "Add Check Always", UserActions.checkAlwaysNode);
             AddNewItemToMenu(menu, "Move/Add Set Destination", UserActions.SetDestinationNode);
             AddNewItemToMenu(menu, "Move/Add RandomMove", UserActions.randomMoveNode);
             AddNewItemToMenu(menu, "Add Delay", UserActions.delayNode);
             AddNewItemToMenu(menu, "Add Portal", UserActions.portalNode);
+            AddNewItemToMenu(menu, "Move/Add Stop", UserActions.stopNode);
 
 
             menu.ShowAsContext();
@@ -462,7 +464,7 @@ namespace BehaviourTreeEditor
         {
             GenericMenu menu = new GenericMenu();
             menu.AddItem(new GUIContent("Delete"), false, ContextCallback, UserActions.deleteNode);
-            if ((selectedNode.drawNode is ConditionNode) && selectedNode.transitions.Count < 2 || !(selectedNode.drawNode is ConditionNode))
+            if (((selectedNode.drawNode is ConditionNode) && selectedNode.transitions.Count < 2 || !(selectedNode.drawNode is ConditionNode))&&selectedNode.drawNode.EnableTransitions)
                 menu.AddItem(new GUIContent("Make Transition"), false, ContextCallback, UserActions.makeTransition);
             menu.ShowAsContext();
             e.Use();
@@ -482,6 +484,9 @@ namespace BehaviourTreeEditor
                 case UserActions.conditionNode:
                     currentGraph.AddNode(settings.ConditionNode, mousePosition.x, mousePosition.y, "Condition");
                     break;
+                case UserActions.checkAlwaysNode:
+                    currentGraph.AddNode(settings.CheckAlwaysNode, mousePosition.x, mousePosition.y, "Check Always");
+                    break;
 
                 case UserActions.SetDestinationNode:
                     currentGraph.AddNode(settings.SetDestinationNode, mousePosition.x, mousePosition.y, "Set Destination");
@@ -500,6 +505,9 @@ namespace BehaviourTreeEditor
 
                 case UserActions.portalNode:
                     currentGraph.AddNode(settings.PortalNode, mousePosition.x, mousePosition.y, "Portal");
+                    break;
+                case UserActions.stopNode:
+                    currentGraph.AddNode(settings.StopNode, mousePosition.x, mousePosition.y, "Stop Move");
                     break;
 
                 case UserActions.randomMoveNode:

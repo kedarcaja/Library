@@ -15,3 +15,6 @@ MonoBehaviour:
   Width: 200
   Height: 130
   NodeColor: {r: 1, g: 0.42745098, b: 0, a: 1}
+  unconectableNodes:
+  - {fileID: 11400000, guid: 4810b0d1e5d4688449b1f963aa8978f6, type: 2}
+  enableTransitions: 1

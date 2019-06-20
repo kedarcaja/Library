@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
@@ -12,15 +13,13 @@ namespace BehaviourTreeEditor
         [NonSerialized]
         public BehaviourGraph graph;
         public BaseNode currentNode;
-
-
-
         public BaseNode CurrentNode { get => currentNode; }
         public void Tick()
         {
+            CheckAlwaysConditions();
+        
+
             DecideForNextNode();
-
-
             if (currentNode != null)
             {
                 currentNode.nodeColor = Color.green;
@@ -41,9 +40,23 @@ namespace BehaviourTreeEditor
             }
 
         }
+        public void CheckAlwaysConditions()
+        {
+
+            foreach (BaseNode b in graph.nodes)
+            {
+                if (b.drawNode is CheckAlwaysNode)
+                {
+                    foreach (ECondition c in b.alwaysCheckConditions)
+                    {
+                        if (ConditionNode.IsChecked(c, graph.character)) currentNode = b;
+                    }
+                }
+            }
+        }
         public void Init()
         {
-            currentNode = graph.nodes[0];
+            currentNode = graph.nodes.First(f=>!(f.drawNode is CheckAlwaysNode));
         }
         public void DecideForNextNode()
         {
@@ -57,42 +70,9 @@ namespace BehaviourTreeEditor
             }
             if (currentNode.drawNode is ConditionNode)
             {
-				bool isChecked = false;
-				switch (currentNode.condition)
-				{
-					case ECondition.IsThunder:
-						isChecked = MainOpossum.GetWeather(currentNode.Graph.character) == EWeather.Thunder;
-						break;
-					case ECondition.IsSunnyDay:
-						isChecked = MainOpossum.GetWeather(currentNode.Graph.character) == EWeather.SunnyDay;
-
-						break;
-					case ECondition.IsAlive:
-
-                        isChecked =
-                            currentNode.Graph.character.CharacterData.IsAlive;
-
-						break;
-					case ECondition.IsTimeToGoToWork:
-
-						break;
-					case ECondition.IsDead:
-                        isChecked = currentNode.Graph.character.CharacterData.IsAlive == false;
-
-                        break;
-					case ECondition.IsNight:
-                        break;
-					case ECondition.IsMorning:
-						break;
-					case ECondition.IsPlayerClose:
-                        isChecked = currentNode.Graph.character.PlayerIsClose();
-						break;
-					case ECondition.ReachedDestination:
-                        isChecked = currentNode.Graph.character.AgentReachedTarget();
-                        break;
+				
 			
-				}
-                if(isChecked)
+                if(ConditionNode.IsChecked(currentNode.condition,graph.character))
 				{
                     if (currentNode.transitions.Exists(x => x.Value == "true"))
                     {
@@ -120,6 +100,10 @@ namespace BehaviourTreeEditor
                 BaseNode b = graph.nodes.Find(n => n.ID == currentNode.portalTargetNodeID);
                 currentNode = b != null ? b : currentNode;
                
+            }
+            if(currentNode.drawNode is CheckAlwaysNode)
+            {
+                currentNode = currentNode.transitions[0]?.endNode;
             }
 
         }

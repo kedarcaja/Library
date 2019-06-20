@@ -20,9 +20,11 @@ MonoBehaviour:
   otherGUIColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
   CommentNode: {fileID: 11400000, guid: 4810b0d1e5d4688449b1f963aa8978f6, type: 2}
   ConditionNode: {fileID: 11400000, guid: ff66ae395c499994fa8a190326c5f331, type: 2}
+  CheckAlwaysNode: {fileID: 11400000, guid: 5c5761bb2c325284ea0dee0ec1fd3f68, type: 2}
   AnimatorHandleNode: {fileID: 11400000, guid: f088124990a2e4d43aef7d00f588636d, type: 2}
   SetDestinationNode: {fileID: 11400000, guid: ef10c60c9fb367c4299587adddc3e56b, type: 2}
   RandomMoveNode: {fileID: 11400000, guid: 242641f3f5b3bac47a08b143745984e2, type: 2}
   DelayNode: {fileID: 11400000, guid: cc7cd4f73d06ed2499c9639d1e439af3, type: 2}
   PortalNode: {fileID: 11400000, guid: 884e6fb9c46eac74daeac798dbb89321, type: 2}
   AnimatorSwapNode: {fileID: 11400000, guid: 0a62f18c27d0eb349914b94edd22d596, type: 2}
+  StopNode: {fileID: 11400000, guid: cda925ea7b968c24b8a8d34859deb302, type: 2}
