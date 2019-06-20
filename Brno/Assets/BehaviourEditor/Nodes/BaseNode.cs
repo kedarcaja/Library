@@ -38,7 +38,7 @@ namespace BehaviourTreeEditor
         #endregion
 
         #region Condition node Variables
-        public Condition condition;
+        public ECondition condition;
         #endregion
         #region Animator nodes Variables
 

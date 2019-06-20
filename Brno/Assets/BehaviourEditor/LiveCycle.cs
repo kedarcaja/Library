@@ -57,9 +57,36 @@ namespace BehaviourTreeEditor
             }
             if (currentNode.drawNode is ConditionNode)
             {
+				bool isChecked = false;
+				switch (currentNode.condition)
+				{
+					case ECondition.IsThunder:
+						isChecked = MainOpossum.GetWeather(currentNode.Graph.character) == EWeather.Thunder;
+						break;
+					case ECondition.IsSunnyDay:
+						isChecked = MainOpossum.GetWeather(currentNode.Graph.character) == EWeather.SunnyDay;
 
-                if (currentNode.condition.IsChecked(graph.character))
-                {
+						break;
+					case ECondition.IsAlive:
+
+						isChecked = MainOpossum.GetWeather(currentNode.Graph.character) == EWeather.Thunder;
+
+						break;
+					case ECondition.IsTimeToGoToWork:
+						break;
+					case ECondition.IsDead:
+						break;
+					case ECondition.IsNight:
+						break;
+					case ECondition.IsMorning:
+						break;
+					case ECondition.IsPlayerClose:
+						break;
+					case ECondition.ReachedDestination:
+						break;
+			
+				}
+				{
                     if (currentNode.transitions.Exists(x => x.Value == "true"))
                     {
 

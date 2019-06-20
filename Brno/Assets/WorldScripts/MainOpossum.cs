@@ -17,15 +17,15 @@ public  class MainOpossum : MonoBehaviour
 		WorldTimeOpossum = FindObjectOfType<WorldTimeOpossum>();
 	}
 
-	public EWeather GetWeather(CharacterScript character)
+	public static  EWeather GetWeather(CharacterScript character)
 	{
 		return WeatherOpossum.GetWeatherInBiom(EntityOpossum.GetEntityBiom(character));
 	}
-	public TimeSpan GetTime()
+	public static TimeSpan GetTime()
 	{
 		return WorldTimeOpossum.GetTimeAsTimeSpan;
 	}
-	public EDays GetDay()
+	public static EDays GetDay()
 	{
 		return WorldTimeOpossum.Day;
 	}
