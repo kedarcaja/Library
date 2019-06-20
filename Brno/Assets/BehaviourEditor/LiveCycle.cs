@@ -69,23 +69,30 @@ namespace BehaviourTreeEditor
 						break;
 					case ECondition.IsAlive:
 
-						isChecked = MainOpossum.GetWeather(currentNode.Graph.character) == EWeather.Thunder;
+                        isChecked =
+                            currentNode.Graph.character.CharacterData.IsAlive;
 
 						break;
 					case ECondition.IsTimeToGoToWork:
+
 						break;
 					case ECondition.IsDead:
-						break;
+                        isChecked = currentNode.Graph.character.CharacterData.IsAlive == false;
+
+                        break;
 					case ECondition.IsNight:
-						break;
+                        break;
 					case ECondition.IsMorning:
 						break;
 					case ECondition.IsPlayerClose:
+                        isChecked = currentNode.Graph.character.PlayerIsClose();
 						break;
 					case ECondition.ReachedDestination:
-						break;
+                        isChecked = currentNode.Graph.character.AgentReachedTarget();
+                        break;
 			
 				}
+                if(isChecked)
 				{
                     if (currentNode.transitions.Exists(x => x.Value == "true"))
                     {

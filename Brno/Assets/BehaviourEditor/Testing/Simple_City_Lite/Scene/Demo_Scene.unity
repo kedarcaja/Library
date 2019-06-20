@@ -211,6 +211,8 @@ GameObject:
   m_Component:
   - component: {fileID: 97612369}
   - component: {fileID: 97612368}
+  - component: {fileID: 97612371}
+  - component: {fileID: 97612370}
   m_Layer: 0
   m_Name: WorldManager
   m_TagString: Untagged
@@ -245,6 +247,30 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &97612370
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 97612367}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ae4490968b98fc4abfd48e88bc06804, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &97612371
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 97612367}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b836c3550dd2f2349a6044d0d5e59632, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &114627472
 GameObject:
   m_ObjectHideFlags: 0
@@ -401,7 +427,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sunyProbability: 10
-  radius: 150
+  radius: 34.45
   gizmosColor: {r: 1, g: 0, b: 0, a: 1}
   OnWeatherChange:
     m_PersistentCalls:
@@ -521,8 +547,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsRunning: 0
-  characterData: {fileID: 0}
-  Graph: {fileID: 0}
+  characterData: {fileID: 11400000, guid: b9cce1199df4c8a45a3f2a6fe68652b6, type: 2}
+  Graph: {fileID: 11400000, guid: 3580ec70a41e8cc46803fe1ec0a39f07, type: 2}
 --- !u!195 &425516017
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -3068,7 +3094,7 @@ PrefabInstance:
     - target: {fileID: -927199367670048503, guid: 78851fd33a797de44be079be24bdb13c,
         type: 3}
       propertyPath: m_Name
-      value: Wizard (1)
+      value: Zombie
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 78851fd33a797de44be079be24bdb13c,
         type: 3}

@@ -74,13 +74,14 @@ namespace BehaviourTreeEditor
         {
             return "T" + DateTime.Now.Second.ToString() + transitions.Count.ToString() + end;
         }
-        public BaseNode(DrawNode draw, float x, float y, float width, float height, string title, string id)
+        public BaseNode(DrawNode draw, float x, float y,  string title, string id)
         {
             ID = id;
-            WindowRect = new Rect(x, y, width, height);
+            WindowRect = new Rect(x, y, draw.Width, draw.Height);
             WindowTitle = title;
-            normalHeight = height;
+            normalHeight = draw.Height;
             drawNode = draw;
+            nodeColor = draw.NodeColor;
         }
 
         public void AddTransitionsToRemove(string id)

@@ -21,5 +21,6 @@ namespace BehaviourTreeEditor
         public PortalNode PortalNode;
         public AnimatorSwapNode AnimatorSwapNode;
 
+    
     }
 }

@@ -13,7 +13,7 @@ namespace BehaviourTreeEditor
 #if UNITY_EDITOR
     public class BehaviourEditor : EditorWindow
     {
-#region Variables
+        #region Variables
         Vector3 mousePosition;
         static bool clickedOnWindow;
         public static BaseNode selectedNode;
@@ -23,7 +23,7 @@ namespace BehaviourTreeEditor
         Rect all = new Rect(0, 0, 10000, 10000); // window 
         bool showSettings = false;
         static Transition selectedTransition;
-#region Window Handle Variables
+        #region Window Handle Variables
         private const float kZoomMin = 0.3f;
         private const float kZoomMax = 1f;
         private readonly Rect _zoomArea = new Rect(0, 0, 10000, 10000);
@@ -34,34 +34,36 @@ namespace BehaviourTreeEditor
         public static GUIStyle style;
         private Vector2 offset;
         private Vector2 drag;
-#endregion
+        #endregion
 
-#region SelectionZone
+        #region SelectionZone
         bool creatingSelectionZone = false;
         Vector2 selectionBoxStartPos;
         Vector2 selectionBoxCurrentPos;
-#endregion
+        #endregion
 
         public static CharacterScript currentCharacter;
         //static State previousState;
-#endregion
+        #endregion
         public enum UserActions
         {
-            deleteNode, commentNode, AnimatorHandleNode, makeTransition, conditionNode, SetDestinationNode, delayNode, portalNode, randomMoveNode,animatorSwapNode
+            deleteNode, commentNode, AnimatorHandleNode, makeTransition, conditionNode, SetDestinationNode, delayNode, portalNode, randomMoveNode, animatorSwapNode
         }
         [MenuItem("Behaviour Editor/Editor")]
         static void ShowEditor()
         {
-            BehaviourEditor editor = EditorWindow.GetWindow<BehaviourEditor>();
+            BehaviourEditor editor = GetWindow<BehaviourEditor>();
             editor.minSize = new Vector2(800, 600);
         }
 
-#region Unity Methods
+        #region Unity Methods
         private void OnEnable()
         {
             settings = Resources.Load("Editor/Settings", typeof(EditorSettings)) as EditorSettings;
             style = settings.skin.GetStyle("window");
             titleContent.text = "BehaviourEditor";
+
+
         }
         private void OnGUI()
         {
@@ -75,7 +77,7 @@ namespace BehaviourTreeEditor
             DrawWindows();
 
             if (creatingSelectionZone)
-                GUI.Box(new Rect(selectionBoxStartPos.x, selectionBoxStartPos.y, selectionBoxCurrentPos.x - selectionBoxStartPos.x, selectionBoxCurrentPos.y - selectionBoxStartPos.y), "Title");
+                EditorGUI.DrawRect(new Rect(selectionBoxStartPos.x, selectionBoxStartPos.y, selectionBoxCurrentPos.x - selectionBoxStartPos.x, selectionBoxCurrentPos.y - selectionBoxStartPos.y), new Color(0.3f, 0.3f, 0.3f, 0.4f));
             if (e.isMouse) e.Use();
 
             EditorGUI.DrawRect(new Rect(mousePosition, Vector2.one), Color.red);
@@ -88,6 +90,19 @@ namespace BehaviourTreeEditor
                 DrawNodeCurve(null, selectedNode.WindowRect, new Rect(mousePosition.x, mousePosition.y, 20, 20), EWindowCurvePlacement.Center, EWindowCurvePlacement.Center, Color.black, false);
                 Repaint();
             }
+            if (currentGraph)
+            {
+
+                for (int i = 0; i < currentGraph.selectionZones.Count; i++)
+                {
+                    SelectionZone s = currentGraph.selectionZones[i];
+                    s.CheckSelectedNodes(currentGraph.nodes);
+                    if (s.IsEmpty())
+                    {
+                        currentGraph.selectionZones.Remove(s);
+                    }
+                }
+            }
         }
 
         private bool CharacterSelected()
@@ -99,8 +114,8 @@ namespace BehaviourTreeEditor
         {
             return Selection.activeTransform != null;
         }
-#endregion
-#region Window Handle Methods
+        #endregion
+        #region Window Handle Methods
         void HandlePanning(Event e)
         {
             Vector2 diff = e.mousePosition - scrollStartPos;
@@ -171,8 +186,8 @@ namespace BehaviourTreeEditor
             Handles.color = Color.white;
             Handles.EndGUI();
         }
-#endregion
-#region Input Handle Methods
+        #endregion
+        #region Input Handle Methods
         public void HandleHiearchySelection()
         {
             if (CharacterSelected())
@@ -323,8 +338,8 @@ namespace BehaviourTreeEditor
             }
         }
 
-#endregion
-#region Node Methods
+        #endregion
+        #region Node Methods
         public void DrawWindows()
         {
             if (currentGraph != null)
@@ -358,12 +373,10 @@ namespace BehaviourTreeEditor
                         {
                             n.nodeColor = Color.green;
                         }
-                       
+
                         Repaint();
                     }
-
                 }
-
 
                 EndWindows();
                 GUILayout.EndArea();
@@ -377,8 +390,6 @@ namespace BehaviourTreeEditor
                     }
                 }
             }
-
-
             Rect zone = new Rect(0, 0, 200, 100);
             EditorGUI.DrawRect(zone, settings.otherGUIColor);
             GUILayout.BeginArea(new Rect(zone.x + 2, zone.y + 2, zone.width, zone.height));
@@ -424,15 +435,7 @@ namespace BehaviourTreeEditor
             currentGraph?.nodes[id].DrawWindow();
             GUI.DragWindow();
 
-            for (int i = 0; i < currentGraph.selectionZones.Count; i++)
-            {
-                SelectionZone s = currentGraph.selectionZones[i];
-                s.CheckSelectedNodes(currentGraph.nodes);
-                if (s.IsEmpty())
-                {
-                    currentGraph.selectionZones.Remove(s);
-                }
-            }
+
         }
         void AddNewNode(Event e)
         {
@@ -441,10 +444,11 @@ namespace BehaviourTreeEditor
             AddNewItemToMenu(menu, "Animator/Add AnimatorHandler", UserActions.AnimatorHandleNode);
             AddNewItemToMenu(menu, "Animator/Add Animator Swap", UserActions.animatorSwapNode);
             AddNewItemToMenu(menu, "Add Condition", UserActions.conditionNode);
-            AddNewItemToMenu(menu, "Add Set Destination", UserActions.SetDestinationNode);
+            AddNewItemToMenu(menu, "Move/Add Set Destination", UserActions.SetDestinationNode);
+            AddNewItemToMenu(menu, "Move/Add RandomMove", UserActions.randomMoveNode);
             AddNewItemToMenu(menu, "Add Delay", UserActions.delayNode);
             AddNewItemToMenu(menu, "Add Portal", UserActions.portalNode);
-            AddNewItemToMenu(menu, "Add RandomMove", UserActions.randomMoveNode);
+
 
             menu.ShowAsContext();
             e.Use();
@@ -458,7 +462,7 @@ namespace BehaviourTreeEditor
         {
             GenericMenu menu = new GenericMenu();
             menu.AddItem(new GUIContent("Delete"), false, ContextCallback, UserActions.deleteNode);
-            if (selectedNode.condition != null && (selectedNode.drawNode is ConditionNode) && selectedNode.transitions.Count < 2 || !(selectedNode.drawNode is ConditionNode))
+            if ((selectedNode.drawNode is ConditionNode) && selectedNode.transitions.Count < 2 || !(selectedNode.drawNode is ConditionNode))
                 menu.AddItem(new GUIContent("Make Transition"), false, ContextCallback, UserActions.makeTransition);
             menu.ShowAsContext();
             e.Use();
@@ -476,40 +480,40 @@ namespace BehaviourTreeEditor
                     isMakingTransition = true;
                     break;
                 case UserActions.conditionNode:
-                    currentGraph.AddNode(settings.ConditionNode, mousePosition.x, mousePosition.y, 200, 200, "Condition");
+                    currentGraph.AddNode(settings.ConditionNode, mousePosition.x, mousePosition.y, "Condition");
                     break;
 
                 case UserActions.SetDestinationNode:
-                    currentGraph.AddNode(settings.SetDestinationNode, mousePosition.x, mousePosition.y, 200, 120, "Set Destination");
+                    currentGraph.AddNode(settings.SetDestinationNode, mousePosition.x, mousePosition.y, "Set Destination");
                     break;
-               
+
                 case UserActions.commentNode:
-                    currentGraph.AddNode(settings.CommentNode, mousePosition.x, mousePosition.y, 200, 200, "Comment");
+                    currentGraph.AddNode(settings.CommentNode, mousePosition.x, mousePosition.y, "Comment");
                     break;
                 case UserActions.AnimatorHandleNode:
-                    currentGraph.AddNode(settings.AnimatorHandleNode, mousePosition.x, mousePosition.y, 200, 200, "Animator Handler");
+                    currentGraph.AddNode(settings.AnimatorHandleNode, mousePosition.x, mousePosition.y, "Animator Handler");
                     break;
 
                 case UserActions.delayNode:
-                    currentGraph.AddNode(settings.DelayNode, mousePosition.x, mousePosition.y, 200, 150, "Delay");
+                    currentGraph.AddNode(settings.DelayNode, mousePosition.x, mousePosition.y, "Delay");
                     break;
 
                 case UserActions.portalNode:
-                    currentGraph.AddNode(settings.PortalNode, mousePosition.x, mousePosition.y, 200, 150, "Portal");
+                    currentGraph.AddNode(settings.PortalNode, mousePosition.x, mousePosition.y, "Portal");
                     break;
 
                 case UserActions.randomMoveNode:
-                    currentGraph.AddNode(settings.RandomMoveNode, mousePosition.x, mousePosition.y, 200, 150, "Random Move");
+                    currentGraph.AddNode(settings.RandomMoveNode, mousePosition.x, mousePosition.y, "Random Move");
                     break;
                 case UserActions.animatorSwapNode:
-                    currentGraph.AddNode(settings.AnimatorSwapNode, mousePosition.x, mousePosition.y, 200, 150, "Animator Swap");
+                    currentGraph.AddNode(settings.AnimatorSwapNode, mousePosition.x, mousePosition.y, "Animator Swap");
                     break;
             }
             EditorUtility.SetDirty(currentGraph);
 
         }
-#endregion
-#region Transition Methods
+        #endregion
+        #region Transition Methods
         public static void DrawTransitionClickPoint(Transition t, Vector3 start, Vector3 end)
         {
             if (t == null) return;
@@ -663,7 +667,7 @@ namespace BehaviourTreeEditor
             Handles.DrawBezier(startPos, endPos, startTan, endTan, disable ? Color.black : curveColor, null, 3);
             DrawTransitionClickPoint(t, startPos, endPos);
         }
-#endregion
+        #endregion
         public static void GetEGLLable(string text, GUIStyle style)
         {
             EditorGUILayout.LabelField(text, style);
@@ -689,9 +693,9 @@ namespace BehaviourTreeEditor
             }
         }
 
-     
+
     }
-#region Extending Classes
+    #region Extending Classes
     public static class RectExtensions
     {
         public static Vector2 TopLeft(this Rect rect)

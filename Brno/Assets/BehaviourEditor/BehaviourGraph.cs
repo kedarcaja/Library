@@ -36,9 +36,9 @@ namespace BehaviourTreeEditor
         /// <param name="height"></param>
         /// <param name="title">title of node</param>
         /// <returns></returns>
-        public BaseNode AddNode(DrawNode drawNode, float x, float y, float width, float height, string title)
+        public BaseNode AddNode(DrawNode drawNode, float x, float y, string title)
         {
-            BaseNode n = new BaseNode(drawNode, x, y, width, height, title, GenerateNodeId());
+            BaseNode n = new BaseNode(drawNode, x, y, title, GenerateNodeId());
             n.savedWindowRect = n.WindowRect;
             n.Graph = this;
             nodes.Add(n);
@@ -121,6 +121,9 @@ namespace BehaviourTreeEditor
         }
         public void Drag(Vector2 delta)
         {
+            if (!collapsed) return;
+
+
             Rect.position += delta;
             foreach (BaseNode z in selectedNodes)
             {
@@ -143,7 +146,7 @@ namespace BehaviourTreeEditor
                 bool x = false;
 #if UNITY_EDITOR
 
-                 x = !BehaviourEditor.currentGraph.selectionZones.Exists(z => z.selectedNodes.Contains(b));
+                x = !BehaviourEditor.currentGraph.selectionZones.Exists(z => z.selectedNodes.Contains(b));
 #endif
                 if (x)
                 {

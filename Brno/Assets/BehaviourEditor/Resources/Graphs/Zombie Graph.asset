@@ -12,95 +12,53 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a3d501ae2aac5e4aac88fb12af507ac, type: 3}
   m_Name: Zombie Graph
   m_EditorClassIdentifier: 
-  nodes:
-  - Graph: {fileID: 11400000}
-    ID: 41H0
-    WindowRect:
-      serializedVersion: 2
-      x: 362
-      y: 238
-      width: 200
-      height: 150
-    WindowTitle: Random Move
-    nodeColor:
-      serializedVersion: 2
-      rgba: 4278255360
-    savedNodeColor:
-      serializedVersion: 2
-      rgba: 4286545791
-    collapse: 0
-    normalHeight: 150
-    drawNode: {fileID: 11400000, guid: 242641f3f5b3bac47a08b143745984e2, type: 2}
-    previousCollapse: 0
-    transitions: []
-    depencies: []
-    transitionsIdsToRemove: []
-    savedWindowRect:
-      serializedVersion: 2
-      x: 362
-      y: 238
-      width: 200
-      height: 150
-    nodeCompleted: 1
-    comment: 
-    condition: {fileID: 0}
-    parameter: 
-    AnimatorActivatorType: 0
-    AnimatorActivatorBoolValue: 0
-    AnimatorActivatorIntValue: 0
-    AnimatorActivatorFloatValue: 0
-    animationLayer: 0
-    delay: 0
-    randomMoveArea: r0
-    randomSet: 1
-    portalTargetNodeID: 
-    destinationTarget: {fileID: 0}
-    destinationTargetName: 
+  nodes: []
   removeNodesIDs: []
   selectionZones: []
   character: {fileID: 0}
   LiveCycle:
     currentNode:
       Graph: {fileID: 11400000}
-      ID: 41H0
+      ID: 59E0
       WindowRect:
         serializedVersion: 2
-        x: 362
-        y: 238
+        x: 1048
+        y: 307
         width: 200
-        height: 150
-      WindowTitle: Random Move
+        height: 130
+      WindowTitle: Delay
       nodeColor:
         serializedVersion: 2
         rgba: 4278255360
       savedNodeColor:
         serializedVersion: 2
-        rgba: 4286545791
+        rgba: 4278255360
       collapse: 0
-      normalHeight: 150
-      drawNode: {fileID: 11400000, guid: 242641f3f5b3bac47a08b143745984e2, type: 2}
+      normalHeight: 130
+      drawNode: {fileID: 11400000, guid: cc7cd4f73d06ed2499c9639d1e439af3, type: 2}
       previousCollapse: 0
       transitions: []
       depencies: []
       transitionsIdsToRemove: []
       savedWindowRect:
         serializedVersion: 2
-        x: 362
-        y: 238
+        x: 180
+        y: 178
         width: 200
-        height: 150
+        height: 130
       nodeCompleted: 1
       comment: 
-      condition: {fileID: 0}
+      condition: 0
       parameter: 
       AnimatorActivatorType: 0
       AnimatorActivatorBoolValue: 0
       AnimatorActivatorIntValue: 0
       AnimatorActivatorFloatValue: 0
       animationLayer: 0
-      delay: 0
-      randomMoveArea: r0
-      randomSet: 1
+      animatorController: {fileID: 0}
+      delay: 1
+      randomMoveArea: 
+      randomSet: 0
       portalTargetNodeID: 
       destinationTarget: {fileID: 0}
       destinationTargetName: 

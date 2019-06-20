@@ -19,7 +19,7 @@ MonoBehaviour:
   Color: {r: 0, g: 0, b: 0, a: 1}
   Level: 10
   combatRadius: 0
-  interactionRadius: 0
+  interactionRadius: 5
   health: 100
   maxHealth: 100
   stamina: 100
