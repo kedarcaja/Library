@@ -4,10 +4,16 @@ using UnityEngine;
 
 public class EntityOpossum : MonoBehaviour
 {
- 
-    public static void GetInfo(CharacterScript requierer)
-    {
-        
 
-    }
+	public Biom GetEntityBiom(CharacterScript character)
+	{
+		foreach (Biom b in MainOpossum.WeatherOpossum.bioms)
+		{
+			if (b.IsInBiom(character.transform))
+			{
+				return b;
+			}
+		}
+		return null;
+	}
 }

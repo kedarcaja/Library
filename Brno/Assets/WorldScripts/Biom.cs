@@ -2,49 +2,61 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
+using Random = UnityEngine.Random;
 
 public class Biom : MonoBehaviour
 {
-    public bool SunyDay { get; private set; }
-    [SerializeField]
-    private float sunyProbability, radius, weatherChange;
-    [SerializeField]
-    private Color gizmosColor;
-    public TimeSpan lastCheck { get; private set; } = new TimeSpan();
-    private void Start()
-    {
-        CheckWeather();
-    }
-    private void Update()
-    {
-        if (SunyDay)
-        {
+	public EWeather Weather { get; private set; }
+	[SerializeField]
+	private float sunyProbability, radius;
+	[SerializeField]
+	private Color gizmosColor;
 
-            Debug.Log("Is sunny day...");
+	public UnityEvent OnWeatherChange;
+	private void Start()
+	{
+		CheckWeather();
+	}
+	private void Update()
+	{
+		if (Weather == EWeather.SunnyDay)
+		{
+			Debug.Log("Is sunny day...");
+		}
+		else
+		{
+			Debug.Log("Is thunder...");
+		}
+	}
+	public void CheckWeather()
+	{
+		float random = Random.Range(1f, 100f);
+		if (sunyProbability >= random - Random.Range(0f, 41f))
+		{
+			if (Weather == EWeather.Thunder) { OnWeatherChange?.Invoke(); }
 
-        }
-        else
-        {
-            Debug.Log("Is raining...");
+			Weather = EWeather.SunnyDay;
 
-        }
-        
-    }
-    public void CheckWeather()
-    {
+		}
+		else
+		{
+			if (Weather == EWeather.SunnyDay) { OnWeatherChange?.Invoke(); }
+			Weather = EWeather.Thunder;
 
-        if (WorldTime.Instance.Seconds >= weatherChange+sunyProbability)
-        {
-            lastCheck = WorldTime.Instance.GetTimeAsTimeSpan;
-            SunyDay = !SunyDay;
-
-            Debug.Log("biom weather has been changed...");
-        }
-
-    }
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = gizmosColor;
-        Gizmos.DrawWireSphere(transform.position, radius);
-    }
+		}
+	}
+	private void OnDrawGizmos()
+	{
+		Gizmos.color = gizmosColor;
+		Gizmos.DrawWireSphere(transform.position, radius);
+	}
+	public bool IsInBiom(Transform target)
+	{
+		return IsInBiom(target.position);
+	}
+	public bool IsInBiom(Vector3 place)
+	{
+		return Vector3.Distance(place,transform.position) <= radius;
+	}
 }
