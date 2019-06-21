@@ -634,12 +634,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 425516015}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 414cdc8567cd3b44fb7b59ea1d090cb1, type: 3}
+  m_Script: {fileID: 11500000, guid: 733b8fb702b161048a07e9fe91b3166b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   IsRunning: 0
-  characterData: {fileID: 11400000, guid: b9cce1199df4c8a45a3f2a6fe68652b6, type: 2}
-  Graph: {fileID: 11400000, guid: 3580ec70a41e8cc46803fe1ec0a39f07, type: 2}
+  characterData: {fileID: 11400000, guid: 99d93fdd8a26adf49a3b387e07d3c15e, type: 2}
 --- !u!195 &425516017
 NavMeshAgent:
   m_ObjectHideFlags: 0

@@ -4,31 +4,34 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EntityScript : CharacterScript
+public abstract class EntityScript : CharacterScript
 {
-    [SerializeField]
-    protected BehaviourGraph Graph;
+    protected BehaviourGraph currentGraph;
  
+    protected void InitGraph()
+    {
+        if (currentGraph)
+        {
+            if (currentGraph.LiveCycle == null)
+            {
+                currentGraph.LiveCycle = new LiveCycle();
+            }
+            currentGraph.LiveCycle.graph = currentGraph;
+            currentGraph.LiveCycle.Init();
+            currentGraph.character = this;
+        }
+    }
     protected override void Awake()
     {
-        if (Graph)
-        {
-            if (Graph.LiveCycle == null)
-            {
-                Graph.LiveCycle = new LiveCycle();
-            }
-            Graph.LiveCycle.graph = Graph;
-            Graph.LiveCycle.Init();
-            Graph.character = this;
-        }
+        InitGraph();
         base.Awake();
     }
     protected override void Update()
     {
         base.Update();
-        if (Graph != null)
+        if (currentGraph != null)
         {
-            Graph.LiveCycle.Tick();
+            currentGraph.LiveCycle.Tick();
         }
     }
 

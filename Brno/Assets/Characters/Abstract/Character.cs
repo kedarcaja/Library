@@ -7,6 +7,7 @@ public enum EWork { Lamberjack, Miner, Baker, InnKeeper }
 public enum EMood { Angry, Scared, Sad, Happy }
 public class Character : ScriptableObject
 {
+    
     [HideInInspector]
     public ECharacterClass CharacterClass;
     [HideInInspector]
@@ -218,6 +219,7 @@ public class Character : ScriptableObject
 
     public float CombatRadius { get => combatRadius > 0 ? combatRadius : 0; set => combatRadius = value; }
     public float InteractionRadius { get => interactionRadius > 0 ? interactionRadius : 0; set => interactionRadius = value; }
+   
     #endregion
 
 }

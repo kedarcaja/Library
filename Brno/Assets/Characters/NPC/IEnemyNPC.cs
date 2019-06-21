@@ -8,4 +8,6 @@ public interface IEnemyNPC
     bool CanSwim { get; }
     bool CanDive { get; }
 
+    EntityTimePlan TimePlan { get; set; }
+
 }

@@ -25,8 +25,11 @@ namespace BehaviourTreeEditor
 
         public override void Execute(BaseNode b)
         {
-            b.Graph.character.SetDestination(Vector3.zero);
-            b.nodeCompleted = b.Graph.character.AgentReachedTarget() && b.Graph.character.Agent.velocity.magnitude == 0;
+            b.Graph.character.Agent.isStopped = true;
+            b.Graph.character.Agent.ResetPath();
+            b.Graph.character.Agent.isStopped = false;
+
+            b.nodeCompleted =  b.Graph.character.Agent.velocity.magnitude == 0;
         }
     }
 }

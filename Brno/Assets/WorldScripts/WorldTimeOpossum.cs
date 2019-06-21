@@ -27,7 +27,7 @@ public class WorldTimeOpossum : MonoBehaviour
 	}
 	private void Update()
 	{
-		//Debug.Log("Day: " + Day.ToString() + " Hours: " + Hours + " Minutes: " + Minutes + " Seconds: " + Seconds);
+		Debug.Log("Day: " + Day.ToString() + " Hours: " + Hours + " Minutes: " + Minutes + " Seconds: " + Seconds);
 		if (Input.GetKeyDown(KeyCode.T))
 		{
 			SkipMinute();
