@@ -15,6 +15,6 @@ MonoBehaviour:
   graph: {fileID: 11400000, guid: 3580ec70a41e8cc46803fe1ec0a39f07, type: 2}
   hours: 0
   minutes: 0
-  seconds: 2
+  seconds: 10
   day: 0
   everyDay: 1

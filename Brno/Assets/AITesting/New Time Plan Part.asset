@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: da1c4ce5709209d4882b9c39712e2564, type: 3}
-  m_Name: TimePart
+  m_Name: New Time Plan Part
   m_EditorClassIdentifier: 
-  graph: {fileID: 0}
+  graph: {fileID: 11400000, guid: 77245d6104ddd504aa56a93f5e39c1ce, type: 2}
   hours: 0
-  minutes: 0
-  seconds: 0
+  minutes: 1
+  seconds: 10
   day: 0
-  everyDay: 0
+  everyDay: 1

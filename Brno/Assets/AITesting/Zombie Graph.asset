@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nodes:
   - Graph: {fileID: 11400000}
-    ID: 30T0
+    ID: 23T0
     WindowRect:
       serializedVersion: 2
-      x: 324
-      y: 224
+      x: 487
+      y: 263
       width: 200
       height: 130
     WindowTitle: Set Destination
@@ -32,23 +32,16 @@ MonoBehaviour:
     normalHeight: 130
     drawNode: {fileID: 11400000, guid: ef10c60c9fb367c4299587adddc3e56b, type: 2}
     previousCollapse: 0
-    transitions:
-    - ID: T411C
-      Color: {r: 1, g: 0, b: 1, a: 1}
-      disabled: 0
-      startPlacement: 6
-      endPlacement: 7
-      clicked: 0
-      Value: 
+    transitions: []
     depencies: []
     transitionsIdsToRemove: []
     savedWindowRect:
       serializedVersion: 2
-      x: 324
-      y: 224
+      x: 487
+      y: 263
       width: 200
       height: 130
-    nodeCompleted: 0
+    nodeCompleted: 1
     comment: 
     condition: 0
     parameter: 
@@ -67,135 +60,20 @@ MonoBehaviour:
     alwaysCheckConditions: 
     alwaysCheckCoun: 1
     swapGraph: {fileID: 0}
-  - Graph: {fileID: 11400000}
-    ID: 39J1
-    WindowRect:
-      serializedVersion: 2
-      x: 673
-      y: 308
-      width: 200
-      height: 130
-    WindowTitle: Condition
-    nodeColor:
-      serializedVersion: 2
-      rgba: 4278255360
-    savedNodeColor:
-      serializedVersion: 2
-      rgba: 4286545791
-    collapse: 0
-    normalHeight: 130
-    drawNode: {fileID: 11400000, guid: ff66ae395c499994fa8a190326c5f331, type: 2}
-    previousCollapse: 0
-    transitions:
-    - ID: T511G
-      Color: {r: 1, g: 0, b: 0, a: 1}
-      disabled: 0
-      startPlacement: 5
-      endPlacement: 7
-      clicked: 0
-      Value: true
-    depencies:
-    - ID: T411C
-      Color: {r: 1, g: 0, b: 1, a: 1}
-      disabled: 0
-      startPlacement: 6
-      endPlacement: 7
-      clicked: 0
-      Value: 
-    transitionsIdsToRemove: []
-    savedWindowRect:
-      serializedVersion: 2
-      x: 673
-      y: 308
-      width: 200
-      height: 130
-    nodeCompleted: 0
-    comment: 
-    condition: 8
-    parameter: 
-    AnimatorActivatorType: 0
-    AnimatorActivatorBoolValue: 0
-    AnimatorActivatorIntValue: 0
-    AnimatorActivatorFloatValue: 0
-    animationLayer: 0
-    animatorController: {fileID: 0}
-    delay: 0
-    randomMoveArea: 
-    randomSet: 0
-    portalTargetNodeID: 
-    destinationTarget: {fileID: 0}
-    destinationTargetName: 
-    alwaysCheckConditions: 
-    alwaysCheckCoun: 1
-    swapGraph: {fileID: 0}
-  - Graph: {fileID: 11400000}
-    ID: 47G2
-    WindowRect:
-      serializedVersion: 2
-      x: 957
-      y: 396
-      width: 200
-      height: 150
-    WindowTitle: Graph Swap
-    nodeColor:
-      serializedVersion: 2
-      rgba: 4278255360
-    savedNodeColor:
-      serializedVersion: 2
-      rgba: 4286545791
-    collapse: 0
-    normalHeight: 150
-    drawNode: {fileID: 11400000, guid: e262d33b118c6f940b6e66174e2c4b81, type: 2}
-    previousCollapse: 0
-    transitions: []
-    depencies:
-    - ID: T511G
-      Color: {r: 1, g: 0, b: 0, a: 1}
-      disabled: 0
-      startPlacement: 5
-      endPlacement: 7
-      clicked: 0
-      Value: true
-    transitionsIdsToRemove: []
-    savedWindowRect:
-      serializedVersion: 2
-      x: 957
-      y: 396
-      width: 200
-      height: 150
-    nodeCompleted: 1
-    comment: 
-    condition: 0
-    parameter: 
-    AnimatorActivatorType: 0
-    AnimatorActivatorBoolValue: 0
-    AnimatorActivatorIntValue: 0
-    AnimatorActivatorFloatValue: 0
-    animationLayer: 0
-    animatorController: {fileID: 0}
-    delay: 0
-    randomMoveArea: 
-    randomSet: 0
-    portalTargetNodeID: 
-    destinationTarget: {fileID: 0}
-    destinationTargetName: 
-    alwaysCheckConditions: 
-    alwaysCheckCoun: 1
-    swapGraph: {fileID: 11400000, guid: 77245d6104ddd504aa56a93f5e39c1ce, type: 2}
   removeNodesIDs: []
   selectionZones: []
   character: {fileID: 0}
   LiveCycle:
     currentNode:
       Graph: {fileID: 11400000}
-      ID: 47G2
+      ID: 23T0
       WindowRect:
         serializedVersion: 2
-        x: 957
-        y: 396
+        x: 487
+        y: 263
         width: 200
-        height: 150
-      WindowTitle: Graph Swap
+        height: 130
+      WindowTitle: Set Destination
       nodeColor:
         serializedVersion: 2
         rgba: 4278255360
@@ -203,25 +81,18 @@ MonoBehaviour:
         serializedVersion: 2
         rgba: 4286545791
       collapse: 0
-      normalHeight: 150
-      drawNode: {fileID: 11400000, guid: e262d33b118c6f940b6e66174e2c4b81, type: 2}
+      normalHeight: 130
+      drawNode: {fileID: 11400000, guid: ef10c60c9fb367c4299587adddc3e56b, type: 2}
       previousCollapse: 0
       transitions: []
-      depencies:
-      - ID: T511G
-        Color: {r: 1, g: 0, b: 0, a: 1}
-        disabled: 0
-        startPlacement: 5
-        endPlacement: 7
-        clicked: 0
-        Value: true
+      depencies: []
       transitionsIdsToRemove: []
       savedWindowRect:
         serializedVersion: 2
-        x: 957
-        y: 396
+        x: 487
+        y: 263
         width: 200
-        height: 150
+        height: 130
       nodeCompleted: 1
       comment: 
       condition: 0
@@ -237,7 +108,7 @@ MonoBehaviour:
       randomSet: 0
       portalTargetNodeID: 
       destinationTarget: {fileID: 0}
-      destinationTargetName: 
+      destinationTargetName: t
       alwaysCheckConditions: 
       alwaysCheckCoun: 1
-      swapGraph: {fileID: 11400000, guid: 77245d6104ddd504aa56a93f5e39c1ce, type: 2}
+      swapGraph: {fileID: 0}

@@ -19,7 +19,8 @@ public class EntityTimePlan : ScriptableObject
     }
     public TimePlanPart CurrentPart
     {
-        get { if (CurrentPartExists()) return parts.Find(p => (p.Day == MainOpossum.GetDay() || p.EveryDay) && p.Time == MainOpossum.GetTime()); return null; }
+        get { if (CurrentPartExists()) return parts.Find(p => (p.Day == MainOpossum.GetDay() || p.EveryDay) && p.Time == MainOpossum.GetTime());
+            else return parts.Find(p => (p.Day == MainOpossum.GetDay() || p.EveryDay) && p.Time < MainOpossum.GetTime());         }
     }
     private bool CurrentPartExists()
     {
