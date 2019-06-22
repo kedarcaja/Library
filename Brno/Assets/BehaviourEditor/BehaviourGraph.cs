@@ -14,9 +14,14 @@ namespace BehaviourTreeEditor
         public List<SelectionZone> selectionZones = new List<SelectionZone>();
         public EntityScript character;
         public LiveCycle LiveCycle;
+        private BaseNode enterNode;
+
 
 
         private BaseNode currentNode;
+
+        public BaseNode EnterNode { get => enterNode; }
+
 
         public void RemoveTransitions()
         {
@@ -25,38 +30,45 @@ namespace BehaviourTreeEditor
                 b?.RemoveTransitions();
             }
         }
+        public bool IsEnterState(BaseNode b)
+        {
+            return enterNode.transitions[0].endNode.ID == b.ID;
+        }
+        public void SetAsEnterState(BaseNode end)
+        {
+            EnterNode.transitions.Clear();
+            EnterNode.transitions.Add(new Transition(EnterNode, end, EWindowCurvePlacement.RightCenter, EWindowCurvePlacement.LeftCenter, Color.green, false, ""));
 
-        /// <summary>
-        /// Adds new node to graph
-        /// </summary>
-        /// <param name="drawNode">template of node design and behaviour</param>
-        /// <param name="x"></param>
-        /// <param name="y"></param>
-        /// <param name="width"></param>
-        /// <param name="height"></param>
-        /// <param name="title">title of node</param>
-        /// <returns></returns>
+        }
+
         public BaseNode AddNode(DrawNode drawNode, float x, float y, string title)
         {
             BaseNode n = new BaseNode(drawNode, x, y, title, GenerateNodeId());
             n.savedWindowRect = n.WindowRect;
             n.Graph = this;
             nodes.Add(n);
+
+            if(enterNode.transitions.Count == 0)
+            {
+                EnterNode.transitions.Add(new Transition(EnterNode, n, EWindowCurvePlacement.RightCenter, EWindowCurvePlacement.LeftCenter, Color.green, false, ""));
+            }
             return n;
         }
         private void OnEnable()
         {
-
-
             InitTransitions();
+        }
+        private void Awake()
+        {
+            enterNode = new BaseNode(BehaviourEditor.settings.EnterNode, 10, 200, "", GenerateNodeId());
+            enterNode.Graph = this;
+            nodes.Add(enterNode);
         }
         /// <summary>
         /// Adds nodes id to list of nodes to remove
         /// </summary>
         public void RemoveNodeSelectedNodes()
         {
-
-
             for (int i = 0; i < nodes.Count; i++)
             {
                 if (nodes[i] == null) continue;

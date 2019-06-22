@@ -9,7 +9,10 @@ namespace BehaviourTreeEditor
 
         public float Width = 200, Height = 200;
         public Color NodeColor = Color.grey;
-
+        public bool Deletable = true;
+        public int transitionsLimit = 0;
+        public bool unlimitedTransitions;
+        public bool enableColorChange = true, enableCollapse = true;
         [SerializeField]
         protected List<DrawNode> unconectableNodes = new List<DrawNode>();
 

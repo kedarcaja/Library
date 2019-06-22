@@ -114,26 +114,30 @@ namespace BehaviourTreeEditor
 #if UNITY_EDITOR
 
             EditorGUI.DrawRect(new Rect(0, 17, WindowRect.width, WindowRect.height - 17), nodeColor);
-            EditorGUILayout.LabelField("Node Color: ", GColor.White);
-            if (this == BehaviourEditor.currentGraph.LiveCycle.currentNode)
+            if (drawNode.enableColorChange)
             {
-                savedNodeColor = EditorGUILayout.ColorField(nodeColor);
-
-
+                EditorGUILayout.LabelField("Node Color: ", GColor.White);
+         
+                if (this == BehaviourEditor.currentGraph.LiveCycle.currentNode)
+                {
+                    savedNodeColor = EditorGUILayout.ColorField(nodeColor);
+                }
+                else
+                {
+                    nodeColor = EditorGUILayout.ColorField(nodeColor);
+                }
             }
-            else
+            if (drawNode.enableCollapse)
             {
-                nodeColor = EditorGUILayout.ColorField(nodeColor);
-            }
-
-            collapse = EditorGUILayout.Toggle(collapse);
-            if (collapse)
-            {
-                WindowRect.height = 100;
-            }
-            else
-            {
-                WindowRect.height = normalHeight;
+                collapse = EditorGUILayout.Toggle(collapse);
+                if (collapse)
+                {
+                    WindowRect.height = 100;
+                }
+                else
+                {
+                    WindowRect.height = normalHeight;
+                }
             }
             drawNode?.DrawWindow(this);
 #endif

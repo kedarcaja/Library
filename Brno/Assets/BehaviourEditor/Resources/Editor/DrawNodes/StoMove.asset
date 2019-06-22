@@ -15,5 +15,10 @@ MonoBehaviour:
   Width: 200
   Height: 200
   NodeColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  Deletable: 1
+  transitionsLimit: 0
+  unlimitedTransitions: 1
+  enableColorChange: 1
+  enableCollapse: 1
   unconectableNodes: []
   enableTransitions: 1

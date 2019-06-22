@@ -23,6 +23,7 @@ namespace BehaviourTreeEditor
         public AnimatorSwapNode AnimatorSwapNode;
         public StopNode StopNode;
         public GraphSwapNode GraphSwapNode;
+        public EnterNode EnterNode;
 
     }
 }

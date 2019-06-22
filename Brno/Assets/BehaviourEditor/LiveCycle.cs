@@ -17,7 +17,7 @@ namespace BehaviourTreeEditor
         public void Tick()
         {
             CheckAlwaysConditions();
-        
+
 
             DecideForNextNode();
             if (currentNode != null)
@@ -56,7 +56,7 @@ namespace BehaviourTreeEditor
         }
         public void Init()
         {
-            currentNode = graph.nodes.First(f=>!(f.drawNode is CheckAlwaysNode));
+            currentNode = graph.nodes.Find(f => (f.drawNode is EnterNode));
         }
         public void DecideForNextNode()
         {
@@ -65,15 +65,15 @@ namespace BehaviourTreeEditor
             if (currentNode.drawNode is ExecutableNode && currentNode.nodeCompleted)
             {
                 CheckTransitions();
-              
+
                 return;
             }
             if (currentNode.drawNode is ConditionNode)
             {
-				
-			
-                if(ConditionNode.IsChecked(currentNode.condition,graph.character))
-				{
+
+
+                if (ConditionNode.IsChecked(currentNode.condition, graph.character))
+                {
                     if (currentNode.transitions.Exists(x => x.Value == "true"))
                     {
 
@@ -91,7 +91,7 @@ namespace BehaviourTreeEditor
 
                     }
                 }
-            
+
 
                 return;
             }
@@ -99,14 +99,14 @@ namespace BehaviourTreeEditor
             {
                 BaseNode b = graph.nodes.Find(n => n.ID == currentNode.portalTargetNodeID);
                 currentNode = b != null ? b : currentNode;
-               
+
             }
-            if(currentNode.drawNode is CheckAlwaysNode)
+            if (currentNode.drawNode is CheckAlwaysNode)
             {
                 currentNode = currentNode.transitions[0]?.endNode;
             }
 
         }
-     
+
     }
 }

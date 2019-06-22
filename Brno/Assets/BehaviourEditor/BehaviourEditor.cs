@@ -47,7 +47,7 @@ namespace BehaviourTreeEditor
         #endregion
         public enum UserActions
         {
-            deleteNode, commentNode, AnimatorHandleNode, makeTransition, conditionNode, SetDestinationNode, delayNode, portalNode, randomMoveNode, animatorSwapNode, checkAlwaysNode,stopNode,graphSwapNode
+            deleteNode, commentNode, AnimatorHandleNode, makeTransition, conditionNode, SetDestinationNode, delayNode, portalNode, randomMoveNode, animatorSwapNode, checkAlwaysNode, stopNode, graphSwapNode, setAsStartNode
         }
         [MenuItem("Behaviour Editor/Editor")]
         static void ShowEditor()
@@ -368,13 +368,7 @@ namespace BehaviourTreeEditor
                     BaseNode n = currentGraph.nodes[i];
                     if (n.WindowRect.size != Vector2.zero) // if node is in zone and zone is not collapsed
                     {
-                        n.WindowRect = GUI.Window(i, n.WindowRect, DrawNodeWindow, n.WindowTitle + " id: " + n.ID); // setting up nodes as windows
-                        if (n == currentGraph.LiveCycle.currentNode)
-                        {
-                            n.nodeColor = Color.green;
-                        }
-
-                        Repaint();
+                        n.WindowRect = GUI.Window(i, n.WindowRect, DrawNodeWindow, n.WindowTitle + (n.drawNode is EnterNode ? "" : " id: " + n.ID)); // setting up nodes as windows
                     }
                 }
 
@@ -429,13 +423,10 @@ namespace BehaviourTreeEditor
 
 
         }
-
         void DrawNodeWindow(int id)
         {
             currentGraph?.nodes[id].DrawWindow();
             GUI.DragWindow();
-
-
         }
         void AddNewNode(Event e)
         {
@@ -464,11 +455,21 @@ namespace BehaviourTreeEditor
         private void ModifyNode(Event e)
         {
             GenericMenu menu = new GenericMenu();
-            menu.AddItem(new GUIContent("Delete"), false, ContextCallback, UserActions.deleteNode);
-            if (((selectedNode.drawNode is ConditionNode) && selectedNode.transitions.Count < 2 || !(selectedNode.drawNode is ConditionNode))&&selectedNode.drawNode.EnableTransitions)
+            if (selectedNode.drawNode.Deletable)
+                menu.AddItem(new GUIContent("Delete"), false, ContextCallback, UserActions.deleteNode);
+            if (TransitionEnable())
                 menu.AddItem(new GUIContent("Make Transition"), false, ContextCallback, UserActions.makeTransition);
+
+            if (selectedNode != currentGraph.EnterNode && currentGraph.EnterNode.transitions[0].endNode != selectedNode)
+                menu.AddItem(new GUIContent("Set As StartState"), false, ContextCallback, UserActions.setAsStartNode);
+
+
             menu.ShowAsContext();
             e.Use();
+        }
+        private bool TransitionEnable()
+        {
+            return selectedNode.drawNode.EnableTransitions && (selectedNode.transitions.Count < selectedNode.drawNode.transitionsLimit || selectedNode.drawNode.unlimitedTransitions);
         }
         private void ContextCallback(object o)
         {
@@ -477,6 +478,13 @@ namespace BehaviourTreeEditor
             switch (a)
             {
                 case UserActions.deleteNode:
+                    if (currentGraph.IsEnterState(selectedNode))
+                    {
+                        if(currentGraph.nodes.Count > 1)
+                        {
+                            currentGraph.SetAsEnterState(currentGraph.nodes.FirstOrDefault(f => !(f.drawNode is EnterNode)));
+                        }
+                    }
                     currentGraph.removeNodesIDs.Add(selectedNode.ID);
                     break;
                 case UserActions.makeTransition:
@@ -520,6 +528,9 @@ namespace BehaviourTreeEditor
                 case UserActions.graphSwapNode:
                     currentGraph.AddNode(settings.GraphSwapNode, mousePosition.x, mousePosition.y, "Graph Swap");
                     break;
+                case UserActions.setAsStartNode:
+                    currentGraph.SetAsEnterState(selectedNode);
+                    break;
             }
             EditorUtility.SetDirty(currentGraph);
 
@@ -528,7 +539,7 @@ namespace BehaviourTreeEditor
         #region Transition Methods
         public static void DrawTransitionClickPoint(Transition t, Vector3 start, Vector3 end)
         {
-            if (t == null) return;
+            if (t == null || t.startNode.drawNode is EnterNode) return;
             Handles.color = t.Color;
 
             if (Handles.Button((start + end) * .5f, Quaternion.identity, 4, 8, Handles.DotHandleCap))

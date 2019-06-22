@@ -29,3 +29,4 @@ MonoBehaviour:
   AnimatorSwapNode: {fileID: 11400000, guid: 0a62f18c27d0eb349914b94edd22d596, type: 2}
   StopNode: {fileID: 11400000, guid: cda925ea7b968c24b8a8d34859deb302, type: 2}
   GraphSwapNode: {fileID: 11400000, guid: e262d33b118c6f940b6e66174e2c4b81, type: 2}
+  EnterNode: {fileID: 11400000, guid: 2f52d7d8a8f283c42bd7c11b0c6faa15, type: 2}
