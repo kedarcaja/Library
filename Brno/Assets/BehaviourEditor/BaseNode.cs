@@ -72,7 +72,9 @@ namespace BehaviourTreeEditor
         public List<ECondition> alwaysCheckConditions = new List<ECondition>();
         public int alwaysCheckCoun = 1;
         #endregion
-
+        #region Graph swap node
+        public BehaviourGraph swapGraph;
+        #endregion
         public string GetTransitionId(char end)
         {
             return "T" + DateTime.Now.Second.ToString() + transitions.Count.ToString() + end;

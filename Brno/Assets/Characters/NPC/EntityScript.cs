@@ -6,16 +6,13 @@ using UnityEngine.AI;
 
 public abstract class EntityScript : CharacterScript
 {
-    protected BehaviourGraph currentGraph;
- 
-    protected void InitGraph()
+    public BehaviourGraph currentGraph;
+
+    public void InitGraph()
     {
         if (currentGraph)
         {
-            if (currentGraph.LiveCycle == null)
-            {
-                currentGraph.LiveCycle = new LiveCycle();
-            }
+            currentGraph.LiveCycle = new LiveCycle();
             currentGraph.LiveCycle.graph = currentGraph;
             currentGraph.LiveCycle.Init();
             currentGraph.character = this;
@@ -52,7 +49,7 @@ public abstract class EntityScript : CharacterScript
     {
         SetDestination(GetRandomMoveArea(area));
     }
-    
+
     public bool PlayerIsClose()
     {
         return ObjectIsClose(PlayerScript.Instance.transform, characterData.InteractionRadius);
